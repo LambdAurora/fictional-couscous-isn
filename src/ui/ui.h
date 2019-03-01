@@ -1,4 +1,4 @@
-#ifndef UI_H
-#define UI_H
+#ifndef FICTIONAL_COUSCOUS_UI_H
+#define FICTIONAL_COUSCOUS_UI_H
 
-#endif
+#endif //FICTIONAL_COUSCOUS_UI_H
