@@ -39,7 +39,7 @@ set(PROJECT_HEADERS
   src/graphics/raytracing.h
   src/physics/physics.h
   src/ui/ui.h
-)
+  src/game.h src/world/world.h src/base.h)
 
 # Now build the executable.
 add_executable(fictional_couscous_isn ${PROJECT_SOURCES} ${PROJECT_HEADERS})
