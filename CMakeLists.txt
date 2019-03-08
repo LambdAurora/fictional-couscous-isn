@@ -37,6 +37,7 @@ set(PROJECT_SOURCES src/main.c
   src/physics/raytrace.c
   src/maths/vec2d.c
   src/maths/double.c
+  lib/easysdl.c
 )
 
 set(PROJECT_HEADERS
@@ -49,6 +50,7 @@ set(PROJECT_HEADERS
   src/physics/raytrace.h
   src/maths/vec2d.h
   src/maths/double.h
+  lib/easysdl.h
 )
 
 # Now build the executable.

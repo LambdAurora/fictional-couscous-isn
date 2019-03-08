@@ -4,7 +4,7 @@
 #include <math.h>
 #include <stdbool.h>
 
-#define EPSILON 0.01
+#define EPSILON 0.001
 
 bool approx_eq(double a, double b);
 bool approx_gt(double a, double b);

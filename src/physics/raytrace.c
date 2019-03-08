@@ -20,9 +20,31 @@ MaybePosition2D intersect2D(Line2D a, Line2D b) {
     res.pos.x = a.pos.x + a.vec.x * s;
     res.pos.y = a.pos.y + a.vec.y * s;
 
-    printf("%lf %lf\n", s, t);
+    // printf("%lf %lf\n", s, t);
 
     res.success = approx_lt(s, a.length) && approx_gt(s, 0) && approx_lt(t, b.length) && approx_gt(t, 0);
     return res;
   }
+}
+
+RayIntersection cast_ray(Lines lines, Line2D ray) {
+  MaybePosition2D res_pos;
+  size_t n;
+  size_t hit = 0;
+  res_pos.success = false;
+  for (n = 0; n < lines.length; n++) {
+    MaybePosition2D i = intersect2D(lines.lines[n], ray);
+    if (i.success) {
+      if (!res_pos.success || dist(ray.pos, i.pos) < dist(ray.pos, res_pos.pos)) {
+        hit = n;
+        res_pos.success = true;
+        res_pos.pos.x = i.pos.x;
+        res_pos.pos.y = i.pos.y;
+      }
+    }
+  }
+  RayIntersection res;
+  res.pos = res_pos;
+  res.index = hit;
+  return res;
 }

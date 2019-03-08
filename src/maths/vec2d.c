@@ -14,3 +14,9 @@ Vec2D norm(Vec2D in) {
   res.x = in.x / l;
   res.y = in.y / l;
 }
+
+double dist(Vec2D a, Vec2D b) {
+  double c = a.x - b.x;
+  double d = a.y - b.y;
+  return sqrt(c * c + d * d);
+}

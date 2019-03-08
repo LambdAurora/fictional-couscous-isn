@@ -13,5 +13,7 @@ struct Vec2D {
 typedef struct Vec2D Vec2D;
 
 double dot2D(Vec2D a, Vec2D b);
+Vec2D norm(Vec2D in);
+double dist(Vec2D a, Vec2D b);
 
 #endif //FICTIONAL_COUSCOUS_VEC2D_H
