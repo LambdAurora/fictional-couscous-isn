@@ -34,16 +34,30 @@ set(PROJECT_SOURCES src/main.c
   src/graphics/raytracing.c
   src/physics/physics.c
   src/ui/ui.c
+  src/physics/raytrace.c
+  src/maths/vec2d.c
+  src/maths/double.c
 )
+
 set(PROJECT_HEADERS
   src/graphics/raytracing.h
   src/physics/physics.h
   src/ui/ui.h
-  src/game.h src/world/world.h src/base.h)
+  src/game.h
+  src/world/world.h
+  src/base.h
+  src/physics/raytrace.h
+  src/maths/vec2d.h
+  src/maths/double.h
+)
 
 # Now build the executable.
 add_executable(fictional_couscous_isn ${PROJECT_SOURCES} ${PROJECT_HEADERS})
 target_link_libraries(fictional_couscous_isn SDL2::SDL2 SDL2::SDL2gfx SDL2::SDL2image SDL2::SDL2mixer SDL2::SDL2ttf)
+
+if(NOT LAMBDA_WINDOWS)
+  target_link_libraries(fictional_couscous_isn m)
+endif()
 
 # Generate the version header and include it.
 generate_version_header("FICTIONAL_COUSCOUS_ISN" "fictional_couscous_isn" ${FICTIONAL_COUSCOUS_ISN_VERSION_MAJOR} ${FICTIONAL_COUSCOUS_ISN_VERSION_MINOR} ${FICTIONAL_COUSCOUS_ISN_VERSION_PATCH} "${FICTIONAL_COUSCOUS_ISN_VERSION_TYPE}")
