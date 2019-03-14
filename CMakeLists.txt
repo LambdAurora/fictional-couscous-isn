@@ -37,6 +37,7 @@ set(PROJECT_SOURCES src/main.c
   src/physics/raytrace.c
   src/maths/vec2d.c
   src/maths/double.c
+  src/maths/geometry.c
   lib/easysdl.c
 )
 
@@ -50,6 +51,7 @@ set(PROJECT_HEADERS
   src/physics/raytrace.h
   src/maths/vec2d.h
   src/maths/double.h
+  src/maths/geometry.h
   lib/easysdl.h
 )
 

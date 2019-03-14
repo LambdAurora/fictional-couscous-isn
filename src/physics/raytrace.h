@@ -4,6 +4,7 @@
 #include "../world/world.h"
 #include "../maths/vec2d.h"
 #include "../maths/double.h"
+#include "../maths/geometry.h"
 #include <stdbool.h>
 
 struct MaybePosition2D {
@@ -11,19 +12,6 @@ struct MaybePosition2D {
   bool success;
 };
 typedef struct MaybePosition2D MaybePosition2D;
-
-struct Line2D {
-  Vec2D pos;
-  Vec2D vec; // should be normalized
-  double length;
-};
-typedef struct Line2D Line2D;
-
-struct Lines {
-  Line2D* lines;
-  size_t length;
-};
-typedef struct Lines Lines;
 
 struct RayIntersection {
   size_t index;
