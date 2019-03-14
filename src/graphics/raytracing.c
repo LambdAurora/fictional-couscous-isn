@@ -45,13 +45,13 @@ void sweep(
             255);
           #endif// DRAW_REFLECTION
           #ifdef DRAW_OUTLINE
-          EZ_trace_rectangle_plein(x, height / 2 - mh - dh - 1, 0, dh + 1,
+          EZ_trace_rectangle_plein(x - 1, height / 2 - mh - dh - 1, 1, dh + 1,
             mix(0, bg.red, mist),
             mix(0, bg.green, mist),
             mix(0, bg.blue, mist),
             255
           );
-          EZ_trace_rectangle_plein(x, height / 2 + mh - 1, 0, dh + 1,
+          EZ_trace_rectangle_plein(x - 1, height / 2 + mh - 1, 1, dh + 1,
             mix(0, bg.red, mist),
             mix(0, bg.green, mist),
             mix(0, bg.blue, mist),
