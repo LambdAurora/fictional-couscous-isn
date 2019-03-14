@@ -56,7 +56,7 @@ int main()
 		double dt = (double)(clock() - last_clock) / CLOCKS_PER_SEC;
 		last_clock = clock();
 		EZ_trace_rectangle_plein(0, 0, width, height, bg.red, bg.green, bg.blue, 255);
-		sweep(width, height, lines, Vec2D_new(x, y), angle, 0.6, 100, bg);
+		sweep(width, height, lines, Vec2D_new(x, y), angle, 0.6, 100, bg, 5);
 		EZ_mise_a_jour();
 
 		int evt;

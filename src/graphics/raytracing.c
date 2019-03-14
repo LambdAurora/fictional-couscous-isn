@@ -6,7 +6,7 @@ void sweep(
   Lines lines,
   const Vec2D camera_pos,
   double rotation, double fov, double length,
-  const Color bg
+  const Color bg, double mist_length
 ) {
   int x;
   int last_h = 0;
@@ -26,7 +26,7 @@ void sweep(
       dist += dist2D(ray.pos, r.pos.pos);
       Line2D line = lines.lines[r.index];
       int h = (int)((double)height / 2 / dist);
-      double mist = 1 - 1 / (1 + dist * dist / sqrt(length));
+      double mist = 1 - 1 / (1 + dist * dist / mist_length);
       uint8_t red = mix(line.color.red, bg.red, mist);
       uint8_t green = mix(line.color.green, bg.green, mist);
       uint8_t blue = mix(line.color.blue, bg.blue, mist);
@@ -67,7 +67,7 @@ void sweep(
     }
     #ifdef DRAW_OUTLINE
     if (r.pos.success && r.index != last_index && x > 1 || !r.pos.success && last_index != -1) {
-      double mist = 1 - 1 / (1 + last_dist * last_dist / sqrt(length));
+      double mist = 1 - 1 / (1 + last_dist * last_dist / mist_length);
       EZ_trace_rectangle_plein(x - 1, height / 2 - last_h, 1, last_h * 2,
         mix(0, bg.red, mist),
         mix(0, bg.green, mist),

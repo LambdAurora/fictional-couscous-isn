@@ -16,7 +16,7 @@ void sweep(
   Lines lines,
   Vec2D camera_pos,
   double rotation, double fov, double length,
-  Color bg
+  Color bg, double mist_length
 );
 
 #define DRAW_OUTLINE
