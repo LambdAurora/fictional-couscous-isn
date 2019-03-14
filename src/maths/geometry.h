@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include "double.h"
 #include "vec2d.h"
+#include "../graphics/color.h"
 
 enum LINE_TYPE {
   NORMAL_LINE
@@ -16,6 +17,7 @@ struct Line2D {
   Vec2D vec; // should be normalized
   double length;
   u_int8_t type;
+  Color color;
   void* data;
 };
 typedef struct Line2D Line2D;

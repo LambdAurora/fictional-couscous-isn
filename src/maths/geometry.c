@@ -19,5 +19,8 @@ Line2D Line2D_new(Vec2D from, Vec2D to) {
   }
   res.type = NORMAL_LINE;
   res.data = NULL;
+  res.color.red = 255;
+  res.color.green = 255;
+  res.color.blue = 255;
   return res;
 }
