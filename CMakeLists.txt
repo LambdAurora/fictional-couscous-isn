@@ -38,7 +38,7 @@ set(PROJECT_SOURCES src/main.c
   src/maths/vec2d.c
   src/maths/double.c
   src/maths/geometry.c
-  src/maths/color.c
+  src/graphics/color.c
   lib/easysdl.c
 )
 
@@ -53,7 +53,7 @@ set(PROJECT_HEADERS
   src/maths/vec2d.h
   src/maths/double.h
   src/maths/geometry.h
-  src/maths/color.h
+  src/graphics/color.h
   lib/easysdl.h
 )
 
