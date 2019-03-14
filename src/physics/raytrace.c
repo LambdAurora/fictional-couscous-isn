@@ -35,7 +35,7 @@ RayIntersection cast_ray(Lines lines, Line2D ray) {
   for (n = 0; n < lines.length; n++) {
     MaybePosition2D i = intersect2D(lines.lines[n], ray);
     if (i.success) {
-      if (!res_pos.success || dist(ray.pos, i.pos) < dist(ray.pos, res_pos.pos)) {
+      if (!res_pos.success || dist2D(ray.pos, i.pos) < dist2D(ray.pos, res_pos.pos)) {
         hit = n;
         res_pos.success = true;
         res_pos.pos.x = i.pos.x;
