@@ -1,51 +1,31 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "../lib/easysdl.h"
+#include <math.h>
+#include <time.h>
+#include "easysdl.h"
+#include "graphics/color.h"
+#include "graphics/raytracing.h"
 #include "physics/raytrace.h"
 #include "maths/vec2d.h"
+#include "maths/geometry.h"
 #include "world/world.h"
-#include <math.h>
 
 #define ARROW 0x40000000
 
 int main()
 {
-	int height = 64;
-	EZ_creation_fenetre(" ", 256, 64);
-	printf("Hello, World!\n");
-	Line2D a;
-	Line2D b;
-	Line2D c;
+	const int height = 480;
+	const int width = 1080;
+	EZ_creation_fenetre(" ", width, height);
 
-	a.pos.x = 0;
-	a.pos.y = 0;
-	a.vec.x = 1;
-	a.vec.y = 0;
-	a.length = 1;
+	Line2D a = Line2D_new(Vec2D_new(0, 0), Vec2D_new(1, 0));
+	Line2D b = Line2D_new(Vec2D_new(0, 0), Vec2D_new(0, 1));
+	Line2D c = Line2D_new(Vec2D_new(0, 1), Vec2D_new(-0.5, 1));
+	Color bg = Color_new(209, 213, 201);
 
-	b.pos.x = 0;
-	b.pos.y = 0;
-	b.vec.x = 0;
-	b.vec.y = 1;
-	b.length = 1;
-
-	c.pos.x = 0;
-	c.pos.y = 1;
-	c.vec.x = -sqrt(2) / 2;
-	c.vec.y = -sqrt(2) / 2;
-	c.length = .5;
-
-	MaybePosition2D pos = intersect2D(a, b);
-
-	printf("%s (%lf, %lf)\n", (pos.success ? "true" : "false"), pos.pos.x, pos.pos.y);
-
-	pos = intersect2D(a, c);
-
-	printf("%s (%lf, %lf)\n", (pos.success ? "true" : "false"), pos.pos.x, pos.pos.y);
-
-	pos = intersect2D(c, b);
-
-	printf("%s (%lf, %lf)\n", (pos.success ? "true" : "false"), pos.pos.x, pos.pos.y);
+	a.color = Color_new(83, 190, 187);
+	b.color = Color_new(113, 190, 118);
+	c.color = Color_new(228, 214, 84);
 
 	Lines lines;
 	lines.lines = (Line2D*)malloc(sizeof(Line2D) * 3);
@@ -54,6 +34,7 @@ int main()
 	lines.lines[0] = a;
 	lines.lines[1] = b;
 	lines.lines[2] = c;
+
 	double x = -1;
 	double y = 0.5;
 	double angle = 0;
@@ -69,27 +50,16 @@ int main()
 	bool drag = false;
 	int drag_x = 0;
 
+	int last_clock = clock();
+
 	while (!exit) {
-		for (int i = 0; i < 256; i++) {
-			double a = angle + ((double)(i + (drag ? -EZ_souris_x() + drag_x : 0)) / 128 - 1) * .5;
-			Line2D ray;
-			ray.length = 100;
-			ray.pos.x = x;
-			ray.pos.y = y;
-			ray.vec.x = cos(a);
-			ray.vec.y = sin(a);
-			RayIntersection r = cast_ray(lines, ray);
-			int red = (r.index == 0) * 255;
-			int green = (r.index == 1) * 255;
-			int blue = (r.index == 2) * 255;
-			int d = height / dist(ray.pos, r.pos.pos) / 2;
-			EZ_trace_rectangle_plein(i, 0, i + 1, 64, 0, 0, 0, 255);
-			if (r.pos.success) {
-				EZ_trace_rectangle_plein(i, height / 2 - d, i + 1, d * 2, red, green, blue, 255);
-			}
-		}
+		double dt = (double)(clock() - last_clock) / CLOCKS_PER_SEC;
+		last_clock = clock();
+		EZ_trace_rectangle_plein(0, 0, width, height, bg.red, bg.green, bg.blue, 255);
+		sweep(width, height, lines, Vec2D_new(x, y), angle, 0.6, 100, bg);
 		EZ_mise_a_jour();
-		int evt = 1;
+
+		int evt;
 		while (evt = EZ_recupere_evenement_continu()) {
 			if (evt == EZ_EXIT) exit = true;
 			if (evt == EZ_TOUCHE_ENFONCEE || evt == EZ_TOUCHE_RELACHEE) {
@@ -127,23 +97,23 @@ int main()
 			}
 		}
 		if (up) {
-			x += .007 * cos(angle);
-			y += .007 * sin(angle);
+			x += 1.4 * cos(angle) * dt;
+			y += 1.4 * sin(angle) * dt;
 		}
 		if (down) {
-			x -= .007 * cos(angle);
-			y -= .007 * sin(angle);
+			x -= 1.4 * cos(angle) * dt;
+			y -= 1.4 * sin(angle) * dt;
 		}
 		if (right) {
-			x -= .005 * sin(angle);
-			y += .005 * cos(angle);
+			x -= 1 * sin(angle) * dt;
+			y += 1 * cos(angle) * dt;
 		}
 		if (left) {
-			x += .005 * sin(angle);
-			y -= .005 * cos(angle);
+			x += 1 * sin(angle) * dt;
+			y -= 1 * cos(angle) * dt;
 		}
-		if (rright) angle += .004;
-		if (rleft) angle -= .004;
+		if (rright) angle += .8 * dt;
+		if (rleft) angle -= .8 * dt;
 	}
 
 	return 0;
