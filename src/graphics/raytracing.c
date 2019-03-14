@@ -66,7 +66,7 @@ void sweep(
       #endif// DRAW_OUTLINE
     }
     #ifdef DRAW_OUTLINE
-    if (r.pos.success && r.index != last_index || !r.pos.success && last_index != -1) {
+    if (r.pos.success && r.index != last_index && x > 1 || !r.pos.success && last_index != -1) {
       double mist = 1 - 1 / (1 + last_dist * last_dist / sqrt(length));
       EZ_trace_rectangle_plein(x - 1, height / 2 - last_h, 1, last_h * 2,
         mix(0, bg.red, mist),
