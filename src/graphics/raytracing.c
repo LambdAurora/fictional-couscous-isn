@@ -14,37 +14,28 @@ void sweep(
     int last_index = -1;
     double last_dist = 0;
     for (x = 0; x < width; x++) {
-        double angle = rotation + ((double) x - (double) width / 2) / (double) width * 2 * fov;
+        double angle = ((double) x - (double) width / 2) / (double) width * 2 * fov;
         Line2D ray;
         double dist = 0;
         ray.length = length;
         ray.pos = *camera_pos;
-        ray.vec.x = cos(angle);
-        ray.vec.y = sin(angle);
+        ray.vec.x = cos(angle + rotation);
+        ray.vec.y = sin(angle + rotation);
         int n = 0;
         RayIntersection r = cast_ray(lines, &ray);
         if (r.pos.success) {
             dist += dist2D(&(ray.pos), &(r.pos.pos));
             Line2D line = lines->lines[r.index];
-            int h = (int) ((double) height / 2 / dist);
+            int h = (int) ((double) height * calc_height(dist, angle));
             double mist = 1 - 1 / (1 + dist * dist / mist_length);
             uint8_t red = mix(line.color.red, bg->red, mist);
             uint8_t green = mix(line.color.green, bg->green, mist);
             uint8_t blue = mix(line.color.blue, bg->blue, mist);
-            int h2 = (int) ((double) height / sqrt(dist * dist + 4));
             int mh = h < last_h ? h : last_h;
             int dh = h < last_h ? last_h - h : h - last_h;
             switch (line.type) {
                 case NORMAL_LINE:
                     EZ_trace_rectangle_plein((uint32_t) x, (uint32_t) (height / 2 - h), 0, (uint32_t) h * 2, red, green, blue, 255);
-#ifdef DRAW_REFLECTION
-                EZ_trace_rectangle_plein(
-                  x, height / 2 + h, 0, h2,
-                  mix(red, bg.red, REFLECTION_AMOUNT),
-                  mix(green, bg.green, REFLECTION_AMOUNT),
-                  mix(blue, bg.blue, REFLECTION_AMOUNT),
-                  255);
-#endif// DRAW_REFLECTION
 #ifdef DRAW_OUTLINE
                     EZ_trace_rectangle_plein((uint32_t) x - 1, (uint32_t) height / 2 - mh - dh - 1, 1, (uint32_t) dh + 1,
                                              mix(0, bg->red, mist),
@@ -83,4 +74,8 @@ void sweep(
         }
 #endif// DRAW_OUTLINE
     }
+}
+
+double calc_height(double distance, double angle) {
+  return .5 / distance / cos(angle);
 }

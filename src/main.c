@@ -43,6 +43,8 @@ int main() {
     level.walls = lines;
     World world;
     world.level = level;
+    world.player_position.x = -1;
+    world.player_position.y = 0.5;
 
     bool exit = false;
 

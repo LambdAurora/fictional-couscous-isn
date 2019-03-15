@@ -19,6 +19,8 @@ void sweep(
         const Color* bg, double mist_length
 );
 
+double calc_height(double distance, double angle);
+
 #define DRAW_OUTLINE
 
 #endif //FICTIONAL_COUSCOUS_RAYTRACING_H
