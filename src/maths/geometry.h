@@ -8,26 +8,26 @@
 #include "../graphics/color.h"
 
 enum LINE_TYPE {
-  NORMAL_LINE
+    NORMAL_LINE
 };
 typedef enum LINE_TYPE LINE_TYPE;
 
 struct Line2D {
-  Vec2D pos;
-  Vec2D vec; // should be normalized
-  double length;
-  u_int8_t type;
-  Color color;
-  void* data;
+    Vec2D pos;
+    Vec2D vec; // should be normalized
+    double length;
+    u_int8_t type;
+    Color color;
+    void* data;
 };
 typedef struct Line2D Line2D;
 
 struct Lines {
-  Line2D* lines;
-  size_t length;
+    Line2D* lines;
+    size_t length;
 };
 typedef struct Lines Lines;
 
-Line2D Line2D_new(Vec2D from, Vec2D to);
+Line2D Line2D_new(const Vec2D* from, const Vec2D* to);
 
 #endif// FICTIONAL_COUSCOUS_GEOMETRY_H
