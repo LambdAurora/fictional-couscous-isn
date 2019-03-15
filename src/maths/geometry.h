@@ -3,12 +3,14 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include <inttypes.h>
 #include "double.h"
 #include "vec2d.h"
 #include "../graphics/color.h"
 
 enum LINE_TYPE {
-  NORMAL_LINE
+  NORMAL_LINE,
+  BOUNCE_LINE
 };
 typedef enum LINE_TYPE LINE_TYPE;
 
@@ -16,7 +18,7 @@ struct Line2D {
   Vec2D pos;
   Vec2D vec; // should be normalized
   double length;
-  u_int8_t type;
+  uint8_t type;
   Color color;
   void* data;
 };

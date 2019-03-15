@@ -21,19 +21,23 @@ int main()
 	Line2D a = Line2D_new(Vec2D_new(0, 0), Vec2D_new(1, 0));
 	Line2D b = Line2D_new(Vec2D_new(0, 0), Vec2D_new(0, 1));
 	Line2D c = Line2D_new(Vec2D_new(0, 1), Vec2D_new(-0.5, 1));
+	Line2D d = Line2D_new(Vec2D_new(-0, -1), Vec2D_new(-1.5, -0.5));
+	d.type = BOUNCE_LINE;
 	Color bg = Color_new(209, 213, 201);
 
 	a.color = Color_new(83, 190, 187);
 	b.color = Color_new(113, 190, 118);
 	c.color = Color_new(228, 214, 84);
+	d.color = Color_new(255, 64, 64);
 
 	Lines lines;
-	lines.lines = (Line2D*)malloc(sizeof(Line2D) * 3);
-	lines.length = 3;
+	lines.lines = (Line2D*)malloc(sizeof(Line2D) * 4);
+	lines.length = 4;
 	// copy the values in the allocated memory
 	lines.lines[0] = a;
 	lines.lines[1] = b;
 	lines.lines[2] = c;
+	lines.lines[3] = d;
 
 	double x = -1;
 	double y = 0.5;
@@ -56,7 +60,8 @@ int main()
 		double dt = (double)(clock() - last_clock) / CLOCKS_PER_SEC;
 		last_clock = clock();
 		EZ_trace_rectangle_plein(0, 0, width, height, bg.red, bg.green, bg.blue, 255);
-		sweep(width, height, lines, Vec2D_new(x, y), angle, 0.6, 100, bg, 5);
+		Vec2D pos = Vec2D_new(x, y);
+		sweep(width, height, &lines, &pos, angle, 0.6, 100, &bg, 5);
 		EZ_mise_a_jour();
 
 		int evt;
