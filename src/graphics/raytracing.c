@@ -36,7 +36,7 @@ void sweep(
             int dh = h < last_h ? last_h - h : h - last_h;
             switch (line.type) {
                 case NORMAL_LINE:
-                    EZ_trace_rectangle_plein((uint32_t) x, (uint32_t) (height / 2 - h), 0, h * 2, red, green, blue, 255);
+                    EZ_trace_rectangle_plein((uint32_t) x, (uint32_t) (height / 2 - h), 0, (uint32_t) h * 2, red, green, blue, 255);
 #ifdef DRAW_REFLECTION
                 EZ_trace_rectangle_plein(
                   x, height / 2 + h, 0, h2,
@@ -46,13 +46,13 @@ void sweep(
                   255);
 #endif// DRAW_REFLECTION
 #ifdef DRAW_OUTLINE
-                    EZ_trace_rectangle_plein(x - 1, height / 2 - mh - dh - 1, 1, dh + 1,
+                    EZ_trace_rectangle_plein((uint32_t) x - 1, (uint32_t) height / 2 - mh - dh - 1, 1, (uint32_t) dh + 1,
                                              mix(0, bg->red, mist),
                                              mix(0, bg->green, mist),
                                              mix(0, bg->blue, mist),
                                              255
                     );
-                    EZ_trace_rectangle_plein(x - 1, height / 2 + mh - 1, 1, dh + 1,
+                    EZ_trace_rectangle_plein((uint32_t) (x - 1), (uint32_t) (height / 2 + mh - 1), 1, (uint32_t) (dh + 1),
                                              mix(0, bg->red, mist),
                                              mix(0, bg->green, mist),
                                              mix(0, bg->blue, mist),
@@ -67,9 +67,9 @@ void sweep(
 #endif// DRAW_OUTLINE
         }
 #ifdef DRAW_OUTLINE
-        if (r.pos.success && r.index != last_index && x > 1 || !r.pos.success && last_index != -1) {
+        if ((r.pos.success && r.index != last_index && x > 1) || (!r.pos.success && last_index != -1)) {
             double mist = 1 - 1 / (1 + last_dist * last_dist / mist_length);
-            EZ_trace_rectangle_plein(x - 1, height / 2 - last_h, 1, last_h * 2,
+            EZ_trace_rectangle_plein((uint32_t) (x - 1), (uint32_t) (height / 2 - last_h), 1, (uint32_t) (last_h * 2),
                                      mix(0, bg->red, mist),
                                      mix(0, bg->green, mist),
                                      mix(0, bg->blue, mist),

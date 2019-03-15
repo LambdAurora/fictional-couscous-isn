@@ -17,9 +17,13 @@ int main() {
     const int width = 1080;
     EZ_creation_fenetre(" ", width, height);
 
-    Line2D a = Line2D_new(Vec2D_new(0, 0), Vec2D_new(1, 0));
-    Line2D b = Line2D_new(Vec2D_new(0, 0), Vec2D_new(0, 1));
-    Line2D c = Line2D_new(Vec2D_new(0, 1), Vec2D_new(-0.5, 1));
+    Vec2D vec0 = Vec2D_new(.0, .0);
+    Vec2D vec1 = Vec2D_new(1., .0);
+    Vec2D vec2 = Vec2D_new(.0, 1.);
+    Vec2D vec3 = Vec2D_new(-.5, 1.);
+    Line2D a = Line2D_new(&vec0, &vec1);
+    Line2D b = Line2D_new(&vec0, &vec2);
+    Line2D c = Line2D_new(&vec1, &vec3);
     Color bg = Color_new(209, 213, 201);
 
     a.color = Color_new(83, 190, 187);
@@ -34,9 +38,12 @@ int main() {
     lines.lines[1] = b;
     lines.lines[2] = c;
 
-    double x = -1;
-    double y = 0.5;
-    double angle = 0;
+    Level level;
+    level.spawn_position = Vec2D_new(-1., .5);
+    level.walls = lines;
+    World world;
+    world.level = level;
+
     bool exit = false;
 
     bool up = false;
@@ -55,7 +62,8 @@ int main() {
         double dt = (double) (clock() - last_clock) / CLOCKS_PER_SEC;
         last_clock = clock();
         EZ_trace_rectangle_plein(0, 0, width, height, bg.red, bg.green, bg.blue, 255);
-        sweep(width, height, lines, Vec2D_new(x, y), angle, 0.6, 100, bg, 5);
+
+        sweep(width, height, &(world.level.walls), &(world.player_position), world.player_angle, 0.6, 100, &bg, 5);
         EZ_mise_a_jour();
 
         int evt;
@@ -93,27 +101,27 @@ int main() {
                 drag = true;
             } else if (evt == EZ_SOURIS_BOUTON_GAUCHE_RELACHE) {
                 drag = false;
-                angle -= ((double) (EZ_souris_x() - drag_x) / 128) * .5;
+                world.player_angle -= ((double) (EZ_souris_x() - drag_x) / 128) * .5;
             }
         }
         if (up) {
-            x += 1.4 * cos(angle) * dt;
-            y += 1.4 * sin(angle) * dt;
+            world.player_position.x += 1.4 * cos(world.player_angle) * dt;
+            world.player_position.y += 1.4 * sin(world.player_angle) * dt;
         }
         if (down) {
-            x -= 1.4 * cos(angle) * dt;
-            y -= 1.4 * sin(angle) * dt;
+            world.player_position.x -= 1.4 * cos(world.player_angle) * dt;
+            world.player_position.y -= 1.4 * sin(world.player_angle) * dt;
         }
         if (right) {
-            x -= 1 * sin(angle) * dt;
-            y += 1 * cos(angle) * dt;
+            world.player_position.x -= 1 * sin(world.player_angle) * dt;
+            world.player_position.y += 1 * cos(world.player_angle) * dt;
         }
         if (left) {
-            x += 1 * sin(angle) * dt;
-            y -= 1 * cos(angle) * dt;
+            world.player_position.x += 1 * sin(world.player_angle) * dt;
+            world.player_position.y -= 1 * cos(world.player_angle) * dt;
         }
-        if (rright) angle += .8 * dt;
-        if (rleft) angle -= .8 * dt;
+        if (rright) world.player_angle += .8 * dt;
+        if (rleft) world.player_angle -= .8 * dt;
     }
 
     return 0;

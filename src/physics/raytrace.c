@@ -17,8 +17,8 @@ MaybePosition2D intersect2D(const Line2D* a, const Line2D* b) {
         double s = -(b->vec.y * wx - b->vec.x * wy) / (b->vec.x * a->vec.y - b->vec.y * a->vec.x);
         double t = -(a->vec.x * wy - a->vec.y * wx) / (a->vec.x * b->vec.y - a->vec.y * b->vec.x);
 
-        res.pos.x = a.pos.x + a.vec.x * s;
-        res.pos.y = a.pos.y + a.vec.y * s;
+        res.pos.x = a->pos.x + a->vec.x * s;
+        res.pos.y = a->pos.y + a->vec.y * s;
 
         // printf("%lf %lf\n", s, t);
 

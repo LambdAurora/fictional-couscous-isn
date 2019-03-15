@@ -39,6 +39,7 @@ set(PROJECT_SOURCES src/main.c
   src/maths/double.c
   src/maths/geometry.c
   src/graphics/color.c
+        src/world/world.c
   lib/easysdl.c
 )
 
