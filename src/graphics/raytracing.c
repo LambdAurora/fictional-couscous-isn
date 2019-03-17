@@ -4,78 +4,39 @@
 // TODO: replace `lines` with `world`
 void sweep(
         int width, int height,
-        const Lines* lines,
-        const Vec2D* camera_pos,
-        double rotation, double fov, double length,
+        const World* world,
+        size_t layer,double fov, double length,
         const Color* bg, double mist_length
 ) {
     int x;
-    int last_h = 0;
-    int last_index = -1;
     double last_dist = 0;
     for (x = 0; x < width; x++) {
         double angle = ((double) x - (double) width / 2) / (double) width * 2 * fov;
+
         Line2D ray;
-        double dist = 0;
         ray.length = length;
-        ray.pos = *camera_pos;
-        ray.vec.x = cos(angle + rotation);
-        ray.vec.y = sin(angle + rotation);
-        int n = 0;
-        RayIntersection r = cast_ray(lines, &ray);
-        if (r.pos.success) {
-            dist += dist2D(&(ray.pos), &(r.pos.pos));
-            Line2D line = lines->lines[r.index];
-            int h = (int) ((double) height * calc_height(dist, angle));
-            double mist = 1 - 1 / (1 + dist * dist / mist_length);
-            uint8_t red = mix(line.color.red, bg->red, mist);
-            uint8_t green = mix(line.color.green, bg->green, mist);
-            uint8_t blue = mix(line.color.blue, bg->blue, mist);
-            int mh = h < last_h ? h : last_h;
-            int dh = h < last_h ? last_h - h : h - last_h;
-            switch (line.type) {
-                case NORMAL_LINE:
-                    EZ_trace_rectangle_plein((uint32_t) x, (uint32_t) (height / 2 - h), 0, (uint32_t) h * 2, red, green, blue, 255);
-#ifdef DRAW_OUTLINE
-                    EZ_trace_rectangle_plein((uint32_t) x - 1, (uint32_t) height / 2 - mh - dh - 1, 1, (uint32_t) dh + 1,
-                                             mix(0, bg->red, mist),
-                                             mix(0, bg->green, mist),
-                                             mix(0, bg->blue, mist),
-                                             255
-                    );
-                    EZ_trace_rectangle_plein((uint32_t) (x - 1), (uint32_t) (height / 2 + mh - 1), 1, (uint32_t) (dh + 1),
-                                             mix(0, bg->red, mist),
-                                             mix(0, bg->green, mist),
-                                             mix(0, bg->blue, mist),
-                                             255
-                    );
-                    break;
-#endif// DRAW_OUTLINE
+        ray.pos = world->player_position;
+        ray.vec.x = cos(angle + world->player_angle);
+        ray.vec.y = sin(angle + world->player_angle);
+
+        RayIntersection cast = cast_ray(world, &ray, layer);
+        if (cast.success) {
+            size_t n_hit;
+            for (n_hit = cast.n_hits - 1; n_hit != -1; n_hit--) {
+                Hit hit = cast.hits[n_hit];
+                Line2D* line = hit.line;
+                int h = (int) ((double) height * calc_height(hit.dist, angle));
+                double mist = 1 - 1 / (1 + hit.dist * hit.dist / mist_length);
+
+                switch (line->type) {
+                    case NORMAL_LINE:
+                        EZ_trace_rectangle_plein((uint32_t) x, (uint32_t) (height / 2 - h), 0, (uint32_t) h * 2, line->color.red, line->color.green, line->color.blue, mix(255, 0, mist));
+                }
             }
-#ifdef DRAW_OUTLINE
-            last_h = h;
-            last_dist = dist;
-#endif// DRAW_OUTLINE
         }
-#ifdef DRAW_OUTLINE
-        if ((r.pos.success && r.index != last_index && x > 1) || (!r.pos.success && last_index != -1)) {
-            double mist = 1 - 1 / (1 + last_dist * last_dist / mist_length);
-            EZ_trace_rectangle_plein((uint32_t) (x - 1), (uint32_t) (height / 2 - last_h), 1, (uint32_t) (last_h * 2),
-                                     mix(0, bg->red, mist),
-                                     mix(0, bg->green, mist),
-                                     mix(0, bg->blue, mist),
-                                     255
-            );
-        }
-        if (r.pos.success) {
-            last_index = (int) r.index;
-        } else {
-            last_index = -1;
-        }
-#endif// DRAW_OUTLINE
     }
 }
 
 double calc_height(double distance, double angle) {
-  return .5 / distance / cos(angle);
+    return .5 / distance / cos(angle);
 }

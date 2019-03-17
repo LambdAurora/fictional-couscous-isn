@@ -4,11 +4,19 @@
 #include "../base.h"
 #include "../maths/geometry.h"
 
+#define N_LEVELS 1
+
 typedef Vec2D Position;
+
+struct Layer {
+  Lines walls;
+};
+typedef struct Layer Layer;
 
 struct Level {
     Position spawn_position;
-    Lines walls;
+    Layer* layers;
+    size_t n_layers;
 };
 typedef struct Level Level;
 

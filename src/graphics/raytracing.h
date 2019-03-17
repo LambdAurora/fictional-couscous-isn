@@ -13,9 +13,8 @@
 
 void sweep(
         int width, int height,
-        const Lines* lines,
-        const Vec2D* camera_pos,
-        double rotation, double fov, double length,
+        const World* world,
+        size_t layer, double fov, double length,
         const Color* bg, double mist_length
 );
 

@@ -23,7 +23,7 @@ int main() {
     Vec2D vec3 = Vec2D_new(-.5, 1.);
     Line2D a = Line2D_new(&vec0, &vec1);
     Line2D b = Line2D_new(&vec0, &vec2);
-    Line2D c = Line2D_new(&vec1, &vec3);
+    Line2D c = Line2D_new(&vec2, &vec3);
     Color bg = Color_new(209, 213, 201);
 
     a.color = Color_new(83, 190, 187);
@@ -40,11 +40,11 @@ int main() {
 
     Level level;
     level.spawn_position = Vec2D_new(-1., .5);
-    level.walls = lines;
+    level.layers = (Layer*)malloc(sizeof(Layer) * 1);
+    level.n_layers = 1;
+    level.layers[0].walls = lines;
     World world;
-    world.level = level;
-    world.player_position.x = -1;
-    world.player_position.y = 0.5;
+    World_use_level(&world, &level);
 
     bool exit = false;
 
@@ -65,7 +65,7 @@ int main() {
         last_clock = clock();
         EZ_trace_rectangle_plein(0, 0, width, height, bg.red, bg.green, bg.blue, 255);
 
-        sweep(width, height, &(world.level.walls), &(world.player_position), world.player_angle, 0.6, 100, &bg, 5);
+        sweep(width, height, &world, 0, 0.6, 100, &bg, 5);
         EZ_mise_a_jour();
 
         int evt;
