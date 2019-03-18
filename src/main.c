@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
+#include <unistd.h>
+#include <SDL2/SDL.h>
 #include "easysdl.h"
 #include "graphics/color.h"
 #include "graphics/raytracing.h"
@@ -24,19 +26,42 @@ int main() {
     Line2D a = Line2D_new(&vec0, &vec1);
     Line2D b = Line2D_new(&vec0, &vec2);
     Line2D c = Line2D_new(&vec2, &vec3);
+
+    Vec2D d_start = Vec2D_new(-2, -0.5);
+    Vec2D d_end = Vec2D_new(-2, 0.5);
+    Line2D d = Line2D_new(&d_start, &d_end);
+
+    Vec2D e_start = d_start;
+    Vec2D e_end = Vec2D_new(-1, -0.5);
+    Line2D e = Line2D_new(&e_start, &e_end);
+
+    Vec2D f_start = Vec2D_new(1, 0);
+    Vec2D f_end = Vec2D_new(1, -0.5);
+    Line2D f = Line2D_new(&f_start, &f_end);
+
     Color bg = Color_new(209, 213, 201);
 
     a.color = Color_new(83, 190, 187);
     b.color = Color_new(113, 190, 118);
     c.color = Color_new(228, 214, 84);
+    d.color = Color_new(145, 104, 159);
+    e.color = Color_new(249, 131, 117);
+    f.color = Color_new(180, 191, 122);
+
+    d.type = BOUNCE_LINE;
+    e.type = BOUNCE_LINE;
+    f.type = BOUNCE_LINE;
 
     Lines lines;
-    lines.lines = (Line2D*) malloc(sizeof(Line2D) * 3);
-    lines.length = 3;
+    lines.length = 6;
+    lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length);
     // copy the values in the allocated memory
     lines.lines[0] = a;
     lines.lines[1] = b;
     lines.lines[2] = c;
+    lines.lines[3] = d;
+    lines.lines[4] = e;
+    lines.lines[5] = f;
 
     Level level;
     level.spawn_position = Vec2D_new(-1., .5);
@@ -65,7 +90,13 @@ int main() {
         last_clock = clock();
         EZ_trace_rectangle_plein(0, 0, width, height, bg.red, bg.green, bg.blue, 255);
 
-        sweep(width, height, &world, 0, 0.6, 100, &bg, 5);
+        sweep(width, height, &world, 0, 0.6, 100, &bg, 100);
+
+        // FPS-meter
+        char str[50];
+        sprintf(str, "%d", (int)(1 / dt));
+        EZ_trace_texte(str, "../../minesweeper/resources/DF-font.ttf", 16, 0, 0, 0, 0, 0, 255);
+        
         EZ_mise_a_jour();
 
         int evt;

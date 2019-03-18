@@ -8,7 +8,8 @@
 #include "../graphics/color.h"
 
 enum LINE_TYPE {
-    NORMAL_LINE
+    NORMAL_LINE,
+    BOUNCE_LINE
 };
 typedef enum LINE_TYPE LINE_TYPE;
 

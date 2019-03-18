@@ -31,4 +31,6 @@ Vec2D Vec2D_mult(const Vec2D* a, double by);
 
 bool Vec2D_eq(const Vec2D* a, const Vec2D* b);
 
+Vec2D Vec2D_normal(const Vec2D* vec);
+
 #endif //FICTIONAL_COUSCOUS_VEC2D_H

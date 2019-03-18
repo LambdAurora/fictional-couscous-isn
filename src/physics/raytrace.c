@@ -36,6 +36,8 @@ RayIntersection cast_ray(const World* world, const Line2D* ray, size_t layer) {
     double dist = 0;
     Line2D ray2 = *ray;
 
+    size_t current_layer = layer;
+
     for (p = 0; p < MAX_BOUNCES; p++) {
         result.hits[p].line = NULL;
         result.hits[p].exists = NULL;
@@ -45,7 +47,7 @@ RayIntersection cast_ray(const World* world, const Line2D* ray, size_t layer) {
         size_t n;
         size_t hit;
         hit_pos.success = false;
-        const Lines* lines = &world->level.layers[layer].walls;
+        const Lines* lines = &world->level.layers[current_layer].walls;
         for (n = 0; n < lines->length; n++) {
             MaybePosition2D intersection = intersect2D(&(lines->lines[n]), &ray2);
             if (intersection.success) {
@@ -67,6 +69,21 @@ RayIntersection cast_ray(const World* world, const Line2D* ray, size_t layer) {
             switch (lines->lines[hit].type) {
                 case NORMAL_LINE:
                     loop = false;
+                    break;
+                case BOUNCE_LINE:
+                    ray2.pos.x = hit_pos.pos.x;
+                    ray2.pos.y = hit_pos.pos.y;
+                    {
+                        Vec2D normal = Vec2D_normal(&lines->lines[hit].vec);
+                        Vec2D bounce;
+                        double d = dot2D(&normal, &ray2.vec);
+                        bounce.x = ray2.vec.x - 2 * d * normal.x;
+                        bounce.y = ray2.vec.y - 2 * d * normal.y;
+                        ray2.vec = bounce;
+                    }
+                    ray2.pos.x += 2 * EPSILON * ray2.vec.x;
+                    ray2.pos.y += 2 * EPSILON * ray2.vec.y;
+                    break;
             }
         } else {
             loop = false;

@@ -57,3 +57,7 @@ Vec2D Vec2D_mult(const Vec2D* a, double by) {
 bool Vec2D_eq(const Vec2D* a, const Vec2D* b) {
     return approx_eq(a->x, b->x) && approx_eq(a->y, b->y);
 }
+
+Vec2D Vec2D_normal(const Vec2D* vec) {
+    return Vec2D_new(-vec->y, vec->x);
+}

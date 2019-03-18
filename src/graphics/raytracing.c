@@ -31,6 +31,10 @@ void sweep(
                 switch (line->type) {
                     case NORMAL_LINE:
                         EZ_trace_rectangle_plein((uint32_t) x, (uint32_t) (height / 2 - h), 0, (uint32_t) h * 2, line->color.red, line->color.green, line->color.blue, mix(255, 0, mist));
+                        break;
+                    case BOUNCE_LINE:
+                        EZ_trace_rectangle_plein((uint32_t) x, (uint32_t) (height / 2 - h), 0, (uint32_t) h * 2, line->color.red, line->color.green, line->color.blue, mix(32, 0, mist));
+                        break;
                 }
             }
         }
