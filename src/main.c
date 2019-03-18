@@ -35,25 +35,49 @@ int main() {
     Vec2D e_end = Vec2D_new(-1, -0.5);
     Line2D e = Line2D_new(&e_start, &e_end);
 
-    Vec2D f_start = Vec2D_new(1, 0);
-    Vec2D f_end = Vec2D_new(1, -0.5);
+    double D = 32;
+
+    Vec2D f_start = Vec2D_new(2, D);
+    Vec2D f_end = Vec2D_new(2, -D);
     Line2D f = Line2D_new(&f_start, &f_end);
+
+    Vec2D g_start = Vec2D_new(-2.5, D);
+    Vec2D g_end = Vec2D_new(-2.5, -D);
+    Line2D g = Line2D_new(&g_start, &g_end);
+    f.data = &g;
+    g.data = &f;
+
+    Vec2D h_start = Vec2D_new(D, 2);
+    Vec2D h_end = Vec2D_new(-D, 2);
+    Line2D h = Line2D_new(&h_start, &h_end);
+
+    Vec2D i_start = Vec2D_new(D, -2.5);
+    Vec2D i_end = Vec2D_new(-D, -2.5);
+    Line2D i = Line2D_new(&i_start, &i_end);
+    h.data = &i;
+    i.data = &h;
 
     Color bg = Color_new(209, 213, 201);
 
     a.color = Color_new(83, 190, 187);
     b.color = Color_new(113, 190, 118);
     c.color = Color_new(228, 214, 84);
-    d.color = Color_new(145, 104, 159);
-    e.color = Color_new(249, 131, 117);
+    d.color = Color_new(122, 58, 144);
+    e.color = Color_new(217, 90, 75);
     f.color = Color_new(180, 191, 122);
 
-    d.type = BOUNCE_LINE;
-    e.type = BOUNCE_LINE;
-    f.type = BOUNCE_LINE;
+    uint8_t alpha = 128;
+    d.type = TRANSPARENT_LINE;
+    d.data = &alpha;
+    e.type = TRANSPARENT_LINE;
+    e.data = &alpha;
+    f.type = TELEPORT_LINE;
+    g.type = TELEPORT_LINE;
+    h.type = TELEPORT_LINE;
+    i.type = TELEPORT_LINE;
 
     Lines lines;
-    lines.length = 6;
+    lines.length = 9;
     lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length);
     // copy the values in the allocated memory
     lines.lines[0] = a;
@@ -62,6 +86,9 @@ int main() {
     lines.lines[3] = d;
     lines.lines[4] = e;
     lines.lines[5] = f;
+    lines.lines[6] = g;
+    lines.lines[7] = h;
+    lines.lines[8] = i;
 
     Level level;
     level.spawn_position = Vec2D_new(-1., .5);
@@ -90,13 +117,13 @@ int main() {
         last_clock = clock();
         EZ_trace_rectangle_plein(0, 0, width, height, bg.red, bg.green, bg.blue, 255);
 
-        sweep(width, height, &world, 0, 0.6, 100, &bg, 100);
+        sweep(width, height, &world, 0, 0.6, 100, &bg, 1000);
 
         // FPS-meter
         char str[50];
         sprintf(str, "%d", (int)(1 / dt));
-        EZ_trace_texte(str, "../../minesweeper/resources/DF-font.ttf", 16, 0, 0, 0, 0, 0, 255);
-        
+        EZ_trace_texte(str, "../resources/DF-font.ttf", 16, 0, 0, 0, 0, 0, 255);
+
         EZ_mise_a_jour();
 
         int evt;

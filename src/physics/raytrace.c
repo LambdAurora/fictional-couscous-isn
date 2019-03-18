@@ -84,6 +84,21 @@ RayIntersection cast_ray(const World* world, const Line2D* ray, size_t layer) {
                     ray2.pos.x += 2 * EPSILON * ray2.vec.x;
                     ray2.pos.y += 2 * EPSILON * ray2.vec.y;
                     break;
+                case TELEPORT_LINE:
+                    // rotation and layer changing isn't supported yet, this will have to be done
+                    {
+                        Line2D* loc = (Line2D*)lines->lines[hit].data;
+                        ray2.pos.x = hit_pos.pos.x - lines->lines[hit].pos.x + loc->pos.x;
+                        ray2.pos.y = hit_pos.pos.y - lines->lines[hit].pos.y + loc->pos.y;
+                    }
+                    ray2.pos.x += ray2.vec.x * EPSILON * 2;
+                    ray2.pos.y += ray2.vec.y * EPSILON * 2;
+                    break;
+                case TRANSPARENT_LINE:
+                    ray2.pos.x = hit_pos.pos.x + ray2.vec.x * EPSILON * 2;
+                    ray2.pos.y = hit_pos.pos.y + ray2.vec.y * EPSILON * 2;
+                    break;
+
             }
         } else {
             loop = false;

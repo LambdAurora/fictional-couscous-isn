@@ -9,7 +9,9 @@
 
 enum LINE_TYPE {
     NORMAL_LINE,
-    BOUNCE_LINE
+    BOUNCE_LINE,
+    TELEPORT_LINE,
+    TRANSPARENT_LINE
 };
 typedef enum LINE_TYPE LINE_TYPE;
 
