@@ -3,7 +3,10 @@
 
 #include "../maths/geometry.h"
 
+#define PLAYER_RADIUS 0.1
+
 double get_distance_of(const Vec2D* pos, const Line2D* line);
+double get_distance_to_ends(const Vec2D* pos, const Line2D* line);
 
 bool collide(const Vec2D* pos, const Line2D* line);
 
