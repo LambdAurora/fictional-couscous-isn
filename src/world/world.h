@@ -9,27 +9,22 @@
 typedef Vec2D Position;
 
 struct Layer {
-  Lines walls;
+    Lines walls;
 };
 typedef struct Layer Layer;
-
-struct Level {
-    Position spawn_position;
-    Layer* layers;
-    size_t n_layers;
-};
-typedef struct Level Level;
 
 struct World {
     uint64_t age;
     Position player_position;
     double player_angle;
-    Level level;
+    Position spawn_position;
+    Layer* layers;
+    size_t n_layers;
 };
 typedef struct World World;
 
-void World_use_level(World *world, const Level *level);
+void World_init(World* world, Position spawn_pos);
 
-void World_update(World *world);
+void World_update(World* world);
 
 #endif //FICTIONAL_COUSCOUS_ISN_WORLD_H
