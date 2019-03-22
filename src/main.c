@@ -195,8 +195,13 @@ int main(int argc, char** argv) {
         bool dont_move = false;
         for (i = 0; i < walls.length; i++) {
             Line2D* wall = &(walls.lines[i]);
-            if (!can_move(&world.player_position, &new_player_position, wall) && wall->type != TELEPORT_LINE) {
+            bool blocked = !can_move(&world.player_position, &new_player_position, wall);
+            if (blocked && wall->type != TELEPORT_LINE) {
                 dont_move = true;
+                break;
+            } else if (blocked && wall->type == TELEPORT_LINE) {
+                dont_move = true;
+                world.player_position = world.spawn_position;
                 break;
             }
         }
