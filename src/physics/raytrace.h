@@ -7,7 +7,9 @@
 #include "../maths/geometry.h"
 #include <stdbool.h>
 
-#define MAX_BOUNCES 32
+#ifndef MAX_BOUNCES
+#define MAX_BOUNCES 128
+#endif
 
 struct MaybePosition2D {
     Vec2D pos;
@@ -30,8 +32,16 @@ struct RayIntersection {
 };
 typedef struct RayIntersection RayIntersection;
 
+struct TeleportTarget {
+    Line2D* line;
+    size_t layer;
+};
+typedef struct TeleportTarget TeleportTarget;
+
 MaybePosition2D intersect2D(const Line2D* a, const Line2D* b);
 
 RayIntersection cast_ray(const World* world, const Line2D* ray, size_t level);
+
+TeleportTarget TeleportTarget_new(Line2D* line, size_t layer);
 
 #endif //FICTIONAL_COUSCOUS_RAYTRACE_H
