@@ -45,8 +45,10 @@ int main(int argc, char** argv) {
     Vec2D g_start = Vec2D_new(-2.5, D);
     Vec2D g_end = Vec2D_new(-2.5, -D);
     Line2D g = Line2D_new(&g_start, &g_end);
-    f.data = &g;
-    g.data = &f;
+    TeleportTarget f_target = TeleportTarget_new(&g, 0);
+    TeleportTarget g_target = TeleportTarget_new(&f, 0);
+    f.data = &f_target;
+    g.data = &g_target;
 
     Vec2D h_start = Vec2D_new(D, 2);
     Vec2D h_end = Vec2D_new(-D, 2);
@@ -55,8 +57,10 @@ int main(int argc, char** argv) {
     Vec2D i_start = Vec2D_new(D, -2.5);
     Vec2D i_end = Vec2D_new(-D, -2.5);
     Line2D i = Line2D_new(&i_start, &i_end);
-    h.data = &i;
-    i.data = &h;
+    TeleportTarget h_target = TeleportTarget_new(&i, 0);
+    TeleportTarget i_target = TeleportTarget_new(&h, 0);
+    h.data = &h_target;
+    i.data = &i_target;
 
     Color bg = Color_new(209, 213, 201);
 
@@ -116,7 +120,7 @@ int main(int argc, char** argv) {
         last_clock = clock();
         EZ_trace_rectangle_plein(0, 0, width, height, bg.red, bg.green, bg.blue, 255);
 
-        sweep(width, height, &world, 0, 0.6, 100, &bg, 1000);
+        sweep(width, height, &world, 0, 0.6, 100, &bg, 10000);
 
         // FPS-meter
         char str[50];

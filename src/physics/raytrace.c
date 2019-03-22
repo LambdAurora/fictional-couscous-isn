@@ -87,9 +87,9 @@ RayIntersection cast_ray(const World* world, const Line2D* ray, size_t layer) {
                 case TELEPORT_LINE:
                     // rotation and layer changing isn't supported yet, this will have to be done
                     {
-                        Line2D* loc = (Line2D*)lines->lines[hit].data;
-                        ray2.pos.x = hit_pos.pos.x - lines->lines[hit].pos.x + loc->pos.x;
-                        ray2.pos.y = hit_pos.pos.y - lines->lines[hit].pos.y + loc->pos.y;
+                        TeleportTarget* loc = (TeleportTarget*)lines->lines[hit].data;
+                        ray2.pos.x = hit_pos.pos.x - lines->lines[hit].pos.x + loc->line->pos.x;
+                        ray2.pos.y = hit_pos.pos.y - lines->lines[hit].pos.y + loc->line->pos.y;
                     }
                     ray2.pos.x += ray2.vec.x * EPSILON * 2;
                     ray2.pos.y += ray2.vec.y * EPSILON * 2;
@@ -106,4 +106,11 @@ RayIntersection cast_ray(const World* world, const Line2D* ray, size_t layer) {
         bounces++;
     }
     return result;
+}
+
+TeleportTarget TeleportTarget_new(Line2D* line, size_t layer) {
+    TeleportTarget res;
+    res.line = line;
+    res.layer = layer;
+    return res;
 }
