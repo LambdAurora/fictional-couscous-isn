@@ -45,9 +45,9 @@ RayIntersection cast_ray(const World* world, const Line2D* ray, size_t layer) {
     while (loop && bounces < MAX_BOUNCES) {
         MaybePosition2D hit_pos;
         size_t n;
-        size_t hit;
+        size_t hit = 0;
         hit_pos.success = false;
-        const Lines* lines = &world->level.layers[current_layer].walls;
+        const Lines* lines = &world->layers[current_layer].walls;
         for (n = 0; n < lines->length; n++) {
             MaybePosition2D intersection = intersect2D(&(lines->lines[n]), &ray2);
             if (intersection.success) {

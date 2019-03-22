@@ -8,13 +8,14 @@
 #include "graphics/color.h"
 #include "graphics/raytracing.h"
 #include "physics/raytrace.h"
+#include "physics/physics.h"
 #include "maths/vec2d.h"
 #include "maths/geometry.h"
 #include "world/world.h"
 
 #define ARROW 0x40000000
 
-int main() {
+int main(int argc, char** argv) {
     const int height = 480;
     const int width = 1080;
     EZ_creation_fenetre(" ", width, height);
@@ -71,7 +72,7 @@ int main() {
     d.data = &alpha;
     e.type = TRANSPARENT_LINE;
     e.data = &alpha;
-    f.type = TELEPORT_LINE;
+    f.type = NORMAL_LINE;
     g.type = TELEPORT_LINE;
     h.type = TELEPORT_LINE;
     i.type = TELEPORT_LINE;
@@ -90,13 +91,11 @@ int main() {
     lines.lines[7] = h;
     lines.lines[8] = i;
 
-    Level level;
-    level.spawn_position = Vec2D_new(-1., .5);
-    level.layers = (Layer*)malloc(sizeof(Layer) * 1);
-    level.n_layers = 1;
-    level.layers[0].walls = lines;
     World world;
-    World_use_level(&world, &level);
+    World_init(&world, Vec2D_new(-1., .5));
+    world.layers = (Layer*) malloc(sizeof(Layer) * 1);
+    world.n_layers = 1;
+    world.layers[0].walls = lines;
 
     bool exit = false;
 
@@ -121,8 +120,11 @@ int main() {
 
         // FPS-meter
         char str[50];
-        sprintf(str, "%d", (int)(1 / dt));
+        sprintf(str, "%d", (int) (1 / dt));
         EZ_trace_texte(str, "../resources/DF-font.ttf", 16, 0, 0, 0, 0, 0, 255);
+
+        sprintf(str, "%d", collide(&world.player_position, &f));
+        EZ_trace_texte(str, "../resources/DF-font.ttf", 16, 0, 20, 0, 0, 0, 255);
 
         EZ_mise_a_jour();
 
@@ -164,24 +166,38 @@ int main() {
                 world.player_angle -= ((double) (EZ_souris_x() - drag_x) / 128) * .5;
             }
         }
+        Vec2D new_player_position = world.player_position;
         if (up) {
-            world.player_position.x += 1.4 * cos(world.player_angle) * dt;
-            world.player_position.y += 1.4 * sin(world.player_angle) * dt;
+            new_player_position.x += 1.4 * cos(world.player_angle) * dt;
+            new_player_position.y += 1.4 * sin(world.player_angle) * dt;
         }
         if (down) {
-            world.player_position.x -= 1.4 * cos(world.player_angle) * dt;
-            world.player_position.y -= 1.4 * sin(world.player_angle) * dt;
+            new_player_position.x -= 1.4 * cos(world.player_angle) * dt;
+            new_player_position.y -= 1.4 * sin(world.player_angle) * dt;
         }
         if (right) {
-            world.player_position.x -= 1 * sin(world.player_angle) * dt;
-            world.player_position.y += 1 * cos(world.player_angle) * dt;
+            new_player_position.x -= 1 * sin(world.player_angle) * dt;
+            new_player_position.y += 1 * cos(world.player_angle) * dt;
         }
         if (left) {
-            world.player_position.x += 1 * sin(world.player_angle) * dt;
-            world.player_position.y -= 1 * cos(world.player_angle) * dt;
+            new_player_position.x += 1 * sin(world.player_angle) * dt;
+            new_player_position.y -= 1 * cos(world.player_angle) * dt;
         }
         if (rright) world.player_angle += .8 * dt;
         if (rleft) world.player_angle -= .8 * dt;
+
+        Lines walls = world.layers[0].walls;
+        size_t i;
+        bool dont_move = false;
+        for (i = 0; i < walls.length; i++) {
+            Line2D* wall = &(walls.lines[i]);
+            if (!can_move(&world.player_position, &new_player_position, wall) && wall->type != TELEPORT_LINE) {
+                dont_move = true;
+                break;
+            }
+        }
+        if (!dont_move)
+            world.player_position = new_player_position;
     }
 
     return 0;

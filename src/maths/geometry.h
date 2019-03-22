@@ -1,8 +1,7 @@
 #ifndef FICTIONAL_COUSCOUS_GEOMETRY_H
 #define FICTIONAL_COUSCOUS_GEOMETRY_H
 
-#include <stdlib.h>
-#include <stdbool.h>
+#include "../base.h"
 #include "double.h"
 #include "vec2d.h"
 #include "../graphics/color.h"
