@@ -133,7 +133,7 @@ int main(int argc, char** argv) {
         EZ_mise_a_jour();
 
         int evt;
-        while (evt = EZ_recupere_evenement_continu()) {
+        while ((evt = EZ_recupere_evenement_continu())) {
             if (evt == EZ_EXIT) exit = true;
             if (evt == EZ_TOUCHE_ENFONCEE || evt == EZ_TOUCHE_RELACHEE) {
                 bool state = evt == EZ_TOUCHE_ENFONCEE;
@@ -158,6 +158,9 @@ int main(int argc, char** argv) {
                     case 'a':
                         left = state;
                         break;
+					case 0x1B:
+						exit = true;
+						break;
                     default:
                         break;
                 }

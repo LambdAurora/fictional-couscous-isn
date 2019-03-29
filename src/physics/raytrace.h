@@ -7,7 +7,7 @@
 #include "../maths/geometry.h"
 #include <stdbool.h>
 
-#define MAX_BOUNCES 128
+#define MAX_BOUNCES 32
 
 struct MaybePosition2D {
     Vec2D pos;
