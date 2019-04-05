@@ -1,5 +1,4 @@
 #include "raytracing.h"
-#include <inttypes.h>
 
 // TODO: replace `lines` with `world`
 void sweep(

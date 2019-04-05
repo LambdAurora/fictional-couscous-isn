@@ -1,15 +1,14 @@
 #ifndef FICTIONAL_COUSCOUS_RAYTRACING_H
 #define FICTIONAL_COUSCOUS_RAYTRACING_H
 
-#include <stdlib.h>
-#include <stdbool.h>
-#include <inttypes.h>
+#include "../base.h"
 #include "easysdl.h"
 #include "../maths/geometry.h"
 #include "../maths/vec2d.h"
 #include "../maths/double.h"
 #include "../physics/raytrace.h"
 #include "color.h"
+#include <stdlib.h>
 
 void sweep(
         int width, int height,

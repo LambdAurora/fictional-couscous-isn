@@ -31,16 +31,17 @@ find_package(SDL2_ttf REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_GFX_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_MIXER_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS} lib)
 
 set(PROJECT_SOURCES src/main.c
-  src/graphics/raytracing.c
-  src/physics/physics.c
-  src/ui/ui.c
-  src/physics/raytrace.c
-  src/maths/vec2d.c
-  src/maths/double.c
-  src/maths/geometry.c
-  src/graphics/color.c
-        src/world/world.c
-  lib/easysdl.c
+    src/game.c
+    src/graphics/raytracing.c
+    src/physics/physics.c
+    src/ui/ui.c
+    src/physics/raytrace.c
+    src/maths/vec2d.c
+    src/maths/double.c
+    src/maths/geometry.c
+    src/graphics/color.c
+    src/world/world.c
+    lib/easysdl.c
 )
 
 set(PROJECT_HEADERS

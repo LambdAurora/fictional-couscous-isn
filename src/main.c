@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <SDL2/SDL.h>
 #include "easysdl.h"
+#include "game.h"
 #include "graphics/color.h"
 #include "graphics/raytracing.h"
 #include "physics/raytrace.h"
@@ -13,12 +14,34 @@
 #include "maths/geometry.h"
 #include "world/world.h"
 
+#ifndef GAME_WINDOW_HEIGHT
+#  define GAME_WINDOW_HEIGHT 480
+#endif
+#ifndef GAME_WINDOW_WIDTH
+#  define GAME_WINDOW_WIDTH 1080
+#endif
+
 #define ARROW 0x40000000
 
+/*!
+ * Traite les options passées en arguments au programme.
+ * @param game L'instance du jeu.
+ * @param argc Le nombre d'arguments.
+ * @param argv Les arguments.
+ */
+void parse_command_line(Game *game, int argc, char** argv) {
+    size_t i;
+    for (i = 1; i < argc; i++) {
+        if (strncmp(argv[i], "--top-mode", 11) == 0)
+            game->top_mode = true;
+    }
+}
+
 int main(int argc, char** argv) {
-    const int height = 480;
-    const int width = 1080;
-    EZ_creation_fenetre(" ", width, height);
+    Game game;
+    init_game(&game, GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);
+    parse_command_line(&game, argc, argv);
+    EZ_creation_fenetre(" ", game.width, game.height);
 
     Vec2D vec0 = Vec2D_new(.0, .0);
     Vec2D vec1 = Vec2D_new(1., .0);
@@ -118,16 +141,20 @@ int main(int argc, char** argv) {
     while (!exit) {
         double dt = (double) (clock() - last_clock) / CLOCKS_PER_SEC;
         last_clock = clock();
-        EZ_trace_rectangle_plein(0, 0, width, height, bg.red, bg.green, bg.blue, 255);
+        // On efface tout.
+        EZ_trace_rectangle_plein(0, 0, game.width, game.height, bg.red, bg.green, bg.blue, 255);
 
-        sweep(width, height, &world, 0, 0.6, 100, &bg, 10000);
+        if (game.top_mode)
+            render_top_mode(&game, &world);
+        else
+            sweep(game.width, game.height, &world, 0, 0.6, 100, &bg, 10000);
 
         // FPS-meter
         char str[50];
         sprintf(str, "%d", (int) (1 / dt));
         EZ_trace_texte(str, "../resources/DF-font.ttf", 16, 0, 0, 0, 0, 0, 255);
 
-        sprintf(str, "%d", collide(&world.player_position, &f));
+        sprintf(str, "X: %lf Y: %lf", world.player_position.x, world.player_position.y);
         EZ_trace_texte(str, "../resources/DF-font.ttf", 16, 0, 20, 0, 0, 0, 255);
 
         EZ_mise_a_jour();
@@ -158,6 +185,11 @@ int main(int argc, char** argv) {
                     case 'a':
                         left = state;
                         break;
+                    case 'o':
+                        game.zoom++;
+                        break;
+                    case 'l':
+                        game.zoom = lc_maths_max(game.zoom - 1., 1);
 					case 0x1B:
 						exit = true;
 						break;
@@ -204,7 +236,12 @@ int main(int argc, char** argv) {
                 break;
             } else if (blocked && wall->type == TELEPORT_LINE) {
                 dont_move = true;
-                world.player_position = world.spawn_position;
+                TeleportTarget* target = (TeleportTarget*) wall->data;
+                Vec2D last_pos = world.player_position; 
+                Vec2D new_pos;
+                new_pos.x = (target->line->pos.x + target->line->vec.x * target->line->length) / 2.;
+                new_pos.y = (target->line->pos.y + target->line->vec.y * target->line->length) / 2.;
+                world.player_position = new_pos;
                 break;
             }
         }
@@ -214,3 +251,4 @@ int main(int argc, char** argv) {
 
     return 0;
 }
+

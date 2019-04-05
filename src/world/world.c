@@ -1,6 +1,5 @@
 #include "world.h"
 
-// TODO: fix
 void World_init(World* world, Position spawn_pos) {
     world->spawn_position = spawn_pos;
     world->player_position = spawn_pos;

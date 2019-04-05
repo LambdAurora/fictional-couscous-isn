@@ -18,7 +18,7 @@ struct Line2D {
     Vec2D pos;
     Vec2D vec; // should be normalized
     double length;
-    u_int8_t type;
+    uint8_t type;
     Color color;
     void* data;
 };
