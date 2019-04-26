@@ -185,6 +185,9 @@ int main(int argc, char** argv) {
                     case 'a':
                         left = state;
                         break;
+                    case 'r':
+                        world.player_position = world.spawn_position;
+                        break;
                     case 'o':
                         game.zoom++;
                         break;
@@ -237,10 +240,21 @@ int main(int argc, char** argv) {
             } else if (blocked && wall->type == TELEPORT_LINE) {
                 dont_move = true;
                 TeleportTarget* target = (TeleportTarget*) wall->data;
-                Vec2D last_pos = world.player_position; 
+                Vec2D last_pos = world.player_position;
+                double x_diff = last_pos.x - new_player_position.x;
+                double y_diff = last_pos.y - new_player_position.y;
+                double x_offset = 0;
+                double y_offset = 0;
+                if (lc_maths_abs(x_diff) > lc_maths_abs(y_diff)) {
+                    if (last_pos.x - new_player_position.x > 0) x_offset = -.1495;
+                    else x_offset = .1495;
+                } else {
+                    if (last_pos.y - new_player_position.y > 0) y_offset = -.1495;
+                    else y_offset = .1495;
+                }
                 Vec2D new_pos;
-                new_pos.x = (target->line->pos.x + target->line->vec.x * target->line->length) / 2.;
-                new_pos.y = (target->line->pos.y + target->line->vec.y * target->line->length) / 2.;
+                new_pos.x = last_pos.x - wall->pos.x + target->line->pos.x + x_offset;//(target->line->pos.x + target->line->vec.x * target->line->length) / 2.;
+                new_pos.y = last_pos.y - wall->pos.y + target->line->pos.y + y_offset;//(target->line->pos.y + target->line->vec.y * target->line->length) / 2.;
                 world.player_position = new_pos;
                 break;
             }
