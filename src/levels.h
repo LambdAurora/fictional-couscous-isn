@@ -39,7 +39,6 @@
   Lines lines;\
   lines.length = 9;\
   lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length);\
-  // copy the values in the allocated memory\
   lines.lines[0] = a;\
   lines.lines[1] = b;\
   lines.lines[2] = c;\
@@ -97,7 +96,6 @@
   Lines lines;\
   lines.length = 12;\
   lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length);\
-  // copy the values in the allocated memory\
   lines.lines[0] = w1;\
   lines.lines[1] = w2;\
   lines.lines[2] = w3;\

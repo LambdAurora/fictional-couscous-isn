@@ -45,9 +45,7 @@ int main(int argc, char** argv) {
     parse_command_line(&game, argc, argv);
     EZ_creation_fenetre(" ", game.width, game.height);
 
-    LEVEL_1
-
-    printf("%d\n", lines.length);
+    LEVEL_2
 
     World world;
     World_init(&world, Vec2D_new(-1., .5));
