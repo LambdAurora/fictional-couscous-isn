@@ -240,7 +240,9 @@ int main(int argc, char** argv) {
         if (rright) world.player_angle += .8 * dt;
         if (rleft) world.player_angle -= .8 * dt;
 
-        Lines walls = world.layers[0].walls;
+        World_move(&world, &new_player_position);
+
+        /*Lines walls = world.layers[0].walls;
         size_t i;
         bool dont_move = false;
         for (i = 0; i < walls.length; i++) {
@@ -272,7 +274,7 @@ int main(int argc, char** argv) {
             }
         }
         if (!dont_move)
-            world.player_position = new_player_position;
+            world.player_position = new_player_position;*/
     }
 
     return 0;

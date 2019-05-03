@@ -27,4 +27,6 @@ void World_init(World* world, Position spawn_pos);
 
 void World_update(World* world);
 
+void World_move(World *world, const Vec2D* new_player_position);
+
 #endif //FICTIONAL_COUSCOUS_ISN_WORLD_H
