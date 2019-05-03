@@ -8,6 +8,7 @@
 #include "game.h"
 #include "graphics/color.h"
 #include "graphics/raytracing.h"
+#include "graphics/texture.h"
 #include "physics/raytrace.h"
 #include "physics/physics.h"
 #include "maths/vec2d.h"
@@ -84,6 +85,8 @@ int main(int argc, char** argv) {
     TeleportTarget i_target = TeleportTarget_new(&h, 0);
     h.data = &h_target;
     i.data = &i_target;
+    // TeleportTarget a_target = TeleportTarget_new(&b, 0);
+    // a.data = &a_target;
 
     Color bg = Color_new(209, 213, 201);
 
@@ -95,6 +98,7 @@ int main(int argc, char** argv) {
     f.color = Color_new(180, 191, 122);
 
     uint8_t alpha = 128;
+    a.type = BOUNCE_LINE;
     d.type = TRANSPARENT_LINE;
     d.data = &alpha;
     e.type = TRANSPARENT_LINE;
@@ -103,6 +107,11 @@ int main(int argc, char** argv) {
     g.type = TELEPORT_LINE;
     h.type = TELEPORT_LINE;
     i.type = TELEPORT_LINE;
+
+    b.texture = &texture_checkerboard;
+    c.texture = &texture_gradient;
+    Color c_gradient_color = Color_new(244, 130, 137);
+    c.data = &c_gradient_color;
 
     Lines lines;
     lines.length = 9;
@@ -265,4 +274,3 @@ int main(int argc, char** argv) {
 
     return 0;
 }
-

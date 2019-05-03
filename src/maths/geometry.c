@@ -1,4 +1,5 @@
 #include "geometry.h"
+#include "../graphics/texture.h"
 
 Line2D Line2D_new(const Vec2D* from, const Vec2D* to) {
     Line2D res;
@@ -19,6 +20,7 @@ Line2D Line2D_new(const Vec2D* from, const Vec2D* to) {
     }
     res.type = NORMAL_LINE;
     res.data = NULL;
+    res.texture = &texture_flat;
     res.color.red = 255;
     res.color.green = 255;
     res.color.blue = 255;

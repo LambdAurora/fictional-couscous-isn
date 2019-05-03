@@ -21,6 +21,7 @@ struct Line2D {
     uint8_t type;
     Color color;
     void* data;
+    texture_t texture;
 };
 typedef struct Line2D Line2D;
 

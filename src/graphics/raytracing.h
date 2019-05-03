@@ -8,6 +8,7 @@
 #include "../maths/double.h"
 #include "../physics/raytrace.h"
 #include "color.h"
+#include "texture.h"
 #include <stdlib.h>
 
 void sweep(

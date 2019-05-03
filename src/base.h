@@ -4,6 +4,11 @@
 #include <inttypes.h>
 #include <stdbool.h>
 
+struct Line2D;
+struct Hit;
+
+typedef void (*texture_t)(double, double, double, struct Line2D*, struct Hit*, double);
+
 #define lc_maths_abs(number) (number < 0 ? -(number) : number)
 #define lc_maths_min(a, b) (a < b ? a : b)
 #define lc_maths_max(a, b) (a > b ? a : b)

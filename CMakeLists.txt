@@ -40,6 +40,7 @@ set(PROJECT_SOURCES src/main.c
     src/maths/double.c
     src/maths/geometry.c
     src/graphics/color.c
+    src/graphics/texture.c
     src/world/world.c
     lib/easysdl.c
 )
@@ -56,6 +57,7 @@ set(PROJECT_HEADERS
   src/maths/double.h
   src/maths/geometry.h
   src/graphics/color.h
+  src/graphics/texture.h
   lib/easysdl.h
 )
 
