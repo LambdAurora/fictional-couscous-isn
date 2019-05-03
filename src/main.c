@@ -4,7 +4,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <SDL2/SDL.h>
-#include "easysdl.h"
+#include "base.h"
 #include "game.h"
 #include "graphics/color.h"
 #include "graphics/raytracing.h"
@@ -44,74 +44,42 @@ int main(int argc, char** argv) {
     parse_command_line(&game, argc, argv);
     EZ_creation_fenetre(" ", game.width, game.height);
 
-    Vec2D vec0 = Vec2D_new(.0, .0);
-    Vec2D vec1 = Vec2D_new(1., .0);
-    Vec2D vec2 = Vec2D_new(.0, 1.);
-    Vec2D vec3 = Vec2D_new(-.5, 1.);
-    Line2D a = Line2D_new(&vec0, &vec1);
-    Line2D b = Line2D_new(&vec0, &vec2);
-    Line2D c = Line2D_new(&vec2, &vec3);
+    CREATE_LINE(a, 0, 0, 1, 0);
+    LINE_COLOR(a, 83, 190, 187);
+    LINE_GRADIENT(a, 65, 159, 199);
+    LINE_BOUNCE(a);
 
-    Vec2D d_start = Vec2D_new(-2, -0.5);
-    Vec2D d_end = Vec2D_new(-2, 0.5);
-    Line2D d = Line2D_new(&d_start, &d_end);
+    CREATE_LINE(b, 0, 0, 0, 1);
+    LINE_COLOR(b, 113, 190, 118);
+    LINE_CHECKERBOARD(b);
 
-    Vec2D e_start = d_start;
-    Vec2D e_end = Vec2D_new(-1, -0.5);
-    Line2D e = Line2D_new(&e_start, &e_end);
+    CREATE_LINE(c, 0, 1, -0.5, 1);
+    LINE_COLOR(c, 228, 214, 84);
+    LINE_GRADIENT(c, 244, 130, 137);
+
+    CREATE_LINE(d, -2, -0.5, -2, 0.5);
+    LINE_TRANSPARENT(d, 128);
+    LINE_COLOR(d, 122, 58, 144);
+
+    CREATE_LINE(e, -1.5, -0.5, -1, -0.5);
+    LINE_IMAGE(e, "../resources/flower.png", 0.5, 0.5);
 
     double D = 32;
 
-    Vec2D f_start = Vec2D_new(2, D);
-    Vec2D f_end = Vec2D_new(2, -D);
-    Line2D f = Line2D_new(&f_start, &f_end);
+    CREATE_LINE(f, 2, D, 2, -D);
+    LINE_COLOR(f, 180, 191, 122);
 
-    Vec2D g_start = Vec2D_new(-2.5, D);
-    Vec2D g_end = Vec2D_new(-2.5, -D);
-    Line2D g = Line2D_new(&g_start, &g_end);
-    TeleportTarget f_target = TeleportTarget_new(&g, 0);
-    TeleportTarget g_target = TeleportTarget_new(&f, 0);
-    f.data = &f_target;
-    g.data = &g_target;
+    CREATE_LINE(g, -2.5, D, -2.5, -D);
+    LINE_COLOR(g, 125, 125, 125);
+    LINE_BOUNCE(g);
 
-    Vec2D h_start = Vec2D_new(D, 2);
-    Vec2D h_end = Vec2D_new(-D, 2);
-    Line2D h = Line2D_new(&h_start, &h_end);
+    CREATE_LINE(h, D, 2, -D, 2);
+    CREATE_LINE(i, D, -2.5, -D, -2.5);
 
-    Vec2D i_start = Vec2D_new(D, -2.5);
-    Vec2D i_end = Vec2D_new(-D, -2.5);
-    Line2D i = Line2D_new(&i_start, &i_end);
-    TeleportTarget h_target = TeleportTarget_new(&i, 0);
-    TeleportTarget i_target = TeleportTarget_new(&h, 0);
-    h.data = &h_target;
-    i.data = &i_target;
-    // TeleportTarget a_target = TeleportTarget_new(&b, 0);
-    // a.data = &a_target;
+    LINE_TELEPORT(h, i);
+    LINE_TELEPORT(i, h);
 
     Color bg = Color_new(209, 213, 201);
-
-    a.color = Color_new(83, 190, 187);
-    b.color = Color_new(113, 190, 118);
-    c.color = Color_new(228, 214, 84);
-    d.color = Color_new(122, 58, 144);
-    e.color = Color_new(217, 90, 75);
-    f.color = Color_new(180, 191, 122);
-
-    uint8_t alpha = 128;
-    a.type = BOUNCE_LINE;
-    d.type = TRANSPARENT_LINE;
-    d.data = &alpha;
-    e.type = TRANSPARENT_LINE;
-    e.data = &alpha;
-    f.type = NORMAL_LINE;
-    g.type = BOUNCE_LINE;
-    h.type = TELEPORT_LINE;
-    i.type = TELEPORT_LINE;
-
-    b.texture = &texture_checkerboard;
-    c.texture = &texture_gradient;
-    Color c_gradient_color = Color_new(244, 130, 137);
-    c.data = &c_gradient_color;
 
     Lines lines;
     lines.length = 9;
