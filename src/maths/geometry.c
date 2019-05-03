@@ -2,7 +2,7 @@
 
 Line2D Line2D_new(const Vec2D* from, const Vec2D* to) {
     Line2D res;
-    if (Vec2D_eq(from, to)) { // that's a point, but heh
+    if (Vec2D_eq(from, to)) { // c'est un point, mais heh
         res.pos.x = from->x;
         res.pos.y = from->y;
         res.vec.x = 1;
@@ -17,6 +17,7 @@ Line2D Line2D_new(const Vec2D* from, const Vec2D* to) {
         res.vec.y = norm.y;
         res.length = length2D(&diff);
     }
+    // Définition des valeurs par défaut.
     res.type = NORMAL_LINE;
     res.data = NULL;
     res.color.red = 255;

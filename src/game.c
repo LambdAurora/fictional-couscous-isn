@@ -21,7 +21,7 @@ Vec2D get_last_point(Line2D* line) {
 
 void render_top_mode(Game* g, World* world) {
     size_t layer_i;
-    // On dessine chaque layer, quelle horrible chose!
+    // On dessine chaque couche.
     for (layer_i = 0; layer_i < world->n_layers; layer_i++) {
         Layer layer = world->layers[layer_i];
         size_t wall_i;
@@ -38,4 +38,3 @@ void render_top_mode(Game* g, World* world) {
     // On dessine le joueur.
     EZ_trace_rectangle_plein(to_screen_coord(g, world->player_position.x) - 1, to_screen_coord(g, world->player_position.y) - 1, 2, 2, 0, 0, 0, 255);
 }
-

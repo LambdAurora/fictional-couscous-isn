@@ -1,9 +1,12 @@
 #ifndef FICTIONAL_COUSCOUS_ISN_BASE_H
 #define FICTIONAL_COUSCOUS_ISN_BASE_H
 
+// Fichier définissant les bases et les imports de bases.
+
 #include <inttypes.h>
 #include <stdbool.h>
 
+// Quelques fonctions mathématiques utiles.
 #define lc_maths_abs(number) (number < 0 ? -(number) : number)
 #define lc_maths_min(a, b) (a < b ? a : b)
 #define lc_maths_max(a, b) (a > b ? a : b)

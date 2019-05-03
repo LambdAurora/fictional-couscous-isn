@@ -100,7 +100,7 @@ int main(int argc, char** argv) {
     e.type = TRANSPARENT_LINE;
     e.data = &alpha;
     f.type = NORMAL_LINE;
-    g.type = TELEPORT_LINE;
+    g.type = BOUNCE_LINE;
     h.type = TELEPORT_LINE;
     i.type = TELEPORT_LINE;
 
@@ -144,6 +144,7 @@ int main(int argc, char** argv) {
         // On efface tout.
         EZ_trace_rectangle_plein(0, 0, game.width, game.height, bg.red, bg.green, bg.blue, 255);
 
+        // On fait le rendu en fonction du mode choisi.
         if (game.top_mode)
             render_top_mode(&game, &world);
         else
@@ -193,9 +194,9 @@ int main(int argc, char** argv) {
                         break;
                     case 'l':
                         game.zoom = lc_maths_max(game.zoom - 1., 1);
-					case 0x1B:
-						exit = true;
-						break;
+                    case 0x1B:
+                        exit = true;
+                        break;
                     default:
                         break;
                 }
@@ -208,6 +209,7 @@ int main(int argc, char** argv) {
                 world.player_angle -= ((double) (EZ_souris_x() - drag_x) / 128) * .5;
             }
         }
+        // Créé la nouvelle position du joueur en fonction des entrées.
         Vec2D new_player_position = world.player_position;
         if (up) {
             new_player_position.x += 1.4 * cos(world.player_angle) * dt;
@@ -225,6 +227,7 @@ int main(int argc, char** argv) {
             new_player_position.x += 1 * sin(world.player_angle) * dt;
             new_player_position.y -= 1 * cos(world.player_angle) * dt;
         }
+        // Change l'angle de vision.
         if (rright) world.player_angle += .8 * dt;
         if (rleft) world.player_angle -= .8 * dt;
 
@@ -265,4 +268,3 @@ int main(int argc, char** argv) {
 
     return 0;
 }
-
