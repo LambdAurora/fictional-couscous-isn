@@ -6,6 +6,9 @@
 #include "vec2d.h"
 #include "../graphics/color.h"
 
+/*!
+ * Représente le type de mur.
+ */
 enum LINE_TYPE {
     NORMAL_LINE,
     BOUNCE_LINE,
@@ -14,23 +17,37 @@ enum LINE_TYPE {
 };
 typedef enum LINE_TYPE LINE_TYPE;
 
+/*!
+ * Représente une ligne 2D pouvant être un mur par exemple.
+ * On y retrouve la position, sa longueur, son type, sa couleur et quelques données supplémentaires.
+ */
 struct Line2D {
-    Vec2D pos;
+    Vec2D pos; // Position de la ligne.
     Vec2D vec; // should be normalized
-    double length;
-    uint8_t type;
-    Color color;
-    void* data;
-    texture_t texture;
+    double length; // Longueur de la ligne.
+    LINE_TYPE type; // Type de la ligne.
+    Color color; // Couleur de la ligne.
+    void* data; // Données supplémentaires de la ligne.
+    texture_t texture; // Texture de la ligne
 };
 typedef struct Line2D Line2D;
 
+/*!
+ * Représente une liste de ligne.
+ */
 struct Lines {
     Line2D* lines;
     size_t length;
 };
 typedef struct Lines Lines;
 
+/*!
+ * Créer une nouvelle ligne à partir de 2 points.
+ *
+ * @param from Point de départ de la ligne.
+ * @param to Point d'arrivée de la ligne.
+ * @return Une copie de la nouvelle ligne.
+ */
 Line2D Line2D_new(const Vec2D* from, const Vec2D* to);
 
 #endif// FICTIONAL_COUSCOUS_GEOMETRY_H
