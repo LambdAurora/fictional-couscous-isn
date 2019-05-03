@@ -18,7 +18,7 @@ void sweep(
         ray.vec.x = cos(angle + world->player_angle);
         ray.vec.y = sin(angle + world->player_angle);
 
-        RayIntersection cast = cast_ray(world, &ray, layer);
+        RayIntersection cast = send_ray(world, &ray, layer);
         if (cast.success) {
             size_t n_hit;
             for (n_hit = cast.n_hits - 1; n_hit != -1; n_hit--) {

@@ -1,4 +1,5 @@
 #include "physics.h"
+#include "raytrace.h"
 
 double get_distance_of(const Vec2D* pos, const Line2D* line) {
     Vec2D v = Vec2D_new(pos->x - line->pos.x, pos->y - line->pos.y);
