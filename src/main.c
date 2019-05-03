@@ -6,6 +6,7 @@
 #include <SDL2/SDL.h>
 #include "base.h"
 #include "game.h"
+#include "levels.h"
 #include "graphics/color.h"
 #include "graphics/raytracing.h"
 #include "graphics/texture.h"
@@ -44,56 +45,9 @@ int main(int argc, char** argv) {
     parse_command_line(&game, argc, argv);
     EZ_creation_fenetre(" ", game.width, game.height);
 
-    CREATE_LINE(a, 0, 0, 1, 0);
-    LINE_COLOR(a, 83, 190, 187);
-    LINE_GRADIENT(a, 65, 159, 199);
-    LINE_BOUNCE(a);
+    LEVEL_1
 
-    CREATE_LINE(b, 0, 0, 0, 1);
-    LINE_COLOR(b, 113, 190, 118);
-    LINE_CHECKERBOARD(b);
-
-    CREATE_LINE(c, 0, 1, -0.5, 1);
-    LINE_COLOR(c, 228, 214, 84);
-    LINE_GRADIENT(c, 244, 130, 137);
-
-    CREATE_LINE(d, -2, -0.5, -2, 0.5);
-    LINE_TRANSPARENT(d, 128);
-    LINE_COLOR(d, 122, 58, 144);
-
-    CREATE_LINE(e, -1.5, -0.5, -1, -0.5);
-    LINE_IMAGE(e, "../resources/flower.png", 0.5, 0.5);
-
-    double D = 32;
-
-    CREATE_LINE(f, 2, D, 2, -D);
-    LINE_COLOR(f, 180, 191, 122);
-
-    CREATE_LINE(g, -2.5, D, -2.5, -D);
-    LINE_COLOR(g, 125, 125, 125);
-    LINE_BOUNCE(g);
-
-    CREATE_LINE(h, D, 2, -D, 2);
-    CREATE_LINE(i, D, -2.5, -D, -2.5);
-
-    LINE_TELEPORT(h, i);
-    LINE_TELEPORT(i, h);
-
-    Color bg = Color_new(209, 213, 201);
-
-    Lines lines;
-    lines.length = 9;
-    lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length);
-    // copy the values in the allocated memory
-    lines.lines[0] = a;
-    lines.lines[1] = b;
-    lines.lines[2] = c;
-    lines.lines[3] = d;
-    lines.lines[4] = e;
-    lines.lines[5] = f;
-    lines.lines[6] = g;
-    lines.lines[7] = h;
-    lines.lines[8] = i;
+    printf("%d\n", lines.length);
 
     World world;
     World_init(&world, Vec2D_new(-1., .5));

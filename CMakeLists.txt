@@ -58,6 +58,7 @@ set(PROJECT_HEADERS
   src/maths/geometry.h
   src/graphics/color.h
   src/graphics/texture.h
+  src/levels.h
   lib/easysdl.h
 )
 
