@@ -2,7 +2,7 @@
 
 void texture_flat(double x, double h, double height, Line2D* line, Hit* hit, double opacity) {
   double y = height / 2 - h;
-  EZ_trace_rectangle_plein((uint32_t)x, (uint32_t)y, 1, (uint32_t)(h * 2), line->color.red, line->color.green, line->color.blue, mix(0, 255, opacity));
+  EZ_trace_rectangle_plein((uint32_t)x, (uint32_t)y, 0, (uint32_t)(h * 2), line->color.red, line->color.green, line->color.blue, mix(0, 255, opacity));
 }
 
 void texture_checkerboard(double x, double h, double height, Line2D* line, Hit* hit, double opacity) {
@@ -13,9 +13,9 @@ void texture_checkerboard(double x, double h, double height, Line2D* line, Hit* 
   bool j = (uint32_t)(texture_x * N * 2) % 2;
   for (int i = 0; i < N; i++) {
     if (i % 2 != j) {
-      EZ_trace_rectangle_plein((uint32_t)x, (uint32_t)y, 1, (uint32_t)sy, line->color.red, line->color.green, line->color.blue, mix(0, 255, opacity));
+      EZ_trace_rectangle_plein((uint32_t)x, (uint32_t)y, 0, (uint32_t)sy, line->color.red, line->color.green, line->color.blue, mix(0, 255, opacity));
     } else {
-      EZ_trace_rectangle_plein((uint32_t)x, (uint32_t)y, 1, (uint32_t)sy, line->color.red * 0.95, line->color.green * 0.95, line->color.blue * 0.95, mix(0, 255, opacity));
+      EZ_trace_rectangle_plein((uint32_t)x, (uint32_t)y, 0, (uint32_t)sy, line->color.red * 0.95, line->color.green * 0.95, line->color.blue * 0.95, mix(0, 255, opacity));
     }
     y += sy;
   }
@@ -25,7 +25,7 @@ void texture_gradient(double x, double h, double height, Line2D* line, Hit* hit,
   Color* c = (Color*)line->data;
   double texture_x = dist2D(&hit->pos, &line->pos) / line->length;
   double y = height / 2 - h;
-  EZ_trace_rectangle_plein((uint32_t)x, (uint32_t)y, 1, (uint32_t)(h * 2),
+  EZ_trace_rectangle_plein((uint32_t)x, (uint32_t)y, 0, (uint32_t)(h * 2),
   mix(line->color.red, c->red, texture_x),
   mix(line->color.green, c->green, texture_x),
   mix(line->color.blue, c->blue, texture_x),
@@ -51,7 +51,7 @@ void texture_image(double x, double h, double height, Line2D* line, Hit* hit, do
       uint8_t blue;
       uint8_t alpha;
       EZ_recupere_rvb_image_transparence(img->image, tex_x, i, &red, &green, &blue, &alpha);
-      EZ_trace_rectangle_plein(x, y, 1, sy, red, green, blue, alpha);
+      EZ_trace_rectangle_plein(x, y, 0, sy, red, green, blue, alpha);
       y += sy;
     }
   }
