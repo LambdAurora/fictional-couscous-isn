@@ -27,7 +27,27 @@ MaybePosition2D intersect2D(const Line2D* a, const Line2D* b) {
     }
 }
 
-RayIntersection cast_ray(const World* world, const Line2D* ray, size_t layer) {
+MaybePosition2D cast_ray(const World* world, const Line2D* ray, size_t layer, size_t* hit) {
+  MaybePosition2D hit_pos;
+  size_t n;
+  *hit = 0;
+  hit_pos.success = false;
+  const Lines* lines = &world->layers[layer].walls;
+  for (n = 0; n < lines->length; n++) {
+      MaybePosition2D intersection = intersect2D(&(lines->lines[n]), ray);
+      if (intersection.success) {
+          if (!hit_pos.success || dist2D(&(ray->pos), &(intersection.pos)) < dist2D(&(ray->pos), &(hit_pos.pos))) {
+              *hit = n;
+              hit_pos.success = true;
+              hit_pos.pos.x = intersection.pos.x;
+              hit_pos.pos.y = intersection.pos.y;
+          }
+      }
+  }
+  return hit_pos;
+}
+
+RayIntersection send_ray(const World* world, const Line2D* ray, size_t layer) {
     RayIntersection result;
     result.n_hits = 0;
     int bounces = 0;
@@ -43,22 +63,9 @@ RayIntersection cast_ray(const World* world, const Line2D* ray, size_t layer) {
         result.hits[p].exists = NULL;
     }
     while (loop && bounces < MAX_BOUNCES) {
-        MaybePosition2D hit_pos;
-        size_t n;
-        size_t hit = 0;
-        hit_pos.success = false;
+        size_t hit;
+        MaybePosition2D hit_pos = cast_ray(world, &ray2, current_layer, &hit);
         const Lines* lines = &world->layers[current_layer].walls;
-        for (n = 0; n < lines->length; n++) {
-            MaybePosition2D intersection = intersect2D(&(lines->lines[n]), &ray2);
-            if (intersection.success) {
-                if (!hit_pos.success || dist2D(&(ray2.pos), &(intersection.pos)) < dist2D(&(ray2.pos), &(hit_pos.pos))) {
-                    hit = n;
-                    hit_pos.success = true;
-                    hit_pos.pos.x = intersection.pos.x;
-                    hit_pos.pos.y = intersection.pos.y;
-                }
-            }
-        }
         if (hit_pos.success) {
             dist += dist2D(&(ray2.pos), &(hit_pos.pos));
             result.n_hits++;
