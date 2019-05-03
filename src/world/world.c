@@ -23,7 +23,7 @@ void World_move(World* world, const Vec2D* new_ppos) {
     size_t hit;
     MaybePosition2D result = cast_ray(world, &movement, 0, &hit);
 
-    // On ne touche aucun mur, on bouger.
+    // On ne touche aucun mur, on peut bouger.
     if (!result.success) {
       world->player_position = *new_ppos;
       return;

@@ -1,3 +1,4 @@
+#define STB_IMAGE_IMPLEMENTATION
 #include "texture.h"
 
 void texture_flat(double x, double h, double height, Line2D* line, Hit* hit, double opacity) {
@@ -33,26 +34,21 @@ void texture_gradient(double x, double h, double height, Line2D* line, Hit* hit,
 }
 
 void texture_image(double x, double h, double height, Line2D* line, Hit* hit, double opacity) {
-  TextureImage* img = (TextureImage*)line->data;
-  double texture_x = dist2D(&hit->pos, &line->pos);
-  if (texture_x < img->width / IMAGE_ADJUST) {
-    double y = height / 2 - h + (1 - img->height) * h * 2;
+    TextureImage* img = (TextureImage*) line->data;
+    double texture_x = dist2D(&hit->pos, &line->pos);
+    if (texture_x < img->width / IMAGE_ADJUST) {
+        double y = height / 2 - h + (1 - img->height) * h * 2;
 
-    int imgw;
-    int imgh;
-    EZ_donne_dimension_image(img->image, &imgw, &imgh);
+        int tex_x = (int) (texture_x * img->tex_width / img->width * IMAGE_ADJUST);
 
-    int tex_x = (int)(texture_x * imgw / img->width * IMAGE_ADJUST);
-
-    double sy = img->height * h * 2 / imgh;
-    for (int i = 0; i < imgh; i++) {
-      uint8_t red;
-      uint8_t green;
-      uint8_t blue;
-      uint8_t alpha;
-      EZ_recupere_rvb_image_transparence(img->image, tex_x, i, &red, &green, &blue, &alpha);
-      EZ_trace_rectangle_plein(x, y, 1, sy, red, green, blue, alpha);
-      y += sy;
+        double sy = img->height * h * 2 / img->tex_height;
+        for (int i = 0; i < img->tex_height; i++) {
+            uint8_t red = img->pixels[(4 * (i * img->tex_width + tex_x))];
+            uint8_t green = img->pixels[(4 * (i * img->tex_width + tex_x) + 1)];
+            uint8_t blue = img->pixels[(4 * (i * img->tex_width + tex_x) + 2)];
+            uint8_t alpha = img->pixels[(4 * (i * img->tex_width + tex_x) + 3)];
+            EZ_trace_rectangle_plein(x, y, 1, sy, red, green, blue, alpha);
+            y += sy;
+        }
     }
-  }
 }

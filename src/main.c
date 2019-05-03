@@ -1,9 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <time.h>
-#include <unistd.h>
-#include <SDL2/SDL.h>
 #include "base.h"
 #include "game.h"
 #include "graphics/color.h"
@@ -14,6 +8,9 @@
 #include "maths/vec2d.h"
 #include "maths/geometry.h"
 #include "world/world.h"
+#include <math.h>
+#include <time.h>
+#include <SDL2/SDL.h>
 
 #ifndef GAME_WINDOW_HEIGHT
 #  define GAME_WINDOW_HEIGHT 480
@@ -44,25 +41,25 @@ int main(int argc, char** argv) {
     parse_command_line(&game, argc, argv);
     EZ_creation_fenetre(" ", game.width, game.height);
 
-    CREATE_LINE(a, 0, 0, 1, 0);
-    LINE_COLOR(a, 83, 190, 187);
-    LINE_GRADIENT(a, 65, 159, 199);
-    LINE_BOUNCE(a);
+    CREATE_LINE(a, 0, 0, 1, 0)
+    LINE_COLOR(a, 83, 190, 187)
+    LINE_GRADIENT(a, 65, 159, 199)
+    LINE_BOUNCE(a)
 
-    CREATE_LINE(b, 0, 0, 0, 1);
-    LINE_COLOR(b, 113, 190, 118);
-    LINE_CHECKERBOARD(b);
+    CREATE_LINE(b, 0, 0, 0, 1)
+    LINE_COLOR(b, 113, 190, 118)
+    LINE_CHECKERBOARD(b)
 
-    CREATE_LINE(c, 0, 1, -0.5, 1);
-    LINE_COLOR(c, 228, 214, 84);
-    LINE_GRADIENT(c, 244, 130, 137);
+    CREATE_LINE(c, 0, 1, -0.5, 1)
+    LINE_COLOR(c, 228, 214, 84)
+    LINE_GRADIENT(c, 244, 130, 137)
 
-    CREATE_LINE(d, -2, -0.5, -2, 0.5);
-    LINE_TRANSPARENT(d, 128);
-    LINE_COLOR(d, 122, 58, 144);
+    CREATE_LINE(d, -2, -0.5, -2, 0.5)
+    LINE_TRANSPARENT(d, 128)
+    LINE_COLOR(d, 122, 58, 144)
 
-    CREATE_LINE(e, -1.5, -0.5, -1, -0.5);
-    LINE_IMAGE(e, "../resources/flower.png", 0.5, 0.5);
+    CREATE_LINE(e, -1.5, -0.5, -1, -0.5)
+    LINE_IMAGE(e, "../resources/flower.png", 0.5, 0.5)
 
     double D = 32;
 

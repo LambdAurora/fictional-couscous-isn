@@ -12,7 +12,7 @@ struct Game
 };
 typedef struct Game Game;
 
-void init_game(Game* game, const int width, const int height);
+void init_game(Game* game, int width, int height);
 
 void render_top_mode(Game* g, World* world);
 
