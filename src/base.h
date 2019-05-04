@@ -6,10 +6,10 @@
 #include <inttypes.h>
 #include <stdbool.h>
 #include "easysdl.h"
+#include "stb_image.h"
 
 struct Line2D;
 struct Hit;
-struct EZ_Image;
 
 typedef void (*texture_t)(double, double, double, struct Line2D*, struct Hit*, double);
 
@@ -36,7 +36,8 @@ typedef void (*texture_t)(double, double, double, struct Line2D*, struct Hit*, d
 #define LINE_IMAGE(name, img, w, h)\
   name.type = TRANSPARENT_LINE;\
   TextureImage _##name##_image;\
-  _##name##_image.image = (struct EZ_Image*)EZ_charge_image(img);\
+  int __##name##_channels__;\
+  _##name##_image.pixels = stbi_load(img, &(_##name##_image.tex_width), &(_##name##_image.tex_height), &__##name##_channels__, 4);\
   _##name##_image.width = w;\
   _##name##_image.height = h;\
   name.data = &_##name##_image;\

@@ -1,9 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <time.h>
-#include <unistd.h>
-#include <SDL2/SDL.h>
 #include "base.h"
 #include "game.h"
 #include "levels.h"
@@ -15,6 +9,9 @@
 #include "maths/vec2d.h"
 #include "maths/geometry.h"
 #include "world/world.h"
+#include <math.h>
+#include <time.h>
+#include <SDL2/SDL.h>
 
 #ifndef GAME_WINDOW_HEIGHT
 #  define GAME_WINDOW_HEIGHT 480
@@ -46,8 +43,6 @@ int main(int argc, char** argv) {
     EZ_creation_fenetre(" ", game.width, game.height);
 
     LEVEL_1
-
-    printf("%d\n", lines.length);
 
     World world;
     World_init(&world, Vec2D_new(-1., .5));

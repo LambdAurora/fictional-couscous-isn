@@ -10,9 +10,11 @@
 #define IMAGE_ADJUST 1.8
 
 struct TextureImage {
-  struct EZ_Image* image;
+  uint8_t* pixels;
   double height;
   double width;
+  int tex_width;
+  int tex_height;
 };
 typedef struct TextureImage TextureImage;
 
