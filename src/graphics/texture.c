@@ -12,6 +12,7 @@ void texture_checkerboard(double x, double h, double height, Line2D* line, Hit* 
   double texture_x = dist2D(&hit->pos, &line->pos);
   bool j = (uint32_t)(texture_x * N * 2) % 2;
   for (int i = 0; i < N; i++) {
+    if (y > height) break;
     if (i % 2 != j) {
       EZ_trace_rectangle_plein((uint32_t)x, (uint32_t)y, 0, (uint32_t)sy, line->color.red, line->color.green, line->color.blue, mix(0, 255, opacity));
     } else {
@@ -46,6 +47,7 @@ void texture_image(double x, double h, double height, Line2D* line, Hit* hit, do
 
     double sy = img->height * h * 2 / imgh;
     for (int i = 0; i < imgh; i++) {
+      if (y > height) break;
       uint8_t red;
       uint8_t green;
       uint8_t blue;
@@ -55,4 +57,8 @@ void texture_image(double x, double h, double height, Line2D* line, Hit* hit, do
       y += sy;
     }
   }
+}
+
+void texture_ground(double x, double h, double height, Line2D* line, Hit* hit, double opacity) {
+  EZ_trace_rectangle_plein(x, height / 2 + h, 0, height / 2 - h, line->color.green, line->color.blue, line->color.red, 255);
 }

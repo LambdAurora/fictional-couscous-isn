@@ -91,10 +91,35 @@
   CREATE_LINE(f1, -4.25, 3, -3.75, 3);\
   LINE_IMAGE(f1, "../resources/flower.png", 0.5, 0.5);\
 \
+  CREATE_LINE(g1, 0, 2 - EPSILON, -5, 2 - EPSILON);\
+  LINE_TRANSPARENT(g1, 255);\
+  LINE_COLOR(g1, 76, 144, 87);\
+  g1.texture = &texture_ground;\
+\
+  CREATE_LINE(g2a, 0, 2 + EPSILON, -5, 2 + EPSILON);\
+  LINE_TRANSPARENT(g2a, 255);\
+  LINE_COLOR(g2a, 196, 146, 87);\
+  g2a.texture = &texture_ground;\
+\
+  CREATE_LINE(g2b, -5 + 4 * EPSILON, 2 + EPSILON, -5 + 4 * EPSILON, 4 - 4 * EPSILON);\
+  LINE_TRANSPARENT(g2b, 255);\
+  LINE_COLOR(g2b, 196, 146, 87);\
+  g2b.texture = &texture_ground;\
+\
+  CREATE_LINE(g2c, 0 - 4 * EPSILON, 2 + EPSILON, 0 - 4 * EPSILON, 4 - 4 * EPSILON);\
+  LINE_TRANSPARENT(g2c, 255);\
+  LINE_COLOR(g2c, 196, 146, 87);\
+  g2c.texture = &texture_ground;\
+\
+  CREATE_LINE(g2d, 0 - 4 * EPSILON, 4 - 4 * EPSILON, -5 + 4 * EPSILON, 4 - 4 * EPSILON);\
+  LINE_TRANSPARENT(g2d, 255);\
+  LINE_COLOR(g2d, 196, 146, 87);\
+  g2d.texture = &texture_ground;\
+\
   Color bg = Color_new(107, 110, 101);\
 \
   Lines lines;\
-  lines.length = 12;\
+  lines.length = 17;\
   lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length);\
   lines.lines[0] = w1;\
   lines.lines[1] = w2;\
@@ -107,4 +132,9 @@
   lines.lines[8] = m2;\
   lines.lines[9] = t1;\
   lines.lines[10] = t2;\
-  lines.lines[11] = f1;
+  lines.lines[11] = f1;\
+  lines.lines[12] = g1;\
+  lines.lines[13] = g2a;\
+  lines.lines[14] = g2b;\
+  lines.lines[15] = g2c;\
+  lines.lines[16] = g2d;

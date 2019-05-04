@@ -20,5 +20,6 @@ void texture_flat(double x, double h, double height, Line2D* line, Hit* hit, dou
 void texture_checkerboard(double x, double h, double height, Line2D* line, Hit* hit, double opacity);
 void texture_gradient(double x, double h, double height, Line2D* line, Hit* hit, double opacity);
 void texture_image(double x, double h, double height, Line2D* line, Hit* hit, double opacity);
+void texture_ground(double x, double h, double height, Line2D* line, Hit* hit, double opacity);
 
 #endif // FICTIONAL_COUSCOUS_TEXTURE_H
