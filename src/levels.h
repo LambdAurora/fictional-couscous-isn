@@ -116,7 +116,7 @@
     REG_LINE(t1)\
     REG_LINE(t2)\
 \
-    CREATE_LINE(f1, -4.25, 3, -3.75, 3)\
+    CREATE_LINE(f1, -4.25, 3, -4, 3)\
     LINE_IMAGE(f1, "../resources/flower.png", 0.5, 0.5)\
     ROOMS_AROUND(f1, r2, r2)\
     REG_LINE(f1)\
