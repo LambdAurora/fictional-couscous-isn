@@ -18,9 +18,12 @@ struct TextureImage {
 };
 typedef struct TextureImage TextureImage;
 
-void texture_flat(double x, double h, double height, Line2D* line, Hit* hit, double opacity);
-void texture_checkerboard(double x, double h, double height, Line2D* line, Hit* hit, double opacity);
-void texture_gradient(double x, double h, double height, Line2D* line, Hit* hit, double opacity);
-void texture_image(double x, double h, double height, Line2D* line, Hit* hit, double opacity);
+#define DEF_TEXTURE(name) void name(double x, double h, double height, Line2D* line, Hit* hit, double opacity)
+
+DEF_TEXTURE(texture_flat);
+DEF_TEXTURE(texture_checkerboard);
+DEF_TEXTURE(texture_gradient);
+DEF_TEXTURE(texture_image);
+DEF_TEXTURE(texture_empty);
 
 #endif // FICTIONAL_COUSCOUS_TEXTURE_H

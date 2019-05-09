@@ -25,9 +25,9 @@ typedef void (*texture_t)(double, double, double, struct Line2D*, struct Hit*, d
   Line2D name = Line2D_new(&_##name##_start, &_##name##_end);
 
 #define LINE_TRANSPARENT(name, alpha)\
-  uint8_t _##name##_alpha = alpha;\
+  double _##name##_alpha = alpha;\
   name.type = TRANSPARENT_LINE;\
-  name.data = &_##name##_alpha;
+  name.texture_data = &_##name##_alpha;
 
 #define LINE_BOUNCE(name) name.type = BOUNCE_LINE;
 
@@ -40,19 +40,22 @@ typedef void (*texture_t)(double, double, double, struct Line2D*, struct Hit*, d
   _##name##_image.pixels = stbi_load(img, &(_##name##_image.tex_width), &(_##name##_image.tex_height), &__##name##_channels__, 4);\
   _##name##_image.width = w;\
   _##name##_image.height = h;\
-  name.data = &_##name##_image;\
+  name.texture_data = &_##name##_image;\
   name.texture = &texture_image;
 
 #define LINE_GRADIENT(name, red, green, blue)\
   Color _##name##_gradient_color = Color_new(red, green, blue);\
   name.texture = &texture_gradient;\
-  name.data = &_##name##_gradient_color;
+  name.texture_data = &_##name##_gradient_color;
 
 #define LINE_CHECKERBOARD(name) name.texture = &texture_checkerboard;
 
 #define LINE_TELEPORT(name, target)\
   TeleportTarget _##name##_target = TeleportTarget_new(&target, 0);\
   name.data = &_##name##_target;\
-  name.type = TELEPORT_LINE;
+  name.type = TELEPORT_LINE;\
+  name.texture = &texture_empty;
+
+#define LINE_EMPTY(name) name.texture = &texture_empty;
 
 #endif //FICTIONAL_COUSCOUS_ISN_BASE_H

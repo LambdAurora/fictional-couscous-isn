@@ -13,7 +13,8 @@ enum LINE_TYPE {
     NORMAL_LINE,
     BOUNCE_LINE,
     TELEPORT_LINE,
-    TRANSPARENT_LINE
+    TRANSPARENT_LINE,
+    GHOST_LINE
 };
 typedef enum LINE_TYPE LINE_TYPE;
 
@@ -29,6 +30,7 @@ struct Line2D {
     Color color; // Couleur de la ligne.
     void* data; // Données supplémentaires de la ligne.
     texture_t texture; // Texture de la ligne
+    void* texture_data; // Données supplémentaires de la texture
 };
 typedef struct Line2D Line2D;
 

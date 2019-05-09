@@ -28,14 +28,18 @@ void sweep(
                 double mist = 1 - 1 / (1 + hit.dist * hit.dist / mist_length);
 
                 switch (line->type) {
-                    case NORMAL_LINE:
-                        (*line->texture)(x, h, height, line, &hit, 1 - mist);
-                        break;
                     case BOUNCE_LINE:
                         (*line->texture)(x, h, height, line, &hit, (1 - mist) * 0.25);
                         break;
                     case TRANSPARENT_LINE:
-                        (*line->texture)(x, h, height, line, &hit, (1 - mist) * 0.5);
+                        {
+                            double* transparency_ptr = (double*)line->data;
+                            double transparency = transparency_ptr == NULL ? 0.5 : *transparency_ptr;
+                            (*line->texture)(x, h, height, line, &hit, (1 - mist) * (1 - transparency));
+                        }
+                        break;
+                    default:
+                        (*line->texture)(x, h, height, line, &hit, 1 - mist);
                         break;
                 }
             }
