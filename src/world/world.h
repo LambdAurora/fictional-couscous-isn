@@ -20,6 +20,8 @@ struct World {
     Position spawn_position;
     Layer* layers;
     size_t n_layers;
+    Room** rooms;
+    size_t n_rooms;
 };
 typedef struct World World;
 

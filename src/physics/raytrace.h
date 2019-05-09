@@ -7,7 +7,7 @@
 #include "../maths/line.h"
 #include <stdbool.h>
 
-#define MAX_BOUNCES 32
+#define MAX_BOUNCES 16
 
 struct MaybePosition2D {
     Vec2D pos;
@@ -20,6 +20,7 @@ struct Hit {
     Line2D* line;
     double dist;
     bool exists;
+    bool side;
 };
 typedef struct Hit Hit;
 

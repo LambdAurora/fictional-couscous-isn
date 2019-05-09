@@ -24,6 +24,14 @@ void render_top_mode(Game* g, World* world) {
     // On dessine chaque couche.
     for (layer_i = 0; layer_i < world->n_layers; layer_i++) {
         Layer layer = world->layers[layer_i];
+
+        // On dessine chaque salle
+        size_t room_i;
+        for (room_i = 0; room_i < world->n_rooms; room_i++) {
+            Room* room = world->rooms[room_i];
+            EZ_trace_rectangle_plein(to_screen_coord(g, room->x), to_screen_coord(g, room->y), room->width * g->zoom, room->height * g->zoom, room->color.red, room->color.green, room->color.blue, 255);
+        }
+
         size_t wall_i;
         // On dessine chaque mur.
         for (wall_i = 0; wall_i < layer.walls.length; wall_i++) {

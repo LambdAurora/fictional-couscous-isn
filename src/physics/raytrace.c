@@ -73,6 +73,8 @@ RayIntersection send_ray(const World* world, const Line2D* ray, size_t layer) {
             result.hits[bounces].pos = hit_pos.pos;
             result.hits[bounces].line = &(lines->lines[hit]);
             result.hits[bounces].dist = dist;
+            Vec2D normal = Vec2D_normal(&result.hits[bounces].line->vec);
+            result.hits[bounces].side = dot2D(&normal, &ray2.vec) > 0;
             switch (lines->lines[hit].type) {
                 case NORMAL_LINE:
                     loop = false;
@@ -102,6 +104,7 @@ RayIntersection send_ray(const World* world, const Line2D* ray, size_t layer) {
                     ray2.pos.y += ray2.vec.y * EPSILON * 2;
                     break;
                 case TRANSPARENT_LINE:
+                case GHOST_LINE:
                     ray2.pos.x = hit_pos.pos.x + ray2.vec.x * EPSILON * 2;
                     ray2.pos.y = hit_pos.pos.y + ray2.vec.y * EPSILON * 2;
                     break;

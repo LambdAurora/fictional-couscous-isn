@@ -9,6 +9,7 @@
 #include "../physics/raytrace.h"
 #include "color.h"
 #include "texture.h"
+#include "room.h"
 #include <stdlib.h>
 
 void draw(

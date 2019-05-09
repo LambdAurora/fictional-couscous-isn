@@ -5,6 +5,7 @@ void World_init(World* world, Position spawn_pos) {
     world->spawn_position = spawn_pos;
     world->player_position = spawn_pos;
     world->player_angle = 0.0;
+    world->n_rooms = 0;
 }
 
 void World_update(World* world) {
@@ -38,7 +39,7 @@ void World_move(World* world, const Vec2D* new_ppos) {
     }
 
     // On a affaire à un mur téléporteur.
-    
+
     bounces++;
   }
 }

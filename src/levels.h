@@ -50,63 +50,85 @@
     lines.lines[7] = h;\
     lines.lines[8] = i;
 
+#define REG_LINE(name) lines.lines[line_index++] = name;
 
 #define LEVEL_2 \
+    CREATE_ROOM(r1, -5, 0, 5, 2)\
+    ROOM_COLOR(r1, 101, 120, 116)\
+\
+    CREATE_ROOM(r2, -5, 2, 5, 2)\
+    ROOM_COLOR(r2, 100, 106, 115)\
+\
+    Lines lines;\
+    size_t line_index = 0;\
+    lines.length = 13;\
+    lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length);\
+\
     CREATE_LINE(w1, 0, 0, 0, 1)\
     LINE_COLOR(w1, 176, 172, 184)\
     LINE_CHECKERBOARD(w1)\
+    REG_LINE(w1)\
 \
     CREATE_LINE(w2, 0, 2, 0, 4)\
     LINE_COLOR(w2, 176, 172, 184)\
     LINE_CHECKERBOARD(w2)\
+    REG_LINE(w2)\
 \
     CREATE_LINE(w3, -1, 4, -5, 4)\
     LINE_COLOR(w3, 176, 172, 184)\
+    REG_LINE(w3)\
 \
     CREATE_LINE(w4, -5, 4, -5, 3)\
     LINE_COLOR(w4, 176, 172, 184)\
+    REG_LINE(w4)\
 \
     CREATE_LINE(w5, -5, 2, -5, 0)\
     LINE_COLOR(w5, 176, 172, 184)\
+    REG_LINE(w5)\
 \
     CREATE_LINE(w6, -5, 0, -4, 0)\
     LINE_COLOR(w6, 176, 172, 184)\
+    REG_LINE(w6)\
 \
     CREATE_LINE(w7, -3, 0, 0, 0)\
     LINE_COLOR(w7, 176, 172, 184)\
     LINE_CHECKERBOARD(w7)\
+    REG_LINE(w7)\
 \
     CREATE_LINE(m1, 0, 1, 0, 2)\
     LINE_COLOR(m1, 173, 208, 230)\
     LINE_BOUNCE(m1)\
+    ROOMS_AROUND(m1, r1, r1)\
+    REG_LINE(m1)\
 \
     CREATE_LINE(m2, -5, 2, -5, 3)\
     LINE_COLOR(m2, 173, 208, 230)\
     LINE_BOUNCE(m2)\
+    ROOMS_AROUND(m2, r2, r2)\
+    REG_LINE(m2)\
 \
     CREATE_LINE(t1, -3, 0, -4, 0)\
     CREATE_LINE(t2, 0, 4, -1, 4)\
     LINE_TELEPORT(t1, t2)\
     LINE_TELEPORT(t2, t1)\
+    ROOMS_AROUND(t1, r2, r1)\
+    ROOMS_AROUND(t2, r2, r1)\
+    REG_LINE(t1)\
+    REG_LINE(t2)\
 \
     CREATE_LINE(f1, -4.25, 3, -3.75, 3)\
     LINE_IMAGE(f1, "../resources/flower.png", 0.5, 0.5)\
+    ROOMS_AROUND(f1, r2, r2)\
+    REG_LINE(f1)\
+\
+    CREATE_LINE(g1, -5, 2, 0, 2)\
+    LINE_GHOST(g1)\
+    ROOMS_AROUND(g1, r2, r1)\
+    REG_LINE(g1)\
 \
     Color bg = Color_new(107, 110, 101);\
 \
-    Lines lines;\
-    lines.length = 12;\
-    lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length);\
-\
-    lines.lines[0] = w1;\
-    lines.lines[1] = w2;\
-    lines.lines[2] = w3;\
-    lines.lines[3] = w4;\
-    lines.lines[4] = w5;\
-    lines.lines[5] = w6;\
-    lines.lines[6] = w7;\
-    lines.lines[7] = m1;\
-    lines.lines[8] = m2;\
-    lines.lines[9] = t1;\
-    lines.lines[10] = t2;\
-    lines.lines[11] = f1;
+    world.n_rooms = 2;\
+    world.rooms = (Room**)malloc(sizeof(Room*) * world.n_rooms);\
+    world.rooms[0] = &r1;\
+    world.rooms[1] = &r2;

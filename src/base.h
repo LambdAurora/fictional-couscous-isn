@@ -10,6 +10,7 @@
 
 struct Line2D;
 struct Hit;
+struct World;
 
 typedef void (*texture_t)(double, double, double, struct Line2D*, struct Hit*, double);
 
@@ -56,6 +57,20 @@ typedef void (*texture_t)(double, double, double, struct Line2D*, struct Hit*, d
   name.type = TELEPORT_LINE;\
   name.texture = &texture_empty;
 
+#define LINE_GHOST(name)\
+  name.type = GHOST_LINE;\
+  name.texture = &texture_empty;
+
 #define LINE_EMPTY(name) name.texture = &texture_empty;
+
+#define CREATE_ROOM(name, x, y, width, height) Room name = Room_new(x, y, width, height);
+
+#define ROOM_COLOR(name, red, green, blue) name.color = Color_new(red, green, blue);
+
+#define ROOM_LEFT(line, room) line.room_left = &room;
+#define ROOM_RIGHT(line, room) line.room_right = &room;
+#define ROOMS_AROUND(line, room1, room2)\
+  ROOM_LEFT(line, room1);\
+  ROOM_RIGHT(line, room2);
 
 #endif //FICTIONAL_COUSCOUS_ISN_BASE_H

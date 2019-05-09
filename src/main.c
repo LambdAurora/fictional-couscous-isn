@@ -2,6 +2,7 @@
 #include "game.h"
 #include "levels.h"
 #include "graphics/color.h"
+#include "graphics/room.h"
 #include "graphics/draw.h"
 #include "graphics/texture.h"
 #include "physics/raytrace.h"
@@ -42,10 +43,11 @@ int main(int argc, char** argv) {
     parse_command_line(&game, argc, argv);
     EZ_creation_fenetre(" ", game.width, game.height);
 
-    LEVEL_2
-
     World world;
     World_init(&world, Vec2D_new(-1., .5));
+
+    LEVEL_2
+
     if (game.top_mode) world.player_angle = -M_PI / 2;
     world.layers = (Layer*) malloc(sizeof(Layer) * 1);
     world.n_layers = 1;

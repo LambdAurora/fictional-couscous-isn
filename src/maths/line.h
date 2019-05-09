@@ -5,6 +5,7 @@
 #include "double.h"
 #include "vec2d.h"
 #include "../graphics/color.h"
+#include "../graphics/room.h"
 
 /*!
  * Représente le type de mur.
@@ -31,6 +32,8 @@ struct Line2D {
     void* data; // Données supplémentaires de la ligne.
     texture_t texture; // Texture de la ligne
     void* texture_data; // Données supplémentaires de la texture
+    Room* room_left;
+    Room* room_right;
 };
 typedef struct Line2D Line2D;
 

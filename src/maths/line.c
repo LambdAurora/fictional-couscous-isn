@@ -26,5 +26,7 @@ Line2D Line2D_new(const Vec2D* from, const Vec2D* to) {
     res.color.red = 255;
     res.color.green = 255;
     res.color.blue = 255;
+    res.room_left = NULL;
+    res.room_right = NULL;
     return res;
 }
