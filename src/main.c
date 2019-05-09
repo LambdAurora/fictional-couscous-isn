@@ -15,10 +15,10 @@
 #include <SDL2/SDL.h>
 
 #ifndef GAME_WINDOW_HEIGHT
-#  define GAME_WINDOW_HEIGHT 480
+#  define GAME_WINDOW_HEIGHT 380
 #endif
 #ifndef GAME_WINDOW_WIDTH
-#  define GAME_WINDOW_WIDTH 1080
+#  define GAME_WINDOW_WIDTH 920
 #endif
 
 #define ARROW 0x40000000

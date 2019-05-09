@@ -33,12 +33,22 @@ void World_move(World* world, const Vec2D* new_ppos) {
     // On touche un mur, c'est l'heure des calculs!
     Line2D wall = world->layers[0].walls.lines[hit]; // Le mur touché.
 
-    if (wall.type != TELEPORT_LINE) {
+    if (wall.type == GHOST_LINE) { // c'est un mur "fantôme": on fait comme si il n'était pas là
+      world->player_position = *new_ppos;
+      world->player_position.x += EPSILON * 4 * movement.vec.x;
+      world->player_position.y += EPSILON * 4 * movement.vec.y;
+    }
+    else if (wall.type != TELEPORT_LINE) {
       //world->player_position = result.pos;
       return;
+    } else { // On a affaire à un mur téléporteur.
+      TeleportTarget* loc = (TeleportTarget*)wall.data;
+      world->player_position.x = result.pos.x - wall.pos.x + loc->line->pos.x;
+      world->player_position.y = result.pos.y - wall.pos.y + loc->line->pos.y;
+      world->player_position.x += EPSILON * 4 * movement.vec.x;
+      world->player_position.y += EPSILON * 4 * movement.vec.y;
     }
 
-    // On a affaire à un mur téléporteur.
 
     bounces++;
   }
