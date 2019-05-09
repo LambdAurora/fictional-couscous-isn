@@ -2,12 +2,12 @@
 #include "game.h"
 #include "levels.h"
 #include "graphics/color.h"
-#include "graphics/raytracing.h"
+#include "graphics/draw.h"
 #include "graphics/texture.h"
 #include "physics/raytrace.h"
 #include "physics/physics.h"
 #include "maths/vec2d.h"
-#include "maths/geometry.h"
+#include "maths/line.h"
 #include "world/world.h"
 #include <math.h>
 #include <time.h>
@@ -46,6 +46,7 @@ int main(int argc, char** argv) {
 
     World world;
     World_init(&world, Vec2D_new(-1., .5));
+    if (game.top_mode) world.player_angle = -M_PI / 2;
     world.layers = (Layer*) malloc(sizeof(Layer) * 1);
     world.n_layers = 1;
     world.layers[0].walls = lines;
@@ -74,7 +75,7 @@ int main(int argc, char** argv) {
         if (game.top_mode)
             render_top_mode(&game, &world);
         else
-            sweep(game.width, game.height, &world, 0, 0.6, 100, &bg, 10000);
+            draw(game.width, game.height, &world, 0, 0.6, 100, &bg, 10000);
 
         // FPS-meter
         char str[50];

@@ -32,13 +32,13 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_GFX_INCLUDE_DIRS} ${SDL2_IMAGE_I
 
 set(PROJECT_SOURCES src/main.c
     src/game.c
-    src/graphics/raytracing.c
+    src/graphics/draw.c
     src/physics/physics.c
     src/ui/ui.c
     src/physics/raytrace.c
     src/maths/vec2d.c
     src/maths/double.c
-    src/maths/geometry.c
+    src/maths/line.c
     src/graphics/color.c
     src/graphics/texture.c
     src/world/world.c
@@ -46,7 +46,7 @@ set(PROJECT_SOURCES src/main.c
 )
 
 set(PROJECT_HEADERS
-  src/graphics/raytracing.h
+  src/graphics/draw.h
   src/physics/physics.h
   src/ui/ui.h
   src/game.h
@@ -55,7 +55,7 @@ set(PROJECT_HEADERS
   src/physics/raytrace.h
   src/maths/vec2d.h
   src/maths/double.h
-  src/maths/geometry.h
+  src/maths/line.h
   src/graphics/color.h
   src/graphics/texture.h
   src/levels.h

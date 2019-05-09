@@ -1,7 +1,7 @@
-#include "raytracing.h"
+#include "draw.h"
 
 // TODO: replace `lines` with `world`
-void sweep(
+void draw(
         int width, int height,
         const World* world,
         size_t layer,double fov, double length,

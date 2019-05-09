@@ -1,4 +1,4 @@
-#include "geometry.h"
+#include "line.h"
 #include "../graphics/texture.h"
 
 Line2D Line2D_new(const Vec2D* from, const Vec2D* to) {

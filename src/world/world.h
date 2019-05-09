@@ -2,7 +2,7 @@
 #define FICTIONAL_COUSCOUS_ISN_WORLD_H
 
 #include "../base.h"
-#include "../maths/geometry.h"
+#include "../maths/line.h"
 
 #define N_LEVELS 1
 

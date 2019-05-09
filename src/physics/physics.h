@@ -1,7 +1,7 @@
 #ifndef FICTIONAL_COUSCOUS_PHYSICS_H
 #define FICTIONAL_COUSCOUS_PHYSICS_H
 
-#include "../maths/geometry.h"
+#include "../maths/line.h"
 
 #define PLAYER_RADIUS 0.1
 

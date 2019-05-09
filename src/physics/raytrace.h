@@ -4,7 +4,7 @@
 #include "../world/world.h"
 #include "../maths/vec2d.h"
 #include "../maths/double.h"
-#include "../maths/geometry.h"
+#include "../maths/line.h"
 #include <stdbool.h>
 
 #define MAX_BOUNCES 32

@@ -5,7 +5,7 @@ void init_game(Game* game, const int width, const int height) {
     game->width = width;
     game->height = height;
     game->top_mode = false;
-    game->zoom = 10;
+    game->zoom = 24;
 }
 
 uint32_t to_screen_coord(Game* game, double coordinate) {
@@ -31,7 +31,7 @@ void render_top_mode(Game* g, World* world) {
             Vec2D last = get_last_point(&wall);
             uint8_t alpha = 255;
             if (wall.type == TRANSPARENT_LINE)
-                alpha = *((uint8_t*) wall.data);
+                alpha = wall.data == NULL ? 128 : (uint8_t)(*((double*) wall.data) * 255);
             EZ_trace_segment(to_screen_coord(g, wall.pos.x), to_screen_coord(g, wall.pos.y), to_screen_coord(g, last.x), to_screen_coord(g, last.y), wall.color.red, wall.color.green, wall.color.blue, alpha);
         }
     }

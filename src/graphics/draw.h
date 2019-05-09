@@ -3,7 +3,7 @@
 
 #include "../base.h"
 #include "easysdl.h"
-#include "../maths/geometry.h"
+#include "../maths/line.h"
 #include "../maths/vec2d.h"
 #include "../maths/double.h"
 #include "../physics/raytrace.h"
@@ -11,7 +11,7 @@
 #include "texture.h"
 #include <stdlib.h>
 
-void sweep(
+void draw(
         int width, int height,
         const World* world,
         size_t layer, double fov, double length,
