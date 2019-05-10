@@ -34,6 +34,8 @@ void parse_command_line(Game *game, int argc, char** argv) {
     for (i = 1; i < argc; i++) {
         if (strncmp(argv[i], "--top-mode", 11) == 0)
             game->top_mode = true;
+        else if (strncmp(argv[i], "--no-floor", 10) == 0)
+            game->draw_floor = false;
     }
 }
 
@@ -41,12 +43,12 @@ int main(int argc, char** argv) {
     Game game;
     init_game(&game, GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);
     parse_command_line(&game, argc, argv);
-    EZ_creation_fenetre(" ", game.width, game.height);
+    EZ_creation_fenetre("Non-euclidian 3D rendering engine", game.width, game.height);
 
     World world;
-    World_init(&world, Vec2D_new(-1., .5));
+    World_init(&world, Vec2D_new(1.5, 1.5));
 
-    LEVEL_2
+    LEVEL_3
 
     if (game.top_mode) world.player_angle = -M_PI / 2;
     world.layers = (Layer*) malloc(sizeof(Layer) * 1);
@@ -77,7 +79,7 @@ int main(int argc, char** argv) {
         if (game.top_mode)
             render_top_mode(&game, &world);
         else
-            draw(game.width, game.height, &world, 0, 0.6, 100, &bg, 10000);
+            draw(&game, &world, 0, 0.6, 100, &bg, 10000);
 
         // FPS-meter
         char str[50];

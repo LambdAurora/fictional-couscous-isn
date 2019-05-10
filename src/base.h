@@ -57,9 +57,7 @@ typedef void (*texture_t)(double, double, double, struct Line2D*, struct Hit*, d
   name.type = TELEPORT_LINE;\
   name.texture = &texture_empty;
 
-#define LINE_GHOST(name)\
-  name.type = GHOST_LINE;\
-  name.texture = &texture_empty;
+#define LINE_GHOST(name) name.type = GHOST_LINE;
 
 #define LINE_EMPTY(name) name.texture = &texture_empty;
 

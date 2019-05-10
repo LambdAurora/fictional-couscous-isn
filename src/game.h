@@ -3,11 +3,12 @@
 
 #include "world/world.h"
 
-struct Game 
+struct Game
 {
     int width;
     int height;
     bool top_mode;
+    bool draw_floor;
     int zoom;
 };
 typedef struct Game Game;

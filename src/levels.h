@@ -1,4 +1,5 @@
 #define LEVEL_1 \
+    world.player_position = Vec2D_new(-1, 0.5);\
     CREATE_LINE(a, 0, 0, 1, 0)\
     LINE_COLOR(a, 83, 190, 187)\
     LINE_GRADIENT(a, 65, 159, 199)\
@@ -53,6 +54,7 @@
 #define REG_LINE(name) lines.lines[line_index++] = name;
 
 #define LEVEL_2 \
+    world.player_position = Vec2D_new(-1, 0.5);\
     CREATE_ROOM(r1, -5, 0, 5, 2)\
     ROOM_COLOR(r1, 101, 120, 116)\
 \
@@ -101,7 +103,7 @@
     ROOMS_AROUND(m1, r1, r1)\
     REG_LINE(m1)\
 \
-    CREATE_LINE(m2, -5, 2, -5, 3)\
+    CREATE_LINE(m2, -5, 3, -5, 2)\
     LINE_COLOR(m2, 173, 208, 230)\
     LINE_BOUNCE(m2)\
     ROOMS_AROUND(m2, r2, r2)\
@@ -123,6 +125,7 @@
 \
     CREATE_LINE(g1, -5, 2, 0, 2)\
     LINE_GHOST(g1)\
+    LINE_EMPTY(g1)\
     ROOMS_AROUND(g1, r2, r1)\
     REG_LINE(g1)\
 \
@@ -132,3 +135,136 @@
     world.rooms = (Room**)malloc(sizeof(Room*) * world.n_rooms);\
     world.rooms[0] = &r1;\
     world.rooms[1] = &r2;
+
+#define LEVEL_3 \
+    world.player_position = Vec2D_new(1.5, 1.5);\
+    CREATE_ROOM(r1, 0, 0, 3, 3)\
+    ROOM_COLOR(r1, 230, 32, 32)\
+\
+    CREATE_ROOM(r2, 0, 3, 3, 3)\
+    ROOM_COLOR(r2, 32, 230, 32)\
+\
+    CREATE_ROOM(r3, 3, 0, 3, 3)\
+    ROOM_COLOR(r3, 32, 32, 230)\
+\
+    Lines lines;\
+    size_t line_index = 0;\
+    lines.length = 21;\
+    lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length);\
+\
+    CREATE_LINE(w1, 3, 0, 3, 0.25)\
+    LINE_COLOR(w1, 95, 94, 97)\
+    LINE_GRADIENT(w1, 106, 106, 106)\
+    REG_LINE(w1)\
+\
+    CREATE_LINE(w2, 3, 3, 3, 2.75)\
+    LINE_COLOR(w2, 95, 94, 97)\
+    LINE_GRADIENT(w2, 106, 106, 106)\
+    REG_LINE(w2)\
+\
+    CREATE_LINE(w3, 0, 3, 0.25, 3)\
+    LINE_COLOR(w3, 95, 94, 97)\
+    LINE_GRADIENT(w3, 106, 106, 106)\
+    REG_LINE(w3)\
+\
+    CREATE_LINE(w4, 3, 3, 2.75, 3)\
+    LINE_COLOR(w4, 95, 94, 97)\
+    LINE_GRADIENT(w4, 106, 106, 106)\
+    REG_LINE(w4)\
+\
+    CREATE_LINE(w5, 3, 3, 3.25, 3)\
+    LINE_COLOR(w5, 95, 94, 97)\
+    LINE_GRADIENT(w5, 106, 106, 106)\
+    REG_LINE(w5)\
+\
+    CREATE_LINE(w6, 6, 3, 5.75, 3)\
+    LINE_COLOR(w6, 95, 94, 97)\
+    LINE_GRADIENT(w6, 106, 106, 106)\
+    REG_LINE(w6)\
+\
+    CREATE_LINE(w7, 3, 3, 3, 3.25)\
+    LINE_COLOR(w7, 95, 94, 97)\
+    LINE_GRADIENT(w7, 106, 106, 106)\
+    REG_LINE(w7)\
+\
+    CREATE_LINE(w8, 3, 6, 3, 5.75)\
+    LINE_COLOR(w8, 95, 94, 97)\
+    LINE_GRADIENT(w8, 106, 106, 106)\
+    REG_LINE(w8)\
+\
+    CREATE_LINE(r1w1, 0, 0, 0.5, 0)\
+    LINE_COLOR(r1w1, 164, 119, 116)\
+    LINE_CHECKERBOARD(r1w1)\
+    REG_LINE(r1w1)\
+\
+    CREATE_LINE(r1m1, 0.5, 0, 2.5, 0)\
+    LINE_COLOR(r1m1, 227, 202, 233)\
+    LINE_GRADIENT(r1m1, 227, 157, 184)\
+    LINE_BOUNCE(r1m1)\
+    ROOMS_AROUND(r1m1, r1, r1)\
+    REG_LINE(r1m1)\
+\
+    CREATE_LINE(r1w2, 2.5, 0, 3, 0)\
+    LINE_COLOR(r1w2, 164, 119, 116)\
+    LINE_CHECKERBOARD(r1w2)\
+    REG_LINE(r1w2)\
+\
+    CREATE_LINE(r1w3, 0, 0, 0, 3)\
+    LINE_COLOR(r1w3, 164, 119, 116)\
+    LINE_CHECKERBOARD(r1w3)\
+    REG_LINE(r1w3)\
+\
+    CREATE_LINE(r2w1, 0, 3, 0, 6)\
+    LINE_COLOR(r2w1, 138, 171, 150)\
+    LINE_CHECKERBOARD(r2w1)\
+    REG_LINE(r2w1)\
+\
+    CREATE_LINE(r2w2, 0, 6, 3, 6)\
+    LINE_COLOR(r2w2, 138, 171, 150)\
+    LINE_CHECKERBOARD(r2w2)\
+    REG_LINE(r2w2)\
+\
+    CREATE_LINE(r3w1, 3, 0, 6, 0)\
+    LINE_COLOR(r3w1, 126, 145, 177)\
+    LINE_CHECKERBOARD(r3w1)\
+    REG_LINE(r3w1)\
+\
+    CREATE_LINE(r3w2, 6, 0, 6, 3)\
+    LINE_COLOR(r3w2, 126, 145, 177)\
+    LINE_CHECKERBOARD(r3w2)\
+    REG_LINE(r3w2)\
+\
+    CREATE_LINE(t1, 3, 3.25, 3, 5.75)\
+    CREATE_LINE(t2, 3.25, 3, 5.75, 3)\
+    LINE_TELEPORT(t1, t2)\
+    LINE_TELEPORT(t2, t1)\
+    ROOMS_AROUND(t1, r2, r3)\
+    ROOMS_AROUND(t2, r2, r1)\
+    REG_LINE(t1)\
+    REG_LINE(t2)\
+\
+    CREATE_LINE(f1, .25, .25, .5, .25)\
+    LINE_IMAGE(f1, "../resources/flower.png", 0.5, 0.5)\
+    LINE_GHOST(f1)\
+    ROOMS_AROUND(f1, r1, r1)\
+    REG_LINE(f1)\
+\
+    CREATE_LINE(g1, 0.25, 3, 2.75, 3)\
+    LINE_GHOST(g1)\
+    LINE_EMPTY(g1)\
+    ROOMS_AROUND(g1, r2, r1)\
+    REG_LINE(g1)\
+\
+    CREATE_LINE(g2, 3, 0.25, 3, 2.75)\
+    LINE_GHOST(g2)\
+    LINE_EMPTY(g2)\
+    ROOMS_AROUND(g2, r1, r3)\
+    REG_LINE(g2)\
+\
+    Color bg = Color_new(107, 110, 101);\
+\
+    world.n_rooms = 3;\
+    world.rooms = (Room**)malloc(sizeof(Room*) * world.n_rooms);\
+    world.rooms[0] = &r1;\
+    world.rooms[1] = &r2;\
+    world.rooms[2] = &r3;

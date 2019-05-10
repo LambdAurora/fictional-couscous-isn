@@ -5,6 +5,7 @@ void init_game(Game* game, const int width, const int height) {
     game->width = width;
     game->height = height;
     game->top_mode = false;
+    game->draw_floor = true;
     game->zoom = 24;
 }
 
