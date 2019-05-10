@@ -50,7 +50,8 @@ void World_move(World* world, const Vec2D* new_ppos) {
         world->player_position.y = result.pos.y - wall.pos.y + loc->line->pos.y;
         // On évite de bloquer le joueur.
         FIX_POSITION(world->player_position, movement)
-    } else { // C'est aucun des deux: on arrête.
+    } else {
+        // C'est aucun des deux: on arrête.
         // world->player_position = result.pos;
         return;
     }
