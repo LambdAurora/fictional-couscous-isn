@@ -192,24 +192,26 @@
     LINE_GRADIENT(w8, 106, 106, 106)\
     REG_LINE(w8)\
 \
-    CREATE_LINE(r1w1, 0, 0, 0.5, 0)\
+    CREATE_LINE(r1w1, 1, 0, 3, 0)\
     LINE_COLOR(r1w1, 164, 119, 116)\
     LINE_CHECKERBOARD(r1w1)\
     REG_LINE(r1w1)\
 \
-    CREATE_LINE(r1m1, 0.5, 0, 2.5, 0)\
+    CREATE_LINE(r1m1, 0, 0, 1, 0)\
     LINE_COLOR(r1m1, 227, 202, 233)\
     LINE_GRADIENT(r1m1, 227, 157, 184)\
     LINE_BOUNCE(r1m1)\
     ROOMS_AROUND(r1m1, r1, r1)\
     REG_LINE(r1m1)\
 \
-    CREATE_LINE(r1w2, 2.5, 0, 3, 0)\
-    LINE_COLOR(r1w2, 164, 119, 116)\
-    LINE_CHECKERBOARD(r1w2)\
-    REG_LINE(r1w2)\
+    CREATE_LINE(r1m2, 0, 0, 0, 1)\
+    LINE_COLOR(r1m2, 227, 202, 233)\
+    LINE_GRADIENT(r1m2, 227, 157, 184)\
+    LINE_BOUNCE(r1m2)\
+    ROOMS_AROUND(r1m2, r1, r1)\
+    REG_LINE(r1m2)\
 \
-    CREATE_LINE(r1w3, 0, 0, 0, 3)\
+    CREATE_LINE(r1w3, 0, 1, 0, 3)\
     LINE_COLOR(r1w3, 164, 119, 116)\
     LINE_CHECKERBOARD(r1w3)\
     REG_LINE(r1w3)\

@@ -95,4 +95,7 @@ bool Vec2D_eq(const Vec2D* a, const Vec2D* b);
  */
 Vec2D Vec2D_normal(const Vec2D* vec);
 
+// TODO: doc
+Vec2D Vec2D_rotate(const Vec2D* vec, double angle);
+
 #endif //FICTIONAL_COUSCOUS_VEC2D_H

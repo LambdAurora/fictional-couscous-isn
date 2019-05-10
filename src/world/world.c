@@ -46,8 +46,35 @@ void World_move(World* world, const Vec2D* new_ppos) {
         // On a affaire à un mur téléporteur.
         // Récupérons la position de téléportation du mur.
         TeleportTarget* loc = (TeleportTarget*) wall.data;
-        world->player_position.x = result.pos.x - wall.pos.x + loc->line->pos.x;
-        world->player_position.y = result.pos.y - wall.pos.y + loc->line->pos.y;
+        // world->player_position.x = result.pos.x - wall.pos.x + loc->line->pos.x;
+        // world->player_position.y = result.pos.y - wall.pos.y + loc->line->pos.y;
+
+        double rot_dot_ldir = dot2D(&wall.vec, &movement.vec);
+        Vec2D l_norm = Vec2D_normal(&wall.vec);
+        double rot_dot_lnorm = dot2D(&l_norm, &movement.vec);
+
+        Vec2D t_norm = Vec2D_normal(&loc->line->vec);
+
+        double n_rot_x = t_norm.x * rot_dot_lnorm + loc->line->vec.x * rot_dot_ldir;
+        double n_rot_y = t_norm.y * rot_dot_lnorm + loc->line->vec.y * rot_dot_ldir;
+
+        double line_pos = dist2D(&result.pos, &wall.pos);
+
+        world->player_position.x = loc->line->pos.x + line_pos * loc->line->vec.x;
+        world->player_position.y = loc->line->pos.y + line_pos * loc->line->vec.y;
+
+        movement.vec.x = n_rot_x;
+        movement.vec.y = n_rot_y;
+
+        double n_angle = acos(dot2D(&wall.vec, &loc->line->vec));
+        Vec2D rotated = Vec2D_rotate(&wall.vec, n_angle);
+
+        if (Vec2D_eq(&rotated, &loc->line->vec)) {
+          world->player_angle += n_angle;
+        } else {
+          world->player_angle -= n_angle;
+        }
+
         // On évite de bloquer le joueur.
         FIX_POSITION(world->player_position, movement)
     } else {
