@@ -101,14 +101,14 @@
     ROOMS_AROUND(m1, r1, r1)\
     REG_LINE(m1)\
 \
-    CREATE_LINE(m2, -5, 2, -5, 3)\
+    CREATE_LINE(m2, 0, 4, -1, 4)\
     LINE_COLOR(m2, 173, 208, 230)\
     LINE_BOUNCE(m2)\
     ROOMS_AROUND(m2, r2, r2)\
     REG_LINE(m2)\
 \
     CREATE_LINE(t1, -3, 0, -4, 0)\
-    CREATE_LINE(t2, 0, 4, -1, 4)\
+    CREATE_LINE(t2, -5, 2, -5, 3)\
     LINE_TELEPORT(t1, t2)\
     LINE_TELEPORT(t2, t1)\
     ROOMS_AROUND(t1, r2, r1)\

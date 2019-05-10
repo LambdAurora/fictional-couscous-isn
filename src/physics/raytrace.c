@@ -97,8 +97,20 @@ RayIntersection send_ray(const World* world, const Line2D* ray, size_t layer) {
                     // rotation and layer changing isn't supported yet, this will have to be done
                     {
                         TeleportTarget* loc = (TeleportTarget*)lines->lines[hit].data;
+                        double rot_dot_ldir = dot2D(&lines->lines[hit].vec, &ray2.vec);
+                        Vec2D l_norm = Vec2D_normal(&lines->lines[hit].vec);
+                        double rot_dot_lnorm = dot2D(&l_norm, &ray2.vec);
+
+                        Vec2D t_norm = Vec2D_normal(&loc->line->vec);
+
+                        double n_rot_x = t_norm.x * rot_dot_lnorm + loc->line->vec.x * rot_dot_ldir;
+                        double n_rot_y = t_norm.y * rot_dot_lnorm + loc->line->vec.y * rot_dot_ldir;
+
                         ray2.pos.x = hit_pos.pos.x - lines->lines[hit].pos.x + loc->line->pos.x;
                         ray2.pos.y = hit_pos.pos.y - lines->lines[hit].pos.y + loc->line->pos.y;
+
+                        ray2.vec.x = n_rot_x;
+                        ray2.vec.y = n_rot_y;
                     }
                     ray2.pos.x += ray2.vec.x * EPSILON * 2;
                     ray2.pos.y += ray2.vec.y * EPSILON * 2;
