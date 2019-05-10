@@ -16,8 +16,8 @@ void World_update(World* world) {
 }
 
 #define FIX_POSITION(pos, movement) \
-pos.x += movement.vec.x * EPSILON * 4; \
-pos.y += movement.vec.y * EPSILON * 4; \
+    pos.x += movement.vec.x * 3 * EPSILON; \
+    pos.y += movement.vec.y * 3 * EPSILON;
 
 
 void World_move(World* world, const Vec2D* new_ppos) {
@@ -31,7 +31,8 @@ void World_move(World* world, const Vec2D* new_ppos) {
 
     // On ne touche aucun mur, on peut bouger.
     if (!result.success) {
-      world->player_position = *new_ppos;
+      world->player_position.x = movement.pos.x + movement.length * movement.vec.x;
+      world->player_position.y = movement.pos.y + movement.length * movement.vec.y;
       return;
     }
 
@@ -41,30 +42,23 @@ void World_move(World* world, const Vec2D* new_ppos) {
     if (wall.type == GHOST_LINE) {
         world->player_position = result.pos;
         FIX_POSITION(world->player_position, movement)
-        bounces++;
-        continue;
-    }
-
-    if (wall.type != TELEPORT_LINE) {
-      //world->player_position = result.pos;
-      return;
-    }
-
-    // On a affaire à un mur téléporteur.
-    {
+    } else if (wall.type == TELEPORT_LINE) {
+        // On a affaire à un mur téléporteur.
         // Récupérons la position de téléportation du mur.
         TeleportTarget* loc = (TeleportTarget*) wall.data;
         world->player_position.x = result.pos.x - wall.pos.x + loc->line->pos.x;
         world->player_position.y = result.pos.y - wall.pos.y + loc->line->pos.y;
+        // On évite de bloquer le joueur.
+        FIX_POSITION(world->player_position, movement)
+    } else { // C'est aucun des deux: on arrête.
+        // world->player_position = result.pos;
+        return;
     }
-    // On évite de bloquer le joueur.
-    FIX_POSITION(world->player_position, movement)
 
-    // On mets à jour le mouvement.
+    // On met à jour le mouvement.
     double distance = dist2D(&(result.pos), &(movement.pos));
     movement.length -= distance;
     movement.pos = world->player_position;
-    FIX_POSITION(movement.pos, movement);
 
     bounces++;
   }
