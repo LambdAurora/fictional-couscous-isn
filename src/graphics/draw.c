@@ -91,8 +91,8 @@ void draw(
             }
 
             if (game->draw_floor) {
+                current_room = find_current_room(world);
                 if (current_room != NULL) {
-                    current_room = find_current_room(world);
                     EZ_trace_rectangle_plein(x, game->height / 2 + last_ground_height, 0, game->height - last_ground_height, current_room->color.red, current_room->color.green, current_room->color.blue, 255);
                 }
             }
