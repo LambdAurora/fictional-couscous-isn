@@ -34,7 +34,7 @@ void World_move(World* world, const Vec2D* new_ppos) {
     Line2D wall = world->layers[0].walls.lines[hit]; // Le mur touché.
 
     if (wall.type == GHOST_LINE) { // c'est un mur "fantôme": on fait comme si il n'était pas là
-      world->player_position = *new_ppos;
+      world->player_position = result.pos;
       world->player_position.x += EPSILON * 4 * movement.vec.x;
       world->player_position.y += EPSILON * 4 * movement.vec.y;
     }
@@ -48,6 +48,10 @@ void World_move(World* world, const Vec2D* new_ppos) {
       world->player_position.x += EPSILON * 4 * movement.vec.x;
       world->player_position.y += EPSILON * 4 * movement.vec.y;
     }
+
+    double distance = dist2D(&result.pos, &movement.pos);
+    movement.length -= distance;
+    movement.pos = world->player_position;
 
 
     bounces++;
