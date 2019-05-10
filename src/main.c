@@ -34,6 +34,8 @@ void parse_command_line(Game *game, int argc, char** argv) {
     for (i = 1; i < argc; i++) {
         if (strncmp(argv[i], "--top-mode", 11) == 0)
             game->top_mode = true;
+        else if (strncmp(argv[i], "--no-floor", 10) == 0)
+            game->draw_floor = false;
     }
 }
 
@@ -77,7 +79,7 @@ int main(int argc, char** argv) {
         if (game.top_mode)
             render_top_mode(&game, &world);
         else
-            draw(game.width, game.height, &world, 0, 0.6, 100, &bg, 10000);
+            draw(&game, game.width, game.height, &world, 0, 0.6, 100, &bg, 10000);
 
         // FPS-meter
         char str[50];

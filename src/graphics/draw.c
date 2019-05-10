@@ -2,6 +2,7 @@
 
 // TODO: replace `lines` with `world`
 void draw(
+        const Game* game,
         int width, int height,
         const World* world,
         size_t layer,double fov, double length,
