@@ -106,8 +106,10 @@ RayIntersection send_ray(const World* world, const Line2D* ray, size_t layer) {
                         double n_rot_x = t_norm.x * rot_dot_lnorm + loc->line->vec.x * rot_dot_ldir;
                         double n_rot_y = t_norm.y * rot_dot_lnorm + loc->line->vec.y * rot_dot_ldir;
 
-                        ray2.pos.x = hit_pos.pos.x - lines->lines[hit].pos.x + loc->line->pos.x;
-                        ray2.pos.y = hit_pos.pos.y - lines->lines[hit].pos.y + loc->line->pos.y;
+                        double line_pos = dist2D(&hit_pos.pos, &lines->lines[hit].pos);
+
+                        ray2.pos.x = loc->line->pos.x + line_pos * loc->line->vec.x;
+                        ray2.pos.y = loc->line->pos.y + line_pos * loc->line->vec.y;
 
                         ray2.vec.x = n_rot_x;
                         ray2.vec.y = n_rot_y;

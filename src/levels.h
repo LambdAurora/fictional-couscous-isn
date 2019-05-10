@@ -108,7 +108,7 @@
     REG_LINE(m2)\
 \
     CREATE_LINE(t1, -3, 0, -4, 0)\
-    CREATE_LINE(t2, -5, 2, -5, 3)\
+    CREATE_LINE(t2, -5, 3, -5, 2)\
     LINE_TELEPORT(t1, t2)\
     LINE_TELEPORT(t2, t1)\
     ROOMS_AROUND(t1, r2, r1)\
