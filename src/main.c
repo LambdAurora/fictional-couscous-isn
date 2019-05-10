@@ -79,7 +79,7 @@ int main(int argc, char** argv) {
         if (game.top_mode)
             render_top_mode(&game, &world);
         else
-            draw(&game, game.width, game.height, &world, 0, 0.6, 100, &bg, 10000);
+            draw(&game, &world, 0, 0.6, 100, &bg, 10000);
 
         // FPS-meter
         char str[50];

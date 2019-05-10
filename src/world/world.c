@@ -15,9 +15,9 @@ void World_update(World* world) {
     //
 }
 
-#define FIX_POSITION(world, movement) \
-world->player_position.x += movement.vec.x * EPSILON * 4; \
-world->player_position.y += movement.vec.y * EPSILON * 4; \
+#define FIX_POSITION(pos, movement) \
+pos.x += movement.vec.x * EPSILON * 4; \
+pos.y += movement.vec.y * EPSILON * 4; \
 
 
 void World_move(World* world, const Vec2D* new_ppos) {
@@ -40,7 +40,7 @@ void World_move(World* world, const Vec2D* new_ppos) {
 
     if (wall.type == GHOST_LINE) {
         world->player_position = result.pos;
-        FIX_POSITION(world, movement)
+        FIX_POSITION(world->player_position, movement)
         bounces++;
         continue;
     }
@@ -58,12 +58,13 @@ void World_move(World* world, const Vec2D* new_ppos) {
         world->player_position.y = result.pos.y - wall.pos.y + loc->line->pos.y;
     }
     // On évite de bloquer le joueur.
-    FIX_POSITION(world, movement)
+    FIX_POSITION(world->player_position, movement)
 
     // On mets à jour le mouvement.
     double distance = dist2D(&(result.pos), &(movement.pos));
     movement.length -= distance;
     movement.pos = world->player_position;
+    FIX_POSITION(movement.pos, movement);
 
     bounces++;
   }
