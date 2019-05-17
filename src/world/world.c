@@ -46,8 +46,39 @@ void World_move(World* world, const Vec2D* new_ppos) {
         // On a affaire à un mur téléporteur.
         // Récupérons la position de téléportation du mur.
         TeleportTarget* loc = (TeleportTarget*) wall.data;
-        world->player_position.x = result.pos.x - wall.pos.x + loc->line->pos.x;
-        world->player_position.y = result.pos.y - wall.pos.y + loc->line->pos.y;
+        // Coordonnée X dans le repère du mur.
+        double rot_dot_ldir = dot2D(&(wall.vec), &(movement.vec));
+        Vec2D l_norm = Vec2D_normal(&(wall.vec));
+        double rot_dot_lnorm = dot2D(&l_norm, &(movement.vec));
+
+        Vec2D t_norm = Vec2D_normal(&loc->line->vec);
+
+        // Coordonnées du vecteur du mouvement dans le repère du monde à la sortie du portail.
+        double n_rot_x = t_norm.x * rot_dot_lnorm + loc->line->vec.x * rot_dot_ldir;
+        double n_rot_y = t_norm.y * rot_dot_lnorm + loc->line->vec.y * rot_dot_ldir;
+
+        // Distance du point d'entrée par rapport au point d'origine du mur.
+        double entry_dist = dist2D(&result.pos, &(wall.pos));
+
+        // Mise à jour de la position du joueur.
+        world->player_position.x = loc->line->pos.x + entry_dist * loc->line->vec.x;
+        world->player_position.y = loc->line->pos.y + entry_dist * loc->line->vec.y;
+
+        movement.vec.x = n_rot_x;
+        movement.vec.y = n_rot_y;
+
+        // On a u*u'=||u||*||u'||*cos(u,u') or les vecteurs u et u' sont normalisés alors: u*u'=cos(u,u')
+        // Alors: cos(u,u')=u*u'
+        // D'où: |u,u'|=cos^-1(u*u')
+        double angle = acos(dot2D(&(wall.vec), &(loc->line->vec)));
+        // Le vecteur du portail d'arrivé tourné à partir de l'angle.
+        Vec2D rotated = Vec2D_rotate(&(loc->line->vec), angle);
+        // On vérifie que le vecteur tourné soit égal au vecteur du portail d'entrée pour déterminer l'orientation de l'angle.
+        if (Vec2D_eq(&wall.vec, &rotated))
+            world->player_angle -= angle;
+        else
+            world->player_angle += angle;
+
         // On évite de bloquer le joueur.
         FIX_POSITION(world->player_position, movement)
     } else {

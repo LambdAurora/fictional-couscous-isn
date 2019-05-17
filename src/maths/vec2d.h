@@ -95,4 +95,13 @@ bool Vec2D_eq(const Vec2D* a, const Vec2D* b);
  */
 Vec2D Vec2D_normal(const Vec2D* vec);
 
+/*!
+ * Créer une rotation de vecteur à partir du vecteur donné et d'un angle.
+ *
+ * @param vec Le vecteur donnée.
+ * @param angle L'angle de la rotation.
+ * @return Le vecteur tourné.
+ */
+Vec2D Vec2D_rotate(const Vec2D* vec, double angle);
+
 #endif //FICTIONAL_COUSCOUS_VEC2D_H

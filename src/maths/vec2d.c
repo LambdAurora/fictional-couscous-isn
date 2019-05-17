@@ -61,3 +61,7 @@ bool Vec2D_eq(const Vec2D* a, const Vec2D* b) {
 Vec2D Vec2D_normal(const Vec2D* vec) {
     return Vec2D_new(-vec->y, vec->x);
 }
+
+Vec2D Vec2D_rotate(const Vec2D* vec, double angle) {
+  return Vec2D_new(vec->x * cos(angle) - vec->y * sin(angle), vec->x * sin(angle) + vec->y * cos(angle));
+}
