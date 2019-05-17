@@ -74,17 +74,29 @@ void draw(
 
                 switch (line->type) {
                     case BOUNCE_LINE:
-                        (*line->texture)(x, h, game->height, line, &hit, (1 - mist) * 0.25);
+                        if (!game->draw_complex_textures && is_complex_texture(line->texture)) {
+                            texture_flat(x, h, game->height, line, &hit, (1 - mist) * 0.25);
+                        } else {
+                            (*line->texture)(x, h, game->height, line, &hit, (1 - mist) * 0.25);
+                        }
                         break;
                     case TRANSPARENT_LINE:
                         {
                             double* transparency_ptr = (double*)line->data;
                             double transparency = transparency_ptr == NULL ? 0.5 : *transparency_ptr;
-                            (*line->texture)(x, h, game->height, line, &hit, (1 - mist) * (1 - transparency));
+                            if (!game->draw_complex_textures && is_complex_texture(line->texture)) {
+                                texture_flat(x, h, game->height, line, &hit, (1 - mist) * (1 - transparency));
+                            } else {
+                                (*line->texture)(x, h, game->height, line, &hit, (1 - mist) * (1 - transparency));
+                            }
                         }
                         break;
                     default:
-                        (*line->texture)(x, h, game->height, line, &hit, 1 - mist);
+                        if (!game->draw_complex_textures && is_complex_texture(line->texture)) {
+                            texture_flat(x, h, game->height, line, &hit, 1 - mist);
+                        } else {
+                            (*line->texture)(x, h, game->height, line, &hit, 1 - mist);
+                        }
                         break;
                 }
                 last_ground_height = h;
@@ -103,4 +115,8 @@ void draw(
 
 double calc_height(double distance, double angle, int height, int width) {
     return HEIGHT_ADJUST / distance / cos(angle) * width;
+}
+
+bool is_complex_texture(void* tex) {
+    return tex == &texture_checkerboard || tex == &texture_image;
 }

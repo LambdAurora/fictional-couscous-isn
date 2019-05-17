@@ -11,6 +11,7 @@ struct Game
     bool draw_floor;
     int zoom;
     bool mouse_captured;
+    bool draw_complex_textures;
 };
 typedef struct Game Game;
 

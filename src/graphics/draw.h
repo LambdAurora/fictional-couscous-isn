@@ -25,4 +25,6 @@ void draw(
 
 double calc_height(double distance, double angle, int height, int width);
 
+bool is_complex_texture(void* tex);
+
 #endif //FICTIONAL_COUSCOUS_RAYTRACING_H

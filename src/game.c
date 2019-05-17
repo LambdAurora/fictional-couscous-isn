@@ -9,6 +9,7 @@ void init_game(Game* game, const int width, const int height) {
     game->draw_floor = true;
     game->zoom = 24;
     game->mouse_captured = false;
+    game->draw_complex_textures = true;
 }
 
 uint32_t to_screen_coord(Game* game, double coordinate) {

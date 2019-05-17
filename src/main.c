@@ -71,6 +71,8 @@ int main(int argc, char** argv) {
     bool key_left = false;
     bool key_right = false;
 
+    bool key_h = false;
+
 
     bool drag = false;
     int drag_x = 0;
@@ -97,8 +99,15 @@ int main(int argc, char** argv) {
         sprintf(str, "%d", (int) (1 / dt));
         EZ_trace_texte(str, "../resources/DF-font.ttf", 16, 0, 0, 0, 0, 0, 255);
 
-        sprintf(str, "X: %.4lf Y: %.4lf", world.player_position.x, world.player_position.y);
-        EZ_trace_texte(str, "../resources/DF-font.ttf", 16, 0, 20, 0, 0, 0, 255);
+        if (key_h) {
+            EZ_trace_texte("1: capture mouse", "../resources/DF-font.ttf", 16, 0, 20, 0, 0, 0, 255);
+            EZ_trace_texte("2: toggle ground", "../resources/DF-font.ttf", 16, 0, 40, 0, 0, 0, 255);
+            EZ_trace_texte("3: toggle top view", "../resources/DF-font.ttf", 16, 0, 60, 0, 0, 0, 255);
+            EZ_trace_texte("4: toggle complex textures", "../resources/DF-font.ttf", 16, 0, 80, 0, 0, 0, 255);
+        } else {
+            sprintf(str, "X: %.4lf Y: %.4lf", world.player_position.x, world.player_position.y);
+            EZ_trace_texte(str, "../resources/DF-font.ttf", 16, 0, 20, 0, 0, 0, 255);
+        }
 
         EZ_mise_a_jour();
 
@@ -132,8 +141,11 @@ int main(int argc, char** argv) {
                         key_a = state;
                         break;
                     case 'q':
-                    key_q = state;
-                    break;
+                        key_q = state;
+                        break;
+                    case 'h':
+                        key_h = state;
+                        break;
                     case 'r':
                         world.player_position = world.spawn_position;
                         break;
@@ -174,6 +186,9 @@ int main(int argc, char** argv) {
                         break;
                     case 0x33:
                         if (state) game.top_mode = !game.top_mode;
+                        break;
+                    case 0x34:
+                        if (state) game.draw_complex_textures = !game.draw_complex_textures;
                         break;
                     default:
                         printf("%x\n", EZ_touche());
