@@ -60,12 +60,17 @@ int main(int argc, char** argv) {
 
     bool exit = false;
 
-    bool up = false;
-    bool down = false;
-    bool left = false;
-    bool right = false;
-    bool rotate_left = false;
-    bool rotate_right = false;
+    bool key_shift = false;
+
+    bool key_w = false;
+    bool key_s = false;
+    bool key_a = false;
+    bool key_d = false;
+    bool key_q = false;
+    bool key_z = false;
+    bool key_left = false;
+    bool key_right = false;
+
 
     bool drag = false;
     int drag_x = 0;
@@ -105,24 +110,30 @@ int main(int argc, char** argv) {
                 switch (EZ_touche()) {
                     case ARROW | 0x52:
                     case 'w':
-                        up = state;
+                        key_w = state;
+                        break;
+                    case 'z':
+                        key_z = state;
                         break;
                     case ARROW | 0x50:
-                        rotate_left = state;
+                        key_left = state;
                         break;
                     case ARROW | 0x4f:
-                        rotate_right = state;
+                        key_right = state;
                         break;
                     case ARROW | 0x51:
                     case 's':
-                        down = state;
+                        key_s = state;
                         break;
                     case 'd':
-                        right = state;
+                        key_d = state;
                         break;
                     case 'a':
-                        left = state;
+                        key_a = state;
                         break;
+                    case 'q':
+                    key_q = state;
+                    break;
                     case 'r':
                         world.player_position = world.spawn_position;
                         break;
@@ -131,8 +142,12 @@ int main(int argc, char** argv) {
                         break;
                     case 'l':
                         game.zoom = lc_maths_max(game.zoom - 1., 1);
+                        break;
                     case 0x1B:
                         exit = true;
+                        break;
+                    case 0x400000e1:
+                        key_shift = state;
                         break;
                     case 0x40000044:
                         if (state) {
@@ -153,7 +168,13 @@ int main(int argc, char** argv) {
                                 capture_mouse(&game);
                             }
                         }
-
+                        break;
+                    case 0x32:
+                        if (state) game.draw_floor = !game.draw_floor;
+                        break;
+                    case 0x33:
+                        if (state) game.top_mode = !game.top_mode;
+                        break;
                     default:
                         printf("%x\n", EZ_touche());
                         break;
@@ -177,26 +198,29 @@ int main(int argc, char** argv) {
 
         // Créé la nouvelle position du joueur en fonction des entrées.
         Vec2D new_player_position = world.player_position;
-        if (up) {
-            new_player_position.x += 1.4 * cos(world.player_angle) * dt;
-            new_player_position.y += 1.4 * sin(world.player_angle) * dt;
+
+        double speed = key_shift ? 1.8 : 1;
+
+        if (key_w || key_z) {
+            new_player_position.x += speed * 1.4 * cos(world.player_angle) * dt;
+            new_player_position.y += speed * 1.4 * sin(world.player_angle) * dt;
         }
-        if (down) {
-            new_player_position.x -= 1.4 * cos(world.player_angle) * dt;
-            new_player_position.y -= 1.4 * sin(world.player_angle) * dt;
+        if (key_s) {
+            new_player_position.x -= speed * 1.4 * cos(world.player_angle) * dt;
+            new_player_position.y -= speed * 1.4 * sin(world.player_angle) * dt;
         }
-        if (right) {
-            new_player_position.x -= 1 * sin(world.player_angle) * dt;
-            new_player_position.y += 1 * cos(world.player_angle) * dt;
+        if (key_d) {
+            new_player_position.x -= speed * 1 * sin(world.player_angle) * dt;
+            new_player_position.y += speed * 1 * cos(world.player_angle) * dt;
         }
-        if (left) {
-            new_player_position.x += 1 * sin(world.player_angle) * dt;
-            new_player_position.y -= 1 * cos(world.player_angle) * dt;
+        if (key_a || key_q) {
+            new_player_position.x += speed * 1 * sin(world.player_angle) * dt;
+            new_player_position.y -= speed * 1 * cos(world.player_angle) * dt;
         }
 
         // Change l'angle de vision.
-        if (rotate_right) world.player_angle += .8 * dt;
-        if (rotate_left) world.player_angle -= .8 * dt;
+        if (key_right) world.player_angle += .8 * dt;
+        if (key_left) world.player_angle -= .8 * dt;
 
         World_move(&world, &new_player_position);
     }

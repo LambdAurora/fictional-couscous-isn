@@ -48,6 +48,13 @@ void render_top_mode(Game* g, World* world) {
     }
     // On dessine le joueur.
     EZ_trace_rectangle_plein(to_screen_coord(g, world->player_position.x) - 1, to_screen_coord(g, world->player_position.y) - 1, 2, 2, 0, 0, 0, 255);
+    EZ_trace_segment(
+      to_screen_coord(g, world->player_position.x),
+      to_screen_coord(g, world->player_position.y),
+      to_screen_coord(g, world->player_position.x + 0.5 * cos(world->player_angle)),
+      to_screen_coord(g, world->player_position.y + 0.5 * sin(world->player_angle)),
+      0, 0, 0, 200
+    );
 }
 
 void capture_mouse(Game* game) {
