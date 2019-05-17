@@ -1,3 +1,5 @@
+#define DEFINE_ROOMS(n_rooms, world) world.n_rooms = n_rooms; world.rooms = (Room**) malloc(sizeof(Room*) * world.n_rooms);
+
 #define LEVEL_1 \
     world.player_position = Vec2D_new(-1, 0.5);\
     CREATE_LINE(a, 0, 0, 1, 0)\
@@ -268,3 +270,8 @@
     world.rooms[0] = &r1;\
     world.rooms[1] = &r2;\
     world.rooms[2] = &r3;
+
+#define LEVEL_4 \
+  world.player_position = new_Vec2D(1, 1.5); \
+  DEFINE_ROOMS(1, world) \
+  world.rooms[0] = &r1;
