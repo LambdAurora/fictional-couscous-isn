@@ -7,7 +7,7 @@
 #include "../maths/vec2d.h"
 #include "color.h"
 
-#define IMAGE_ADJUST 1.8
+#define IMAGE_ADJUST 2
 
 struct TextureImage {
   uint8_t* pixels;

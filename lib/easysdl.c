@@ -106,7 +106,7 @@ int EZ_creation_fenetre(char *nom, unsigned int x, unsigned int y)
 	EZ_initialisation_son();
 	EZ_initialisation_tab_image();
 	EZ_initialisation_joystick();
-	EZ_fenetre = SDL_CreateWindow(nom, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, x, y, SDL_WINDOW_SHOWN);
+	EZ_fenetre = SDL_CreateWindow(nom, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, x, y, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_UTILITY);
 	EZ_rendu = SDL_CreateRenderer(EZ_fenetre, -1, SDL_RENDERER_ACCELERATED);
 	printf("%s\n", SDL_GetError());
 	SDL_SetRenderDrawColor(EZ_rendu, 255, 255, 255, 255);

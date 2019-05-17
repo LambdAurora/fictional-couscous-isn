@@ -40,10 +40,13 @@ void parse_command_line(Game *game, int argc, char** argv) {
 }
 
 int main(int argc, char** argv) {
+    extern SDL_Window* EZ_fenetre;
     Game game;
     init_game(&game, GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);
     parse_command_line(&game, argc, argv);
     EZ_creation_fenetre("Non-euclidian 3D rendering engine", game.width, game.height);
+
+    free_mouse(&game);
 
     World world;
     World_init(&world, Vec2D_new(1.5, 1.5));
@@ -72,6 +75,9 @@ int main(int argc, char** argv) {
     while (!exit) {
         double dt = (double) (clock() - last_clock) / CLOCKS_PER_SEC;
         last_clock = clock();
+
+        SDL_GetWindowSize(EZ_fenetre, &game.width, &game.height);
+
         // On efface tout.
         EZ_trace_rectangle_plein(0, 0, game.width, game.height, bg.red, bg.green, bg.blue, 255);
 
@@ -129,6 +135,7 @@ int main(int argc, char** argv) {
                         exit = true;
                         break;
                     default:
+                        printf("%h\n", EZ_touche());
                         break;
                 }
             }
@@ -139,6 +146,14 @@ int main(int argc, char** argv) {
                 drag = false;
                 world.player_angle -= ((double) (EZ_souris_x() - drag_x) / 128) * .5;
             }
+            if (evt == EZ_SOURIS_MOUVEMENT && game.mouse_captured) {
+                int x = EZ_souris_x() - GAME_WINDOW_WIDTH / 2;
+                world.player_angle += ((double) x / 128) * .25;
+                printf("%d %d\n", EZ_souris_x() - GAME_WINDOW_WIDTH / 2, EZ_souris_y() - GAME_WINDOW_HEIGHT / 2);
+            }
+        }
+        if (game.mouse_captured) {
+            SDL_WarpMouseInWindow(EZ_fenetre, GAME_WINDOW_WIDTH / 2, GAME_WINDOW_HEIGHT / 2);
         }
 
         // Créé la nouvelle position du joueur en fonction des entrées.

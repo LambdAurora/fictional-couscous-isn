@@ -52,7 +52,7 @@ void draw(
                     last_ground_height = game->height;
                     continue;
                 }
-                int h = (int) ((double) game->height * calc_height(hit.dist, angle));
+                int h = (int) (calc_height(hit.dist, angle, game->height, game->width));
                 double mist = 1 - 1 / (1 + hit.dist * hit.dist / mist_length);
 
                 if (game->draw_floor) {
@@ -101,6 +101,6 @@ void draw(
     }
 }
 
-double calc_height(double distance, double angle) {
-    return .5 / distance / cos(angle);
+double calc_height(double distance, double angle, int height, int width) {
+    return HEIGHT_ADJUST / distance / cos(angle) * width;
 }

@@ -1,5 +1,6 @@
 #include "game.h"
 #include "easysdl.h"
+#include <SDL2/SDL.h>
 
 void init_game(Game* game, const int width, const int height) {
     game->width = width;
@@ -7,6 +8,7 @@ void init_game(Game* game, const int width, const int height) {
     game->top_mode = false;
     game->draw_floor = true;
     game->zoom = 24;
+    game->mouse_captured = false;
 }
 
 uint32_t to_screen_coord(Game* game, double coordinate) {
@@ -46,4 +48,22 @@ void render_top_mode(Game* g, World* world) {
     }
     // On dessine le joueur.
     EZ_trace_rectangle_plein(to_screen_coord(g, world->player_position.x) - 1, to_screen_coord(g, world->player_position.y) - 1, 2, 2, 0, 0, 0, 255);
+}
+
+void capture_mouse(Game* game) {
+    extern SDL_Window* EZ_fenetre;
+    int width;
+    int height;
+    SDL_GetWindowSize(EZ_fenetre, &width, &height);
+    game->mouse_captured = true;
+    SDL_WarpMouseInWindow(EZ_fenetre, width / 2, height / 2);
+    SDL_SetWindowGrab(EZ_fenetre, true);
+    SDL_ShowCursor(false);
+}
+
+void free_mouse(Game* game) {
+    extern SDL_Window* EZ_fenetre;
+    game->mouse_captured = false;
+    SDL_SetWindowGrab(EZ_fenetre, false);
+    SDL_ShowCursor(true);
 }

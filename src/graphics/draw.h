@@ -14,6 +14,8 @@
 
 #define DISTANCE_THRESHOLD 0.01 // trust me, that'll make things better!
 
+#define HEIGHT_ADJUST 0.21
+
 void draw(
         const Game* game,
         const World* world,
@@ -21,6 +23,6 @@ void draw(
         const Color* bg, double mist_length
 );
 
-double calc_height(double distance, double angle);
+double calc_height(double distance, double angle, int height, int width);
 
 #endif //FICTIONAL_COUSCOUS_RAYTRACING_H
