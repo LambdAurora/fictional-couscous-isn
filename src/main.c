@@ -134,8 +134,28 @@ int main(int argc, char** argv) {
                     case 0x1B:
                         exit = true;
                         break;
+                    case 0x40000044:
+                        if (state) {
+                            if (game.mouse_captured) {
+                                SDL_SetWindowFullscreen(EZ_fenetre, 0);
+                                free_mouse(&game);
+                            } else {
+                                SDL_SetWindowFullscreen(EZ_fenetre, SDL_WINDOW_FULLSCREEN_DESKTOP);
+                                capture_mouse(&game);
+                            }
+                        }
+                        break;
+                    case 0x31:
+                        if (state) {
+                            if (game.mouse_captured) {
+                                free_mouse(&game);
+                            } else {
+                                capture_mouse(&game);
+                            }
+                        }
+
                     default:
-                        printf("%h\n", EZ_touche());
+                        printf("%x\n", EZ_touche());
                         break;
                 }
             }
@@ -149,7 +169,6 @@ int main(int argc, char** argv) {
             if (evt == EZ_SOURIS_MOUVEMENT && game.mouse_captured) {
                 int x = EZ_souris_x() - GAME_WINDOW_WIDTH / 2;
                 world.player_angle += ((double) x / 128) * .25;
-                printf("%d %d\n", EZ_souris_x() - GAME_WINDOW_WIDTH / 2, EZ_souris_y() - GAME_WINDOW_HEIGHT / 2);
             }
         }
         if (game.mouse_captured) {
