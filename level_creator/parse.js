@@ -49,7 +49,7 @@ global.Wall = class Wall {
   }
 
   image(uri, width = 0.5, height = 0.5) {
-    this.texture = ["IMAGE", `"` + path.join(PATH_PREFIX, uri) + `"`, width, height];
+    this.texture = ["IMAGE", `"` + path.join(PATH_PREFIX, uri).replace(/\\/g, "\\\\") + `"`, width, height];
     return this;
   }
 
