@@ -1,0 +1,11 @@
+{
+  "name": "fictional_couscous_level_creator",
+  "version": "1.0.0",
+  "description": "Creates the levels.h file",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": ["Shad Amethyst", "LambdAurora"],
+  "license": "ISC"
+}

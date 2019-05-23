@@ -22,7 +22,7 @@ typedef struct Color Color;
  * @param ratio Taux de mixage.
  * @return Composante mixée.
  */
-u_int8_t mix(u_int8_t a, u_int8_t b, double ratio);
+uint8_t mix(uint8_t a, uint8_t b, double ratio);
 
 /*!
  * Créer une nouvelle couleur à partir de ses trois composantes.

@@ -80,6 +80,7 @@ void draw(
                             (*line->texture)(x, h, game->height, line, &hit, (1 - mist) * 0.25);
                         }
                         break;
+                    case GHOST_LINE:
                     case TRANSPARENT_LINE:
                         {
                             double* transparency_ptr = (double*)line->data;

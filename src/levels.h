@@ -1,277 +1,479 @@
-#define DEFINE_ROOMS(n_rooms, world) world.n_rooms = n_rooms; world.rooms = (Room**) malloc(sizeof(Room*) * world.n_rooms);
-
 #define LEVEL_1 \
-    world.player_position = Vec2D_new(-1, 0.5);\
-    CREATE_LINE(a, 0, 0, 1, 0)\
-    LINE_COLOR(a, 83, 190, 187)\
-    LINE_GRADIENT(a, 65, 159, 199)\
-    LINE_BOUNCE(a)\
-\
-    CREATE_LINE(b, 0, 0, 0, 1)\
-    LINE_COLOR(b, 113, 190, 118)\
-    LINE_CHECKERBOARD(b)\
-\
-    CREATE_LINE(c, 0, 1, -0.5, 1)\
-    LINE_COLOR(c, 228, 214, 84)\
-    LINE_GRADIENT(c, 244, 130, 137)\
-\
-    CREATE_LINE(d, -2, -0.5, -2, 0.5)\
-    LINE_TRANSPARENT(d, 128)\
-    LINE_COLOR(d, 122, 58, 144)\
-\
-    CREATE_LINE(e, -1.5, -0.5, -1, -0.5)\
-    LINE_IMAGE(e, "../resources/flower.png", 0.5, 0.5)\
-\
-    double D = 32;\
-\
-    CREATE_LINE(f, 2, D, 2, -D)\
-    LINE_COLOR(f, 180, 191, 122)\
-\
-    CREATE_LINE(g, -2.5, D, -2.5, -D)\
-    LINE_COLOR(g, 125, 125, 125)\
-    LINE_BOUNCE(g)\
-\
-    CREATE_LINE(h, D, 2, -D, 2)\
-    CREATE_LINE(i, D, -2.5, -D, -2.5)\
-\
-    LINE_TELEPORT(h, i)\
-    LINE_TELEPORT(i, h)\
-\
-    Color bg = Color_new(209, 213, 201);\
-\
-    Lines lines;\
-    lines.length = 9;\
-    lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length);\
-\
-    lines.lines[0] = a;\
-    lines.lines[1] = b;\
-    lines.lines[2] = c;\
-    lines.lines[3] = d;\
-    lines.lines[4] = e;\
-    lines.lines[5] = f;\
-    lines.lines[6] = g;\
-    lines.lines[7] = h;\
-    lines.lines[8] = i;
-
-#define REG_LINE(name) lines.lines[line_index++] = name;
+    world.n_rooms = 0; \
+    world.rooms = (Room**)malloc(sizeof(Room*) * world.n_rooms); \
+    world.player_position = Vec2D_new(-0.7, 0.35); \
+    world.player_angle = 0; \
+    Color bg = Color_new(209, 213, 201); \
+    Lines lines; \
+    lines.length = 9; \
+    lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length); \
+     \
+    CREATE_LINE(_w_0, 0, 0, 0.7, 0) \
+    LINE_COLOR(_w_0, 83, 190, 187) \
+    LINE_BOUNCE(_w_0) \
+    LINE_GRADIENT(_w_0, 65,159,199) \
+     \
+    CREATE_LINE(_w_1, 0, 0, 0, 0.7) \
+    LINE_COLOR(_w_1, 113, 190, 118) \
+    LINE_CHECKERBOARD(_w_1) \
+     \
+    CREATE_LINE(_w_2, 0, 0.7, -0.35, 0.7) \
+    LINE_COLOR(_w_2, 228, 214, 84) \
+    LINE_GRADIENT(_w_2, 244,130,137) \
+     \
+    CREATE_LINE(_w_3, -1.4, -0.35, -1.4, 0.35) \
+    LINE_COLOR(_w_3, 122, 58, 144) \
+    LINE_TRANSPARENT(_w_3, 127.5) \
+     \
+    CREATE_LINE(_w_4, -1.0499999999999998, -0.35, -0.7, -0.35) \
+    LINE_IMAGE(_w_4, "../resources/flower.png",0.5,0.5) \
+    LINE_GHOST(_w_4) \
+     \
+    CREATE_LINE(_w_5, 1.4, 1.4, 1.4, -1.75) \
+    LINE_COLOR(_w_5, 180, 191, 122) \
+     \
+    CREATE_LINE(_w_6, -1.75, 1.4, -1.75, -1.75) \
+    LINE_COLOR(_w_6, 125, 125, 125) \
+    LINE_BOUNCE(_w_6) \
+     \
+    CREATE_LINE(_w_7, 1.4, 1.4, -1.75, 1.4) \
+     \
+    CREATE_LINE(_w_8, 1.4, -1.75, -1.75, -1.75) \
+     \
+    LINE_TELEPORT(_w_7, _w_8) \
+     \
+    LINE_TELEPORT(_w_8, _w_7) \
+     \
+    lines.lines[0] = _w_0; \
+    lines.lines[1] = _w_1; \
+    lines.lines[2] = _w_2; \
+    lines.lines[3] = _w_3; \
+    lines.lines[4] = _w_4; \
+    lines.lines[5] = _w_5; \
+    lines.lines[6] = _w_6; \
+    lines.lines[7] = _w_7; \
+    lines.lines[8] = _w_8; \
 
 #define LEVEL_2 \
-    world.player_position = Vec2D_new(-1, 0.5);\
-    CREATE_ROOM(r1, -5, 0, 5, 2)\
-    ROOM_COLOR(r1, 101, 120, 116)\
-\
-    CREATE_ROOM(r2, -5, 2, 5, 2)\
-    ROOM_COLOR(r2, 100, 106, 115)\
-\
-    Lines lines;\
-    size_t line_index = 0;\
-    lines.length = 13;\
-    lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length);\
-\
-    CREATE_LINE(w1, 0, 0, 0, 1)\
-    LINE_COLOR(w1, 176, 172, 184)\
-    LINE_CHECKERBOARD(w1)\
-    REG_LINE(w1)\
-\
-    CREATE_LINE(w2, 0, 2, 0, 4)\
-    LINE_COLOR(w2, 176, 172, 184)\
-    LINE_CHECKERBOARD(w2)\
-    REG_LINE(w2)\
-\
-    CREATE_LINE(w3, -1, 4, -5, 4)\
-    LINE_COLOR(w3, 176, 172, 184)\
-    REG_LINE(w3)\
-\
-    CREATE_LINE(w4, -5, 4, -5, 3)\
-    LINE_COLOR(w4, 176, 172, 184)\
-    REG_LINE(w4)\
-\
-    CREATE_LINE(w5, -5, 2, -5, 0)\
-    LINE_COLOR(w5, 176, 172, 184)\
-    REG_LINE(w5)\
-\
-    CREATE_LINE(w6, -5, 0, -4, 0)\
-    LINE_COLOR(w6, 176, 172, 184)\
-    REG_LINE(w6)\
-\
-    CREATE_LINE(w7, -3, 0, 0, 0)\
-    LINE_COLOR(w7, 176, 172, 184)\
-    LINE_CHECKERBOARD(w7)\
-    REG_LINE(w7)\
-\
-    CREATE_LINE(m1, 0, 1, 0, 2)\
-    LINE_COLOR(m1, 173, 208, 230)\
-    LINE_BOUNCE(m1)\
-    ROOMS_AROUND(m1, r1, r1)\
-    REG_LINE(m1)\
-\
-    CREATE_LINE(m2, -5, 3, -5, 2)\
-    LINE_COLOR(m2, 173, 208, 230)\
-    LINE_BOUNCE(m2)\
-    ROOMS_AROUND(m2, r2, r2)\
-    REG_LINE(m2)\
-\
-    CREATE_LINE(t1, -3, 0, -4, 0)\
-    CREATE_LINE(t2, 0, 4, -1, 4)\
-    LINE_TELEPORT(t1, t2)\
-    LINE_TELEPORT(t2, t1)\
-    ROOMS_AROUND(t1, r2, r1)\
-    ROOMS_AROUND(t2, r2, r1)\
-    REG_LINE(t1)\
-    REG_LINE(t2)\
-\
-    CREATE_LINE(f1, -4.25, 3, -4, 3)\
-    LINE_IMAGE(f1, "../resources/flower.png", 0.5, 0.5)\
-    ROOMS_AROUND(f1, r2, r2)\
-    REG_LINE(f1)\
-\
-    CREATE_LINE(g1, -5, 2, 0, 2)\
-    LINE_GHOST(g1)\
-    LINE_EMPTY(g1)\
-    ROOMS_AROUND(g1, r2, r1)\
-    REG_LINE(g1)\
-\
-    Color bg = Color_new(107, 110, 101);\
-\
-    world.n_rooms = 2;\
-    world.rooms = (Room**)malloc(sizeof(Room*) * world.n_rooms);\
-    world.rooms[0] = &r1;\
-    world.rooms[1] = &r2;
+    world.n_rooms = 2; \
+    world.rooms = (Room**)malloc(sizeof(Room*) * world.n_rooms); \
+    CREATE_ROOM(_r_0, -5, 0, 5, 2) \
+    ROOM_COLOR(_r_0, 101, 120, 116) \
+    world.rooms[0] = &_r_0; \
+    CREATE_ROOM(_r_1, -5, 2, 5, 2) \
+    ROOM_COLOR(_r_1, 100, 106, 115) \
+    world.rooms[1] = &_r_1; \
+    world.player_position = Vec2D_new(-1, 0.5); \
+    world.player_angle = 0; \
+    Color bg = Color_new(107, 110, 101); \
+    Lines lines; \
+    lines.length = 13; \
+    lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length); \
+     \
+    CREATE_LINE(_w_0, 0, 0, 0, 1) \
+    LINE_COLOR(_w_0, 176, 172, 184) \
+    LINE_CHECKERBOARD(_w_0) \
+    ROOM_LEFT(_w_0, _r_0) \
+     \
+    CREATE_LINE(_w_1, 0, 2, 0, 4) \
+    LINE_COLOR(_w_1, 176, 172, 184) \
+    LINE_CHECKERBOARD(_w_1) \
+    ROOM_LEFT(_w_1, _r_1) \
+     \
+    CREATE_LINE(_w_2, -1, 4, -5, 4) \
+    LINE_COLOR(_w_2, 176, 172, 184) \
+    ROOM_LEFT(_w_2, _r_1) \
+     \
+    CREATE_LINE(_w_3, -5, 4, -5, 3) \
+    LINE_COLOR(_w_3, 176, 172, 184) \
+    ROOM_LEFT(_w_3, _r_1) \
+     \
+    CREATE_LINE(_w_4, -5, 2, -5, 0) \
+    LINE_COLOR(_w_4, 176, 172, 184) \
+    ROOM_LEFT(_w_4, _r_0) \
+     \
+    CREATE_LINE(_w_5, -5, 0, -4, 0) \
+    LINE_COLOR(_w_5, 176, 172, 184) \
+    ROOM_LEFT(_w_5, _r_0) \
+     \
+    CREATE_LINE(_w_6, -3, 0, 0, 0) \
+    LINE_COLOR(_w_6, 176, 172, 184) \
+    LINE_CHECKERBOARD(_w_6) \
+    ROOM_LEFT(_w_6, _r_0) \
+     \
+    CREATE_LINE(_w_7, 0, 1, 0, 2) \
+    LINE_COLOR(_w_7, 182, 196, 190) \
+    LINE_BOUNCE(_w_7) \
+    ROOM_RIGHT(_w_7, _r_0) \
+     \
+    CREATE_LINE(_w_8, -5, 3, -5, 2) \
+    LINE_COLOR(_w_8, 182, 196, 190) \
+    LINE_BOUNCE(_w_8) \
+    ROOM_RIGHT(_w_8, _r_1) \
+     \
+    CREATE_LINE(_w_9, -3, 0, -4, 0) \
+    ROOM_LEFT(_w_9, _r_1) \
+     \
+    CREATE_LINE(_w_10, 0, 4, -1, 4) \
+    ROOM_RIGHT(_w_10, _r_0) \
+     \
+    CREATE_LINE(_w_11, -4.25, 3, -4, 3) \
+    LINE_IMAGE(_w_11, "../resources/flower.png",0.5,0.5) \
+    ROOMS_AROUND(_w_11, _r_1, _r_1) \
+     \
+    CREATE_LINE(_w_12, -5, 2, 0, 2) \
+    LINE_EMPTY(_w_12) \
+    LINE_GHOST(_w_12) \
+    ROOMS_AROUND(_w_12, _r_1, _r_0) \
+     \
+    LINE_TELEPORT(_w_9, _w_10) \
+     \
+    LINE_TELEPORT(_w_10, _w_9) \
+     \
+    lines.lines[0] = _w_0; \
+    lines.lines[1] = _w_1; \
+    lines.lines[2] = _w_2; \
+    lines.lines[3] = _w_3; \
+    lines.lines[4] = _w_4; \
+    lines.lines[5] = _w_5; \
+    lines.lines[6] = _w_6; \
+    lines.lines[7] = _w_7; \
+    lines.lines[8] = _w_8; \
+    lines.lines[9] = _w_9; \
+    lines.lines[10] = _w_10; \
+    lines.lines[11] = _w_11; \
+    lines.lines[12] = _w_12; \
 
 #define LEVEL_3 \
-    world.player_position = Vec2D_new(1.5, 1.5);\
-    CREATE_ROOM(r1, 0, 0, 3, 3)\
-    ROOM_COLOR(r1, 230, 32, 32)\
-\
-    CREATE_ROOM(r2, 0, 3, 3, 3)\
-    ROOM_COLOR(r2, 32, 230, 32)\
-\
-    CREATE_ROOM(r3, 3, 0, 3, 3)\
-    ROOM_COLOR(r3, 32, 32, 230)\
-\
-    Lines lines;\
-    size_t line_index = 0;\
-    lines.length = 21;\
-    lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length);\
-\
-    CREATE_LINE(w1, 3, 0, 3, 0.25)\
-    LINE_COLOR(w1, 95, 94, 97)\
-    LINE_GRADIENT(w1, 106, 106, 106)\
-    REG_LINE(w1)\
-\
-    CREATE_LINE(w2, 3, 3, 3, 2.75)\
-    LINE_COLOR(w2, 95, 94, 97)\
-    LINE_GRADIENT(w2, 106, 106, 106)\
-    REG_LINE(w2)\
-\
-    CREATE_LINE(w3, 0, 3, 0.25, 3)\
-    LINE_COLOR(w3, 95, 94, 97)\
-    LINE_GRADIENT(w3, 106, 106, 106)\
-    REG_LINE(w3)\
-\
-    CREATE_LINE(w4, 3, 3, 2.75, 3)\
-    LINE_COLOR(w4, 95, 94, 97)\
-    LINE_GRADIENT(w4, 106, 106, 106)\
-    REG_LINE(w4)\
-\
-    CREATE_LINE(w5, 3, 3, 3.25, 3)\
-    LINE_COLOR(w5, 95, 94, 97)\
-    LINE_GRADIENT(w5, 106, 106, 106)\
-    REG_LINE(w5)\
-\
-    CREATE_LINE(w6, 6, 3, 5.75, 3)\
-    LINE_COLOR(w6, 95, 94, 97)\
-    LINE_GRADIENT(w6, 106, 106, 106)\
-    REG_LINE(w6)\
-\
-    CREATE_LINE(w7, 3, 3, 3, 3.25)\
-    LINE_COLOR(w7, 95, 94, 97)\
-    LINE_GRADIENT(w7, 106, 106, 106)\
-    REG_LINE(w7)\
-\
-    CREATE_LINE(w8, 3, 6, 3, 5.75)\
-    LINE_COLOR(w8, 95, 94, 97)\
-    LINE_GRADIENT(w8, 106, 106, 106)\
-    REG_LINE(w8)\
-\
-    CREATE_LINE(r1w1, 0, 0, 0.5, 0)\
-    LINE_COLOR(r1w1, 164, 119, 116)\
-    LINE_CHECKERBOARD(r1w1)\
-    REG_LINE(r1w1)\
-\
-    CREATE_LINE(r1m1, 0.5, 0, 2.5, 0)\
-    LINE_COLOR(r1m1, 227, 202, 233)\
-    LINE_GRADIENT(r1m1, 227, 157, 184)\
-    LINE_BOUNCE(r1m1)\
-    ROOMS_AROUND(r1m1, r1, r1)\
-    REG_LINE(r1m1)\
-\
-    CREATE_LINE(r1w2, 2.5, 0, 3, 0)\
-    LINE_COLOR(r1w2, 164, 119, 116)\
-    LINE_CHECKERBOARD(r1w2)\
-    REG_LINE(r1w2)\
-\
-    CREATE_LINE(r1w3, 0, 0, 0, 3)\
-    LINE_COLOR(r1w3, 164, 119, 116)\
-    LINE_CHECKERBOARD(r1w3)\
-    REG_LINE(r1w3)\
-\
-    CREATE_LINE(r2w1, 0, 3, 0, 6)\
-    LINE_COLOR(r2w1, 138, 171, 150)\
-    LINE_CHECKERBOARD(r2w1)\
-    REG_LINE(r2w1)\
-\
-    CREATE_LINE(r2w2, 0, 6, 3, 6)\
-    LINE_COLOR(r2w2, 138, 171, 150)\
-    LINE_CHECKERBOARD(r2w2)\
-    REG_LINE(r2w2)\
-\
-    CREATE_LINE(r3w1, 3, 0, 6, 0)\
-    LINE_COLOR(r3w1, 126, 145, 177)\
-    LINE_CHECKERBOARD(r3w1)\
-    REG_LINE(r3w1)\
-\
-    CREATE_LINE(r3w2, 6, 0, 6, 3)\
-    LINE_COLOR(r3w2, 126, 145, 177)\
-    LINE_CHECKERBOARD(r3w2)\
-    REG_LINE(r3w2)\
-\
-    CREATE_LINE(t1, 3, 3.25, 3, 5.75)\
-    CREATE_LINE(t2, 3.25, 3, 5.75, 3)\
-    LINE_TELEPORT(t1, t2)\
-    LINE_TELEPORT(t2, t1)\
-    ROOMS_AROUND(t1, r2, r3)\
-    ROOMS_AROUND(t2, r2, r1)\
-    REG_LINE(t1)\
-    REG_LINE(t2)\
-\
-    CREATE_LINE(f1, .25, .25, .5, .25)\
-    LINE_IMAGE(f1, "../resources/flower.png", 0.5, 0.5)\
-    LINE_GHOST(f1)\
-    ROOMS_AROUND(f1, r1, r1)\
-    REG_LINE(f1)\
-\
-    CREATE_LINE(g1, 0.25, 3, 2.75, 3)\
-    LINE_GHOST(g1)\
-    LINE_EMPTY(g1)\
-    ROOMS_AROUND(g1, r2, r1)\
-    REG_LINE(g1)\
-\
-    CREATE_LINE(g2, 3, 0.25, 3, 2.75)\
-    LINE_GHOST(g2)\
-    LINE_EMPTY(g2)\
-    ROOMS_AROUND(g2, r1, r3)\
-    REG_LINE(g2)\
-\
-    Color bg = Color_new(107, 110, 101);\
-\
-    world.n_rooms = 3;\
-    world.rooms = (Room**)malloc(sizeof(Room*) * world.n_rooms);\
-    world.rooms[0] = &r1;\
-    world.rooms[1] = &r2;\
-    world.rooms[2] = &r3;
+    world.n_rooms = 3; \
+    world.rooms = (Room**)malloc(sizeof(Room*) * world.n_rooms); \
+    CREATE_ROOM(_r_0, 0, 0, 3, 3) \
+    ROOM_COLOR(_r_0, 230, 32, 32) \
+    world.rooms[0] = &_r_0; \
+    CREATE_ROOM(_r_1, 0, 3, 3, 3) \
+    ROOM_COLOR(_r_1, 32, 230, 32) \
+    world.rooms[1] = &_r_1; \
+    CREATE_ROOM(_r_2, 3, 0, 3, 3) \
+    ROOM_COLOR(_r_2, 32, 32, 230) \
+    world.rooms[2] = &_r_2; \
+    world.player_position = Vec2D_new(1.5, 1.5); \
+    world.player_angle = 0; \
+    Color bg = Color_new(107, 110, 101); \
+    Lines lines; \
+    lines.length = 21; \
+    lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length); \
+     \
+    CREATE_LINE(_w_0, 3, 0, 3, 0.25) \
+    LINE_COLOR(_w_0, 95, 94, 97) \
+    LINE_GRADIENT(_w_0, 106,106,106) \
+    ROOMS_AROUND(_w_0, _r_0, _r_2) \
+     \
+    CREATE_LINE(_w_1, 3, 3, 3, 2.75) \
+    LINE_COLOR(_w_1, 95, 94, 97) \
+    LINE_GRADIENT(_w_1, 106,106,106) \
+    ROOMS_AROUND(_w_1, _r_2, _r_0) \
+     \
+    CREATE_LINE(_w_2, 0, 3, 0.25, 3) \
+    LINE_COLOR(_w_2, 95, 94, 97) \
+    LINE_GRADIENT(_w_2, 106,106,106) \
+    ROOMS_AROUND(_w_2, _r_1, _r_0) \
+     \
+    CREATE_LINE(_w_3, 3, 3, 2.75, 3) \
+    LINE_COLOR(_w_3, 95, 94, 97) \
+    LINE_GRADIENT(_w_3, 106,106,106) \
+    ROOMS_AROUND(_w_3, _r_0, _r_1) \
+     \
+    CREATE_LINE(_w_4, 3, 3, 3.25, 3) \
+    LINE_COLOR(_w_4, 95, 94, 97) \
+    LINE_GRADIENT(_w_4, 106,106,106) \
+    ROOM_RIGHT(_w_4, _r_2) \
+     \
+    CREATE_LINE(_w_5, 6, 3, 5.75, 3) \
+    LINE_COLOR(_w_5, 95, 94, 97) \
+    LINE_GRADIENT(_w_5, 106,106,106) \
+    ROOM_LEFT(_w_5, _r_2) \
+     \
+    CREATE_LINE(_w_6, 3, 3, 3, 3.25) \
+    LINE_COLOR(_w_6, 95, 94, 97) \
+    LINE_GRADIENT(_w_6, 106,106,106) \
+    ROOM_LEFT(_w_6, _r_1) \
+     \
+    CREATE_LINE(_w_7, 3, 6, 3, 5.75) \
+    LINE_COLOR(_w_7, 95, 94, 97) \
+    LINE_GRADIENT(_w_7, 106,106,106) \
+    ROOM_RIGHT(_w_7, _r_1) \
+     \
+    CREATE_LINE(_w_8, 0, 0, 0.5, 0) \
+    LINE_COLOR(_w_8, 164, 119, 116) \
+    LINE_CHECKERBOARD(_w_8) \
+    ROOM_LEFT(_w_8, _r_0) \
+     \
+    CREATE_LINE(_w_9, 0.5, 0, 2.5, 0) \
+    LINE_COLOR(_w_9, 227, 202, 233) \
+    LINE_BOUNCE(_w_9) \
+    ROOM_RIGHT(_w_9, _r_0) \
+     \
+    CREATE_LINE(_w_10, 2.5, 0, 3, 0) \
+    LINE_COLOR(_w_10, 164, 119, 116) \
+    LINE_CHECKERBOARD(_w_10) \
+    ROOM_LEFT(_w_10, _r_0) \
+     \
+    CREATE_LINE(_w_11, 0, 0, 0, 3) \
+    LINE_COLOR(_w_11, 164, 119, 116) \
+    LINE_CHECKERBOARD(_w_11) \
+    ROOM_RIGHT(_w_11, _r_0) \
+     \
+    CREATE_LINE(_w_12, 0, 3, 0, 6) \
+    LINE_COLOR(_w_12, 126, 145, 177) \
+    LINE_CHECKERBOARD(_w_12) \
+    ROOM_RIGHT(_w_12, _r_1) \
+     \
+    CREATE_LINE(_w_13, 0, 6, 3, 6) \
+    LINE_COLOR(_w_13, 126, 145, 177) \
+    LINE_CHECKERBOARD(_w_13) \
+    ROOM_RIGHT(_w_13, _r_1) \
+     \
+    CREATE_LINE(_w_14, 3, 0, 6, 0) \
+    LINE_COLOR(_w_14, 126, 145, 177) \
+    LINE_CHECKERBOARD(_w_14) \
+    ROOM_LEFT(_w_14, _r_2) \
+     \
+    CREATE_LINE(_w_15, 6, 0, 6, 3) \
+    LINE_COLOR(_w_15, 126, 145, 177) \
+    LINE_CHECKERBOARD(_w_15) \
+    ROOM_LEFT(_w_15, _r_2) \
+     \
+    CREATE_LINE(_w_16, 3, 3.25, 3, 5.75) \
+    ROOM_RIGHT(_w_16, _r_2) \
+     \
+    CREATE_LINE(_w_17, 3.25, 3, 5.75, 3) \
+    ROOM_LEFT(_w_17, _r_1) \
+     \
+    CREATE_LINE(_w_18, 0.25, 0.25, 0.5, 0.25) \
+    LINE_IMAGE(_w_18, "../resources/flower.png",0.5,0.5) \
+    LINE_GHOST(_w_18) \
+    ROOMS_AROUND(_w_18, _r_0, _r_0) \
+     \
+    CREATE_LINE(_w_19, 0.25, 3, 2.75, 3) \
+    LINE_EMPTY(_w_19) \
+    LINE_GHOST(_w_19) \
+    ROOMS_AROUND(_w_19, _r_1, _r_0) \
+     \
+    CREATE_LINE(_w_20, 3, 0.25, 3, 2.75) \
+    LINE_EMPTY(_w_20) \
+    LINE_GHOST(_w_20) \
+    ROOMS_AROUND(_w_20, _r_0, _r_2) \
+     \
+    LINE_TELEPORT(_w_16, _w_17) \
+     \
+    LINE_TELEPORT(_w_17, _w_16) \
+     \
+    lines.lines[0] = _w_0; \
+    lines.lines[1] = _w_1; \
+    lines.lines[2] = _w_2; \
+    lines.lines[3] = _w_3; \
+    lines.lines[4] = _w_4; \
+    lines.lines[5] = _w_5; \
+    lines.lines[6] = _w_6; \
+    lines.lines[7] = _w_7; \
+    lines.lines[8] = _w_8; \
+    lines.lines[9] = _w_9; \
+    lines.lines[10] = _w_10; \
+    lines.lines[11] = _w_11; \
+    lines.lines[12] = _w_12; \
+    lines.lines[13] = _w_13; \
+    lines.lines[14] = _w_14; \
+    lines.lines[15] = _w_15; \
+    lines.lines[16] = _w_16; \
+    lines.lines[17] = _w_17; \
+    lines.lines[18] = _w_18; \
+    lines.lines[19] = _w_19; \
+    lines.lines[20] = _w_20; \
 
 #define LEVEL_4 \
-  world.player_position = new_Vec2D(1, 1.5); \
-  DEFINE_ROOMS(1, world) \
-  world.rooms[0] = &r1;
+    world.n_rooms = 0; \
+    world.rooms = (Room**)malloc(sizeof(Room*) * world.n_rooms); \
+    world.player_position = Vec2D_new(1.75, -1.5); \
+    world.player_angle = 1.5707963267948966; \
+    Color bg = Color_new(128, 128, 128); \
+    Lines lines; \
+    lines.length = 16; \
+    lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length); \
+     \
+    CREATE_LINE(_w_0, -0.2, -0.39996000000000004, 0.2, -0.39996000000000004) \
+     \
+    CREATE_LINE(_w_1, -0.2, 0.39996000000000004, 0.2, 0.39996000000000004) \
+     \
+    CREATE_LINE(_w_2, 1.6, -0.39996000000000004, 2, -0.39996000000000004) \
+     \
+    CREATE_LINE(_w_3, 1.6, 1.59996, 2, 1.59996) \
+     \
+    CREATE_LINE(_w_4, -0.2, -0.4, 0.2, -0.4) \
+     \
+    CREATE_LINE(_w_5, -0.2, 0.4, 0.2, 0.4) \
+     \
+    CREATE_LINE(_w_6, 1.6, -0.4, 2, -0.4) \
+     \
+    CREATE_LINE(_w_7, 1.6, 1.6, 2, 1.6) \
+     \
+    CREATE_LINE(_w_8, -0.2, -0.4, -0.2, 0.4) \
+    LINE_COLOR(_w_8, 13, 74, 55) \
+    LINE_CHECKERBOARD(_w_8) \
+     \
+    CREATE_LINE(_w_9, 0.2, -0.4, 0.2, 0.4) \
+    LINE_COLOR(_w_9, 13, 74, 55) \
+    LINE_CHECKERBOARD(_w_9) \
+     \
+    CREATE_LINE(_w_10, -0.19996000000000003, -0.4, -0.19996000000000003, 0.4) \
+    LINE_COLOR(_w_10, 13, 48, 74) \
+    LINE_CHECKERBOARD(_w_10) \
+     \
+    CREATE_LINE(_w_11, 0.19996000000000003, -0.4, 0.19996000000000003, 0.4) \
+    LINE_COLOR(_w_11, 13, 48, 74) \
+    LINE_CHECKERBOARD(_w_11) \
+     \
+    CREATE_LINE(_w_12, 1.6, -0.4, 1.6, 1.6) \
+    LINE_COLOR(_w_12, 13, 48, 74) \
+    LINE_CHECKERBOARD(_w_12) \
+     \
+    CREATE_LINE(_w_13, 2, -0.4, 2, 1.6) \
+    LINE_COLOR(_w_13, 13, 48, 74) \
+    LINE_CHECKERBOARD(_w_13) \
+     \
+    CREATE_LINE(_w_14, 1.60004, -0.4, 1.60004, 1.6) \
+    LINE_COLOR(_w_14, 13, 74, 55) \
+    LINE_CHECKERBOARD(_w_14) \
+     \
+    CREATE_LINE(_w_15, 1.9999600000000002, -0.4, 1.9999600000000002, 1.6) \
+    LINE_COLOR(_w_15, 13, 74, 55) \
+    LINE_CHECKERBOARD(_w_15) \
+     \
+    LINE_TELEPORT(_w_0, _w_6) \
+     \
+    LINE_TELEPORT(_w_1, _w_7) \
+     \
+    LINE_TELEPORT(_w_2, _w_4) \
+     \
+    LINE_TELEPORT(_w_3, _w_5) \
+     \
+    LINE_TELEPORT(_w_4, _w_2) \
+     \
+    LINE_TELEPORT(_w_5, _w_3) \
+     \
+    LINE_TELEPORT(_w_6, _w_0) \
+     \
+    LINE_TELEPORT(_w_7, _w_1) \
+     \
+    lines.lines[0] = _w_0; \
+    lines.lines[1] = _w_1; \
+    lines.lines[2] = _w_2; \
+    lines.lines[3] = _w_3; \
+    lines.lines[4] = _w_4; \
+    lines.lines[5] = _w_5; \
+    lines.lines[6] = _w_6; \
+    lines.lines[7] = _w_7; \
+    lines.lines[8] = _w_8; \
+    lines.lines[9] = _w_9; \
+    lines.lines[10] = _w_10; \
+    lines.lines[11] = _w_11; \
+    lines.lines[12] = _w_12; \
+    lines.lines[13] = _w_13; \
+    lines.lines[14] = _w_14; \
+    lines.lines[15] = _w_15; \
+
+#define LEVEL_5 \
+    world.n_rooms = 0; \
+    world.rooms = (Room**)malloc(sizeof(Room*) * world.n_rooms); \
+    world.player_position = Vec2D_new(0.5, 1.5); \
+    world.player_angle = -1.5707963267948966; \
+    Color bg = Color_new(128, 128, 128); \
+    Lines lines; \
+    lines.length = 3; \
+    lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length); \
+     \
+    CREATE_LINE(_w_0, 0, 0, 1, 0) \
+    LINE_COLOR(_w_0, 53, 92, 50) \
+    LINE_CHECKERBOARD(_w_0) \
+     \
+    CREATE_LINE(_w_1, 0.25, 0.01, 0.75, 0.01) \
+    LINE_IMAGE(_w_1, "../resources/bone.png",0.5,0.5) \
+     \
+    CREATE_LINE(_w_2, 0, 0, 0, 1) \
+    LINE_COLOR(_w_2, 31, 110, 120) \
+    LINE_BOUNCE(_w_2) \
+     \
+    lines.lines[0] = _w_0; \
+    lines.lines[1] = _w_1; \
+    lines.lines[2] = _w_2; \
+
+#define LEVEL_6 \
+    world.n_rooms = 0; \
+    world.rooms = (Room**)malloc(sizeof(Room*) * world.n_rooms); \
+    world.player_position = Vec2D_new(0.5, 1.5); \
+    world.player_angle = -1.5707963267948966; \
+    Color bg = Color_new(128, 128, 128); \
+    Lines lines; \
+    lines.length = 4; \
+    lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length); \
+     \
+    CREATE_LINE(_w_0, 0, 0, 1, 0) \
+    LINE_COLOR(_w_0, 53, 92, 50) \
+    LINE_CHECKERBOARD(_w_0) \
+     \
+    CREATE_LINE(_w_1, 0.25, 0.01, 0.75, 0.01) \
+    LINE_IMAGE(_w_1, "../resources/bone.png",0.5,0.5) \
+     \
+    CREATE_LINE(_w_2, 0, 0, 0, 0.75) \
+    LINE_COLOR(_w_2, 31, 110, 120) \
+    LINE_BOUNCE(_w_2) \
+     \
+    CREATE_LINE(_w_3, 1, 0, 1, 0.75) \
+    LINE_COLOR(_w_3, 208, 121, 39) \
+    LINE_BOUNCE(_w_3) \
+     \
+    lines.lines[0] = _w_0; \
+    lines.lines[1] = _w_1; \
+    lines.lines[2] = _w_2; \
+    lines.lines[3] = _w_3; \
+
+#define LEVEL_7 \
+    world.n_rooms = 0; \
+    world.rooms = (Room**)malloc(sizeof(Room*) * world.n_rooms); \
+    world.player_position = Vec2D_new(0.5, 0.75); \
+    world.player_angle = -0.5235987755982988; \
+    Color bg = Color_new(128, 128, 128); \
+    Lines lines; \
+    lines.length = 6; \
+    lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length); \
+     \
+    CREATE_LINE(_w_0, 0, 0, 1.5, 0) \
+    LINE_COLOR(_w_0, 53, 92, 50) \
+    LINE_CHECKERBOARD(_w_0) \
+     \
+    CREATE_LINE(_w_1, 0.25, 0.01, 0.75, 0.01) \
+    LINE_IMAGE(_w_1, "../resources/bone.png",0.5,0.5) \
+     \
+    CREATE_LINE(_w_2, 0, 1, 1.5, 1) \
+    LINE_COLOR(_w_2, 50, 92, 87) \
+    LINE_CHECKERBOARD(_w_2) \
+     \
+    CREATE_LINE(_w_3, 0.75, 0.99, 1.25, 0.99) \
+    LINE_IMAGE(_w_3, "../resources/flower.png",0.5,0.5) \
+     \
+    CREATE_LINE(_w_4, 0, 0, 0, 1) \
+    LINE_COLOR(_w_4, 31, 110, 120) \
+     \
+    CREATE_LINE(_w_5, 1.5, 0, 1.5, 1) \
+    LINE_COLOR(_w_5, 208, 121, 39) \
+     \
+    LINE_TELEPORT(_w_4, _w_5) \
+     \
+    LINE_TELEPORT(_w_5, _w_4) \
+     \
+    lines.lines[0] = _w_0; \
+    lines.lines[1] = _w_1; \
+    lines.lines[2] = _w_2; \
+    lines.lines[3] = _w_3; \
+    lines.lines[4] = _w_4; \
+    lines.lines[5] = _w_5; \
+
