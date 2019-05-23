@@ -21,7 +21,7 @@ module.exports = (levels) => {
 
     for (let x = 0; x < level._rooms.length; x++) {
       let room = level._rooms[x];
-      write(`CREATE_ROOM(_r_${x}, ${room.x}, ${room.y}, ${room.w}, ${room.h})`);
+      write(`CREATE_ROOM(_r_${x}, ${room.x * level._scale}, ${room.y * level._scale}, ${room.w * level._scale}, ${room.h * level._scale})`);
       write(`ROOM_COLOR(_r_${x}, ${room.red}, ${room.green}, ${room.blue})`);
       write(`world.rooms[${x}] = &_r_${x};`);
     }

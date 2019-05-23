@@ -19,11 +19,13 @@ void draw(
         ray.vec.y = sin(angle + world->player_angle);
 
         RayIntersection cast = send_ray(world, &ray, layer);
+        int last_ground_height = 0;
+        Room* current_room;
+        
         if (cast.success) {
             size_t n_hit;
-            int last_ground_height = 0;
 
-            Room* current_room = find_current_room(world);
+            current_room = find_current_room(world);
 
             for (n_hit = cast.n_hits - 1; n_hit != -1; n_hit--) {
                 Hit hit = cast.hits[n_hit];
@@ -102,14 +104,13 @@ void draw(
                 }
                 last_ground_height = h;
             }
+        }
 
-            if (game->draw_floor) {
-                current_room = find_current_room(world);
-                if (current_room != NULL) {
-                    EZ_trace_rectangle_plein(x, game->height / 2 + last_ground_height, 0, game->height - last_ground_height, current_room->color.red, current_room->color.green, current_room->color.blue, 255);
-                }
-            }
-
+        if (game->draw_floor) {
+          current_room = find_current_room(world);
+          if (current_room != NULL) {
+            EZ_trace_rectangle_plein(x, game->height / 2 + last_ground_height, 0, game->height / 2 - last_ground_height, current_room->color.red, current_room->color.green, current_room->color.blue, 255);
+          }
         }
     }
 }

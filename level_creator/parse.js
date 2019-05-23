@@ -97,6 +97,15 @@ global.Room = class Room {
     this.blue = blue;
     return this;
   }
+
+  wall(ghost) {
+    let f = ghost ? ((l) => l.ghost().empty()) : ((l) => l.color(this.red, this.green, this.blue));
+    level.register_wall(f(new Wall(this.x, this.y, this.x + this.w, this.y)));
+    level.register_wall(f(new Wall(this.x + this.w, this.y, this.x + this.w, this.y + this.h)));
+    level.register_wall(f(new Wall(this.x + this.w, this.y + this.h, this.x, this.y + this.h)));
+    level.register_wall(f(new Wall(this.x, this.y + this.h, this.x, this.y)));
+    return this;
+  }
 }
 
 module.exports = (files) => {
@@ -114,6 +123,7 @@ module.exports = (files) => {
       _bg_red: 128,
       _bg_green: 128,
       _bg_blue: 128,
+      _ground: null,
 
       name(str) {
         this._name = str;
@@ -151,6 +161,11 @@ module.exports = (files) => {
         this._bg_red = red;
         this._bg_green = green;
         this._bg_blue = blue;
+        return this;
+      },
+
+      ground(...c) {
+        this._ground = parse_color(...c);
         return this;
       }
     };

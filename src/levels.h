@@ -291,62 +291,133 @@
     lines.lines[20] = _w_20; \
 
 #define LEVEL_4 \
-    world.n_rooms = 0; \
+    world.n_rooms = 5; \
     world.rooms = (Room**)malloc(sizeof(Room*) * world.n_rooms); \
+    CREATE_ROOM(_r_0, 1.6, -0.4, 0.4, 2) \
+    ROOM_COLOR(_r_0, 56, 56, 56) \
+    world.rooms[0] = &_r_0; \
+    CREATE_ROOM(_r_1, -0.2, -0.4, 0.4, 0.8) \
+    ROOM_COLOR(_r_1, 56, 56, 56) \
+    world.rooms[1] = &_r_1; \
+    CREATE_ROOM(_r_2, 1.5, 2.3000000000000003, 0.6000000000000001, 0.6000000000000001) \
+    ROOM_COLOR(_r_2, 58, 131, 32) \
+    world.rooms[2] = &_r_2; \
+    CREATE_ROOM(_r_3, -0.30000000000000004, -1.3, 0.6000000000000001, 0.6000000000000001) \
+    ROOM_COLOR(_r_3, 41, 74, 125) \
+    world.rooms[3] = &_r_3; \
+    CREATE_ROOM(_r_4, -858993459.2, -858993459.2, 1717986918.4, 1717986918.4) \
+    ROOM_COLOR(_r_4, 139, 143, 147) \
+    world.rooms[4] = &_r_4; \
     world.player_position = Vec2D_new(1.75, -1.5); \
     world.player_angle = 1.5707963267948966; \
-    Color bg = Color_new(128, 128, 128); \
+    Color bg = Color_new(169, 180, 189); \
     Lines lines; \
-    lines.length = 16; \
+    lines.length = 24; \
     lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length); \
      \
     CREATE_LINE(_w_0, -0.2, -0.39996000000000004, 0.2, -0.39996000000000004) \
+    ROOMS_AROUND(_w_0, _r_0, _r_4) \
      \
     CREATE_LINE(_w_1, -0.2, 0.39996000000000004, 0.2, 0.39996000000000004) \
+    ROOMS_AROUND(_w_1, _r_4, _r_0) \
      \
     CREATE_LINE(_w_2, 1.6, -0.39996000000000004, 2, -0.39996000000000004) \
+    ROOMS_AROUND(_w_2, _r_1, _r_4) \
      \
     CREATE_LINE(_w_3, 1.6, 1.59996, 2, 1.59996) \
+    ROOMS_AROUND(_w_3, _r_4, _r_1) \
      \
     CREATE_LINE(_w_4, -0.2, -0.4, 0.2, -0.4) \
+    ROOMS_AROUND(_w_4, _r_0, _r_0) \
      \
     CREATE_LINE(_w_5, -0.2, 0.4, 0.2, 0.4) \
+    ROOMS_AROUND(_w_5, _r_0, _r_0) \
      \
     CREATE_LINE(_w_6, 1.6, -0.4, 2, -0.4) \
+    ROOMS_AROUND(_w_6, _r_1, _r_1) \
      \
     CREATE_LINE(_w_7, 1.6, 1.6, 2, 1.6) \
+    ROOMS_AROUND(_w_7, _r_1, _r_1) \
      \
     CREATE_LINE(_w_8, -0.2, -0.4, -0.2, 0.4) \
     LINE_COLOR(_w_8, 13, 74, 55) \
     LINE_CHECKERBOARD(_w_8) \
+    ROOMS_AROUND(_w_8, _r_4, _r_1) \
      \
     CREATE_LINE(_w_9, 0.2, -0.4, 0.2, 0.4) \
     LINE_COLOR(_w_9, 13, 74, 55) \
     LINE_CHECKERBOARD(_w_9) \
+    ROOMS_AROUND(_w_9, _r_1, _r_4) \
      \
     CREATE_LINE(_w_10, -0.19996000000000003, -0.4, -0.19996000000000003, 0.4) \
     LINE_COLOR(_w_10, 13, 48, 74) \
     LINE_CHECKERBOARD(_w_10) \
+    ROOMS_AROUND(_w_10, _r_1, _r_1) \
      \
     CREATE_LINE(_w_11, 0.19996000000000003, -0.4, 0.19996000000000003, 0.4) \
     LINE_COLOR(_w_11, 13, 48, 74) \
     LINE_CHECKERBOARD(_w_11) \
+    ROOMS_AROUND(_w_11, _r_1, _r_1) \
      \
     CREATE_LINE(_w_12, 1.6, -0.4, 1.6, 1.6) \
     LINE_COLOR(_w_12, 13, 48, 74) \
     LINE_CHECKERBOARD(_w_12) \
+    ROOMS_AROUND(_w_12, _r_4, _r_0) \
      \
     CREATE_LINE(_w_13, 2, -0.4, 2, 1.6) \
     LINE_COLOR(_w_13, 13, 48, 74) \
     LINE_CHECKERBOARD(_w_13) \
+    ROOMS_AROUND(_w_13, _r_0, _r_4) \
      \
     CREATE_LINE(_w_14, 1.60004, -0.4, 1.60004, 1.6) \
     LINE_COLOR(_w_14, 13, 74, 55) \
     LINE_CHECKERBOARD(_w_14) \
+    ROOMS_AROUND(_w_14, _r_4, _r_0) \
      \
     CREATE_LINE(_w_15, 1.9999600000000002, -0.4, 1.9999600000000002, 1.6) \
     LINE_COLOR(_w_15, 13, 74, 55) \
     LINE_CHECKERBOARD(_w_15) \
+    ROOMS_AROUND(_w_15, _r_0, _r_0) \
+     \
+    CREATE_LINE(_w_16, 1.5, 2.3000000000000003, 2.1, 2.3000000000000003) \
+    LINE_EMPTY(_w_16) \
+    LINE_GHOST(_w_16) \
+    ROOMS_AROUND(_w_16, _r_2, _r_4) \
+     \
+    CREATE_LINE(_w_17, 2.1, 2.3000000000000003, 2.1, 2.9000000000000004) \
+    LINE_EMPTY(_w_17) \
+    LINE_GHOST(_w_17) \
+    ROOMS_AROUND(_w_17, _r_2, _r_4) \
+     \
+    CREATE_LINE(_w_18, 2.1, 2.9000000000000004, 1.5, 2.9000000000000004) \
+    LINE_EMPTY(_w_18) \
+    LINE_GHOST(_w_18) \
+    ROOMS_AROUND(_w_18, _r_2, _r_4) \
+     \
+    CREATE_LINE(_w_19, 1.5, 2.9000000000000004, 1.5, 2.3000000000000003) \
+    LINE_EMPTY(_w_19) \
+    LINE_GHOST(_w_19) \
+    ROOMS_AROUND(_w_19, _r_2, _r_4) \
+     \
+    CREATE_LINE(_w_20, -0.30000000000000004, -1.3, 0.30000000000000004, -1.3) \
+    LINE_EMPTY(_w_20) \
+    LINE_GHOST(_w_20) \
+    ROOMS_AROUND(_w_20, _r_3, _r_4) \
+     \
+    CREATE_LINE(_w_21, 0.30000000000000004, -1.3, 0.30000000000000004, -0.7000000000000001) \
+    LINE_EMPTY(_w_21) \
+    LINE_GHOST(_w_21) \
+    ROOMS_AROUND(_w_21, _r_3, _r_4) \
+     \
+    CREATE_LINE(_w_22, 0.30000000000000004, -0.7000000000000001, -0.30000000000000004, -0.7000000000000001) \
+    LINE_EMPTY(_w_22) \
+    LINE_GHOST(_w_22) \
+    ROOMS_AROUND(_w_22, _r_3, _r_4) \
+     \
+    CREATE_LINE(_w_23, -0.30000000000000004, -0.7000000000000001, -0.30000000000000004, -1.3) \
+    LINE_EMPTY(_w_23) \
+    LINE_GHOST(_w_23) \
+    ROOMS_AROUND(_w_23, _r_3, _r_4) \
      \
     LINE_TELEPORT(_w_0, _w_6) \
      \
@@ -380,6 +451,14 @@
     lines.lines[13] = _w_13; \
     lines.lines[14] = _w_14; \
     lines.lines[15] = _w_15; \
+    lines.lines[16] = _w_16; \
+    lines.lines[17] = _w_17; \
+    lines.lines[18] = _w_18; \
+    lines.lines[19] = _w_19; \
+    lines.lines[20] = _w_20; \
+    lines.lines[21] = _w_21; \
+    lines.lines[22] = _w_22; \
+    lines.lines[23] = _w_23; \
 
 #define LEVEL_5 \
     world.n_rooms = 0; \

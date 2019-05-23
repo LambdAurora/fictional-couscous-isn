@@ -1,7 +1,13 @@
 const vec = require("./vec");
 const EPSILON = 0.0001;
+const C_DOUBLE_INFINITY = 2**32; // I know it's not infinity, but that's big enough
 
 module.exports = (level) => {
+  if (level._ground) {
+    let world_room = new Room(-C_DOUBLE_INFINITY / 2, -C_DOUBLE_INFINITY / 2, C_DOUBLE_INFINITY, C_DOUBLE_INFINITY).color(...level._ground);
+    level._rooms.push(world_room);
+  }
+
   function find_room(x, y) {
     for (let n = 0; n < level._rooms.length; n++) {
       let room = level._rooms[n];

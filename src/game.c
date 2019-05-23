@@ -31,7 +31,7 @@ void render_top_mode(Game* g, World* world) {
 
         // On dessine chaque salle
         size_t room_i;
-        for (room_i = 0; room_i < world->n_rooms; room_i++) {
+        for (room_i = world->n_rooms - 1; room_i >= 0 && room_i != -1; room_i--) {
             Room* room = world->rooms[room_i];
             EZ_trace_rectangle_plein(to_screen_coord(g, room->x), to_screen_coord(g, room->y), room->width * g->zoom, room->height * g->zoom, room->color.red, room->color.green, room->color.blue, 255);
         }

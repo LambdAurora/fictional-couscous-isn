@@ -51,7 +51,7 @@ int main(int argc, char** argv) {
     World world;
     World_init(&world, Vec2D_new(1.5, 1.5));
 
-    LEVEL_3
+    LEVEL_4
 
     if (game.top_mode) world.player_angle = -M_PI / 2;
     world.layers = (Layer*) malloc(sizeof(Layer) * 1);
