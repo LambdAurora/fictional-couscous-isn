@@ -31,6 +31,7 @@
      \
     CREATE_LINE(_w_5, 1.4, 1.4, 1.4, -1.75) \
     LINE_COLOR(_w_5, 180, 191, 122) \
+    LINE_BOUNCE(_w_5) \
      \
     CREATE_LINE(_w_6, -1.75, 1.4, -1.75, -1.75) \
     LINE_COLOR(_w_6, 125, 125, 125) \
@@ -555,4 +556,55 @@
     lines.lines[3] = _w_3; \
     lines.lines[4] = _w_4; \
     lines.lines[5] = _w_5; \
+
+#define LEVEL_BOUNCE \
+    world.n_rooms = 1; \
+    world.rooms = (Room**)malloc(sizeof(Room*) * world.n_rooms); \
+    CREATE_ROOM(_r_0, -2147483648, -2147483648, 4294967296, 4294967296) \
+    ROOM_COLOR(_r_0, 87, 87, 87) \
+    world.rooms[0] = &_r_0; \
+    world.player_position = Vec2D_new(0, -1); \
+    world.player_angle = 0; \
+    Color bg = Color_new(99, 99, 99); \
+    Lines lines; \
+    lines.length = 2; \
+    lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length); \
+     \
+    CREATE_LINE(_w_0, -0.5, 0, 0.5, 0) \
+    LINE_IMAGE(_w_0, "../resources/carton-detoure-s.png",1,1) \
+    ROOMS_AROUND(_w_0, _r_0, _r_0) \
+     \
+    CREATE_LINE(_w_1, -0.5, -0.33, -0.5, -0.66) \
+    LINE_COLOR(_w_1, 127, 210, 149) \
+    LINE_BOUNCE(_w_1) \
+    ROOMS_AROUND(_w_1, _r_0, _r_0) \
+     \
+    lines.lines[0] = _w_0; \
+    lines.lines[1] = _w_1; \
+
+#define LEVEL_TRANS \
+    world.n_rooms = 1; \
+    world.rooms = (Room**)malloc(sizeof(Room*) * world.n_rooms); \
+    CREATE_ROOM(_r_0, -2147483648, -2147483648, 4294967296, 4294967296) \
+    ROOM_COLOR(_r_0, 87, 87, 87) \
+    world.rooms[0] = &_r_0; \
+    world.player_position = Vec2D_new(0, -1); \
+    world.player_angle = 0; \
+    Color bg = Color_new(99, 99, 99); \
+    Lines lines; \
+    lines.length = 2; \
+    lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length); \
+     \
+    CREATE_LINE(_w_0, -0.5, 0, 0.5, 0) \
+    LINE_IMAGE(_w_0, "../resources/carton-detoure-s.png",1,1) \
+    ROOMS_AROUND(_w_0, _r_0, _r_0) \
+     \
+    CREATE_LINE(_w_1, 0, -0.33, 0.5, -0.33) \
+    LINE_COLOR(_w_1, 127, 210, 149) \
+    LINE_TRANSPARENT(_w_1, 76.5) \
+    LINE_GHOST(_w_1) \
+    ROOMS_AROUND(_w_1, _r_0, _r_0) \
+     \
+    lines.lines[0] = _w_0; \
+    lines.lines[1] = _w_1; \
 
