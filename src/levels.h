@@ -224,12 +224,12 @@
     ROOM_RIGHT(_w_11, _r_0) \
      \
     CREATE_LINE(_w_12, 0, 3, 0, 6) \
-    LINE_COLOR(_w_12, 126, 145, 177) \
+    LINE_COLOR(_w_12, 138, 171, 150) \
     LINE_CHECKERBOARD(_w_12) \
     ROOM_RIGHT(_w_12, _r_1) \
      \
     CREATE_LINE(_w_13, 0, 6, 3, 6) \
-    LINE_COLOR(_w_13, 126, 145, 177) \
+    LINE_COLOR(_w_13, 138, 171, 150) \
     LINE_CHECKERBOARD(_w_13) \
     ROOM_RIGHT(_w_13, _r_1) \
      \
