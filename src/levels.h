@@ -31,7 +31,6 @@
      \
     CREATE_LINE(_w_5, 1.4, 1.4, 1.4, -1.75) \
     LINE_COLOR(_w_5, 180, 191, 122) \
-    LINE_BOUNCE(_w_5) \
      \
     CREATE_LINE(_w_6, -1.75, 1.4, -1.75, -1.75) \
     LINE_COLOR(_w_6, 125, 125, 125) \

@@ -80,14 +80,14 @@ level.register_wall(
 // r2w1
 level.register_wall(
   new Wall(0, 3, 0, 6)
-  .color("#7e91b1")
+  .color("#8aab96")
   .checkerboard()
 );
 
 // r2w2
 level.register_wall(
   new Wall(0, 6, 3, 6)
-  .color("#7e91b1")
+  .color("#8aab96")
   .checkerboard()
 );
 
