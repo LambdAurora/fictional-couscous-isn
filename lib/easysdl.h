@@ -1,3 +1,8 @@
+/*
+ * Ce fichier n'est pas destiné à une utilisation publique.
+ * Il est réservé à être utilisé dans le cadre de cours d'ISN.
+ */
+
 #ifndef EASYSDL_H_INCLUDED
 #define EASYSDL_H_INCLUDED
 

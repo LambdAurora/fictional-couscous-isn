@@ -1,3 +1,12 @@
+/*
+ * Copyright © 2019 LambdAurora <aurora42lambda@gmail.com>, Shad Amethyst <shad.amethyst@gmail.com>
+ *
+ * This file is part of fictional_couscous_isn.
+ *
+ * Licensed under the MIT license. For more information,
+ * see the LICENSE file.
+ */
+
 #ifndef FICTIONAL_COUSCOUS_TEXTURE_H
 #define FICTIONAL_COUSCOUS_TEXTURE_H
 
@@ -9,10 +18,16 @@
 
 #define IMAGE_ADJUST 2
 
+/*!
+ * Représente une texture à partir d'une image.
+ */
 struct TextureImage {
+  // Pixels de la texture.
   uint8_t* pixels;
+  // Taille de l'image.
   double height;
   double width;
+  // Taille de la texture.
   int tex_width;
   int tex_height;
 };

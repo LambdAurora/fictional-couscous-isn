@@ -1,3 +1,12 @@
+/*
+ * Copyright © 2019 LambdAurora <aurora42lambda@gmail.com>, Shad Amethyst <shad.amethyst@gmail.com>
+ *
+ * This file is part of fictional_couscous_isn.
+ *
+ * Licensed under the MIT license. For more information,
+ * see the LICENSE file.
+ */
+
 #include "world.h"
 #include "../physics/raytrace.h"
 
@@ -10,9 +19,6 @@ void World_init(World* world, Position spawn_pos) {
 
 void World_update(World* world) {
     world->age++;
-
-    // Check if the player is out-of-bound:
-    //
 }
 
 #define FIX_POSITION(pos, movement) \
