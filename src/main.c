@@ -48,6 +48,8 @@ void parse_command_line(Game *game, int argc, char** argv) {
     }
 }
 
+int start(int argc, char** argv);
+
 int main(int argc, char** argv) {
   return start(argc, argv);
 }
