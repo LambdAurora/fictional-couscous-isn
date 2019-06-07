@@ -32,6 +32,7 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_GFX_INCLUDE_DIRS} ${SDL2_IMAGE_I
 
 set(PROJECT_SOURCES src/main.c
     src/game.c
+    src/wagner.c
     src/graphics/draw.c
     src/physics/physics.c
     src/ui/ui.c
