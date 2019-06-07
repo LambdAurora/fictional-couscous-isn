@@ -1,5 +1,5 @@
-level.player_position(1.5, -2)
-  .player_rotation(Math.PI / 2)
+level.player_position(1.5, -5)
+  .player_rotation(Math.PI * .4)
   .ground("#544357")
   .background("#b4b7d4");
 
@@ -48,6 +48,12 @@ wall_b.teleport(wall_a);
 level.register_wall(wall_a);
 level.register_wall(wall_b);
 
+level.register_wall(
+  new Wall(4, 3, 7, 3)
+  .image("resources/face.png", 1, 1)
+  .ghost()
+);
+
 level.register_room(
   new Room(5, 1, 1, 1)
   .color("#a37a7f")
@@ -62,7 +68,7 @@ level.register_room(
 
 /*
 
-*---*
+*---* ???
 |   |
 |   >  #
 |   |

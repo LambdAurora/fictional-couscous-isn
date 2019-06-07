@@ -593,11 +593,11 @@
     CREATE_ROOM(_r_2, -2147483648, -2147483648, 4294967296, 4294967296) \
     ROOM_COLOR(_r_2, 84, 67, 87) \
     world.rooms[2] = &_r_2; \
-    world.player_position = Vec2D_new(1.5, -2); \
-    world.player_angle = 1.5707963267948966; \
+    world.player_position = Vec2D_new(1.5, -5); \
+    world.player_angle = 1.2566370614359172; \
     Color bg = Color_new(180, 183, 212); \
     Lines lines; \
-    lines.length = 16; \
+    lines.length = 17; \
     lines.lines = (Line2D*) malloc(sizeof(Line2D) * lines.length); \
      \
     CREATE_LINE(_w_0, 0, 0, 0, 3) \
@@ -636,45 +636,50 @@
     CREATE_LINE(_w_7, 3, 2, 3, 1) \
     ROOMS_AROUND(_w_7, _r_2, _r_2) \
      \
-    CREATE_LINE(_w_8, 5, 1, 6, 1) \
-    LINE_EMPTY(_w_8) \
+    CREATE_LINE(_w_8, 4, 3, 7, 3) \
+    LINE_IMAGE(_w_8, "../resources/flower.png",1,1) \
     LINE_GHOST(_w_8) \
-    ROOMS_AROUND(_w_8, _r_0, _r_2) \
+    ROOMS_AROUND(_w_8, _r_2, _r_2) \
      \
-    CREATE_LINE(_w_9, 6, 1, 6, 2) \
+    CREATE_LINE(_w_9, 5, 1, 6, 1) \
     LINE_EMPTY(_w_9) \
     LINE_GHOST(_w_9) \
     ROOMS_AROUND(_w_9, _r_0, _r_2) \
      \
-    CREATE_LINE(_w_10, 6, 2, 5, 2) \
+    CREATE_LINE(_w_10, 6, 1, 6, 2) \
     LINE_EMPTY(_w_10) \
     LINE_GHOST(_w_10) \
     ROOMS_AROUND(_w_10, _r_0, _r_2) \
      \
-    CREATE_LINE(_w_11, 5, 2, 5, 1) \
+    CREATE_LINE(_w_11, 6, 2, 5, 2) \
     LINE_EMPTY(_w_11) \
     LINE_GHOST(_w_11) \
     ROOMS_AROUND(_w_11, _r_0, _r_2) \
      \
-    CREATE_LINE(_w_12, 1, -2, 2, -2) \
+    CREATE_LINE(_w_12, 5, 2, 5, 1) \
     LINE_EMPTY(_w_12) \
     LINE_GHOST(_w_12) \
-    ROOMS_AROUND(_w_12, _r_1, _r_2) \
+    ROOMS_AROUND(_w_12, _r_0, _r_2) \
      \
-    CREATE_LINE(_w_13, 2, -2, 2, -1) \
+    CREATE_LINE(_w_13, 1, -2, 2, -2) \
     LINE_EMPTY(_w_13) \
     LINE_GHOST(_w_13) \
     ROOMS_AROUND(_w_13, _r_1, _r_2) \
      \
-    CREATE_LINE(_w_14, 2, -1, 1, -1) \
+    CREATE_LINE(_w_14, 2, -2, 2, -1) \
     LINE_EMPTY(_w_14) \
     LINE_GHOST(_w_14) \
     ROOMS_AROUND(_w_14, _r_1, _r_2) \
      \
-    CREATE_LINE(_w_15, 1, -1, 1, -2) \
+    CREATE_LINE(_w_15, 2, -1, 1, -1) \
     LINE_EMPTY(_w_15) \
     LINE_GHOST(_w_15) \
     ROOMS_AROUND(_w_15, _r_1, _r_2) \
+     \
+    CREATE_LINE(_w_16, 1, -1, 1, -2) \
+    LINE_EMPTY(_w_16) \
+    LINE_GHOST(_w_16) \
+    ROOMS_AROUND(_w_16, _r_1, _r_2) \
      \
     LINE_TELEPORT(_w_6, _w_7) \
      \
@@ -696,6 +701,7 @@
     lines.lines[13] = _w_13; \
     lines.lines[14] = _w_14; \
     lines.lines[15] = _w_15; \
+    lines.lines[16] = _w_16; \
 
 #define LEVEL_TRANS \
     world.n_rooms = 1; \
