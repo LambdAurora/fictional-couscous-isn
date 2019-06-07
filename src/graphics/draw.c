@@ -1,3 +1,12 @@
+/*
+ * Copyright © 2019 LambdAurora <aurora42lambda@gmail.com>, Shad Amethyst <shad.amethyst@gmail.com>
+ *
+ * This file is part of fictional_couscous_isn.
+ *
+ * Licensed under the MIT license. For more information,
+ * see the LICENSE file.
+ */
+
 #include "draw.h"
 
 // TODO: replace `lines` with `world`
@@ -21,7 +30,7 @@ void draw(
         RayIntersection cast = send_ray(world, &ray, layer);
         int last_ground_height = 0;
         Room* current_room;
-        
+
         if (cast.success) {
             size_t n_hit;
 

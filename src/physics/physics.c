@@ -1,3 +1,12 @@
+/*
+ * Copyright © 2019 LambdAurora <aurora42lambda@gmail.com>, Shad Amethyst <shad.amethyst@gmail.com>
+ *
+ * This file is part of fictional_couscous_isn.
+ *
+ * Licensed under the MIT license. For more information,
+ * see the LICENSE file.
+ */
+
 #include "physics.h"
 #include "raytrace.h"
 
@@ -37,11 +46,11 @@ bool can_move(const Vec2D* old_pos, const Vec2D* new_pos, const Line2D* line) {
 
     if (0 >= a || a >= line->length) return true;
 
-    // distances to the line
+    // Distance à la ligne.
     double d1 = get_distance_of(old_pos, line);
     double d2 = get_distance_of(new_pos, line);
 
-    // distances to the ends of the line
+    // Distance à la fin de la ligne.
     double d3 = get_distance_to_ends(old_pos, line);
     double d4 = get_distance_to_ends(new_pos, line);
 

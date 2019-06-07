@@ -1,3 +1,12 @@
+/*
+ * Copyright © 2019 LambdAurora <aurora42lambda@gmail.com>, Shad Amethyst <shad.amethyst@gmail.com>
+ *
+ * This file is part of fictional_couscous_isn.
+ *
+ * Licensed under the MIT license. For more information,
+ * see the LICENSE file.
+ */
+
 #ifndef FICTIONAL_COUSCOUS_RAYTRACE_H
 #define FICTIONAL_COUSCOUS_RAYTRACE_H
 

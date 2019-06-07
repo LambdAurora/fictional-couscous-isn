@@ -1,3 +1,12 @@
+/*
+ * Copyright © 2019 LambdAurora <aurora42lambda@gmail.com>, Shad Amethyst <shad.amethyst@gmail.com>
+ *
+ * This file is part of fictional_couscous_isn.
+ *
+ * Licensed under the MIT license. For more information,
+ * see the LICENSE file.
+ */
+
 #include "base.h"
 #include "game.h"
 #include "levels.h"
@@ -40,6 +49,10 @@ void parse_command_line(Game *game, int argc, char** argv) {
 }
 
 int main(int argc, char** argv) {
+  return start(argc, argv);
+}
+
+int start(int argc, char** argv) {
     extern SDL_Window* EZ_fenetre;
     Game game;
     init_game(&game, GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);

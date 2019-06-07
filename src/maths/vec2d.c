@@ -1,3 +1,12 @@
+/*
+ * Copyright © 2019 LambdAurora <aurora42lambda@gmail.com>, Shad Amethyst <shad.amethyst@gmail.com>
+ *
+ * This file is part of fictional_couscous_isn.
+ *
+ * Licensed under the MIT license. For more information,
+ * see the LICENSE file.
+ */
+
 #include "vec2d.h"
 
 Vec2D Vec2D_new(double x, double y) {
@@ -13,7 +22,7 @@ double dot2D(const Vec2D* a, const Vec2D* b) {
 
 Vec2D norm2D(const Vec2D* in) {
     if (approx_eq(in->x, 0) && approx_eq(in->y, 0)) {
-        // ERROR ERROR
+        // On ne peut pas normaliser un vecteur nul.
         fprintf(stderr, "Tried to normalize a null vector!\n");
     }
     double l = sqrt(in->x * in->x + in->y * in->y);
