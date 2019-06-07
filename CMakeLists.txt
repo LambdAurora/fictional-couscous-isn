@@ -35,7 +35,6 @@ set(PROJECT_SOURCES src/main.c
     src/wagner.c
     src/graphics/draw.c
     src/physics/physics.c
-    src/ui/ui.c
     src/physics/raytrace.c
     src/maths/vec2d.c
     src/maths/double.c
@@ -50,7 +49,6 @@ set(PROJECT_SOURCES src/main.c
 set(PROJECT_HEADERS
   src/graphics/draw.h
   src/physics/physics.h
-  src/ui/ui.h
   src/game.h
   src/world/world.h
   src/base.h

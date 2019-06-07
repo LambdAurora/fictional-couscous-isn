@@ -58,16 +58,21 @@ int main(int argc, char** argv) {
 
 int start(int argc, char** argv) {
     extern SDL_Window* EZ_fenetre;
+    // On intialise le jeu.
     Game game;
     init_game(&game, GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);
+    // On lit les arguments de la ligne de commande.
     parse_command_line(&game, argc, argv);
+    // On créer la fenêtre.
     EZ_creation_fenetre("Non-euclidian 3D rendering engine", game.width, game.height);
 
     free_mouse(&game);
 
+    // On définit le monde.
     World world;
     World_init(&world, Vec2D_new(1.5, 1.5));
 
+    // On définit le niveau utilisé.
     LEVEL_CREDITS
 
     if (game.top_mode) world.player_angle = -M_PI / 2;
@@ -96,10 +101,12 @@ int start(int argc, char** argv) {
 
     clock_t last_clock = clock();
 
+    // On entre dans la boucle principale.
     while (!exit) {
         double dt = (double) (clock() - last_clock) / CLOCKS_PER_SEC;
         last_clock = clock();
 
+        // On récupère la taille actuelle de la fenêtre.
         SDL_GetWindowSize(EZ_fenetre, &game.width, &game.height);
 
         // On efface tout.
@@ -116,6 +123,7 @@ int start(int argc, char** argv) {
         sprintf(str, "%d", (int) (1 / dt));
         EZ_trace_texte(str, "../resources/DF-font.ttf", 16, 0, 0, 0, 0, 0, 255);
 
+        // On affiche un message d'aide si on a appuyé sur la touche H, sinon on mets les coordonnées du joueur.
         if (key_h) {
             EZ_trace_texte("1: capture mouse", "../resources/DF-font.ttf", 16, 0, 20, 0, 0, 0, 255);
             EZ_trace_texte("2: toggle ground", "../resources/DF-font.ttf", 16, 0, 40, 0, 0, 0, 255);
@@ -126,10 +134,13 @@ int start(int argc, char** argv) {
             EZ_trace_texte(str, "../resources/DF-font.ttf", 16, 0, 20, 0, 0, 0, 255);
         }
 
+        // On mets à jour.
         EZ_mise_a_jour();
 
+        // On traite les évènements.
         int evt;
         while ((evt = EZ_recupere_evenement_continu())) {
+            // On quitte si demandé.
             if (evt == EZ_EXIT) exit = true;
             if (evt == EZ_TOUCHE_ENFONCEE || evt == EZ_TOUCHE_RELACHEE) {
                 bool state = evt == EZ_TOUCHE_ENFONCEE;
@@ -164,6 +175,7 @@ int start(int argc, char** argv) {
                         key_h = state;
                         break;
                     case 'r':
+                        // On revient au point d'apparition si on appuie sur la touche R.
                         world.player_position = world.spawn_position;
                         break;
                     case 'o':
@@ -173,12 +185,14 @@ int start(int argc, char** argv) {
                         game.zoom = lc_maths_max(game.zoom - 1., 1);
                         break;
                     case 0x1B:
+                        // Si on appuie sur la touche Echap, on quitte le jeu.
                         exit = true;
                         break;
                     case 0x400000e1:
                         key_shift = state;
                         break;
                     case 0x40000044:
+                        // On entre ou sort du mode plein écran.
                         if (state) {
                             if (game.mouse_captured) {
                                 SDL_SetWindowFullscreen(EZ_fenetre, 0);
@@ -190,6 +204,7 @@ int start(int argc, char** argv) {
                         }
                         break;
                     case 0x31:
+                        // Si on appuie sur & (1), on capture ou libère la souris.
                         if (state) {
                             if (game.mouse_captured) {
                                 free_mouse(&game);
@@ -199,6 +214,7 @@ int start(int argc, char** argv) {
                         }
                         break;
                     case 0x32:
+                        // Si on appuie sur é (2), alors on affiche ou non le sol.
                         if (state) game.draw_floor = !game.draw_floor;
                         break;
                     case 0x33:
@@ -208,6 +224,7 @@ int start(int argc, char** argv) {
                         if (state) game.draw_complex_textures = !game.draw_complex_textures;
                         break;
                     default:
+                        // Si la touche n'est pas connue, on affiche son code dans la console.
                         printf("%x\n", EZ_touche());
                         break;
                 }
@@ -219,32 +236,39 @@ int start(int argc, char** argv) {
                 drag = false;
                 world.player_angle -= ((double) (EZ_souris_x() - drag_x) / 128) * .5;
             }
+            // On change l'angle de vision du joueur avec le souris si elle est capturée.
             if (evt == EZ_SOURIS_MOUVEMENT && game.mouse_captured) {
                 int x = EZ_souris_x() - GAME_WINDOW_WIDTH / 2;
                 world.player_angle += ((double) x / 128) * .25;
             }
         }
         if (game.mouse_captured) {
+            // On remet la souris au milieu de l'écran si elle est capturée.
             SDL_WarpMouseInWindow(EZ_fenetre, GAME_WINDOW_WIDTH / 2, GAME_WINDOW_HEIGHT / 2);
         }
 
         // Créé la nouvelle position du joueur en fonction des entrées.
         Vec2D new_player_position = world.player_position;
 
+        // La vitesse du joueur en fonction de si on appuie sur la touche Shift (Maj).
         double speed = key_shift ? 1.8 : 1;
 
+        // On avance si on appuie sur W ou Z.
         if (key_w || key_z) {
             new_player_position.x += speed * 1.4 * cos(world.player_angle) * dt;
             new_player_position.y += speed * 1.4 * sin(world.player_angle) * dt;
         }
+        // On recule si on appuie sur Z.
         if (key_s) {
             new_player_position.x -= speed * 1.4 * cos(world.player_angle) * dt;
             new_player_position.y -= speed * 1.4 * sin(world.player_angle) * dt;
         }
+        // On va à gauche si on appuie sur D.
         if (key_d) {
             new_player_position.x -= speed * 1 * sin(world.player_angle) * dt;
             new_player_position.y += speed * 1 * cos(world.player_angle) * dt;
         }
+        // On va à droite si on appuie sur A ou Q.
         if (key_a || key_q) {
             new_player_position.x += speed * 1 * sin(world.player_angle) * dt;
             new_player_position.y -= speed * 1 * cos(world.player_angle) * dt;
@@ -254,6 +278,7 @@ int start(int argc, char** argv) {
         if (key_right) world.player_angle += .8 * dt;
         if (key_left) world.player_angle -= .8 * dt;
 
+        // On traite le déplacement du joueur dans le monde.
         World_move(&world, &new_player_position);
     }
 
