@@ -9,7 +9,6 @@
 
 #include "draw.h"
 
-// TODO: replace `lines` with `world`
 void draw(
         const Game* game,
         const World* world,
@@ -18,30 +17,30 @@ void draw(
 ) {
     int x;
     double last_dist = 0;
-    for (x = 0; x < game->width; x++) {
-        double angle = ((double) x - (double) game->width / 2) / (double) game->width * 2 * fov;
+    for (x = 0; x < game->width; x++) { // on dessine chaque bande verticale de pixel, l'une après l'autre
+        double angle = ((double) x - (double) game->width / 2) / (double) game->width * 2 * fov; // angle du rayon à envoyer
 
+        // on crée le rayon à envoyer
         Line2D ray;
         ray.length = length;
         ray.pos = world->player_position;
         ray.vec.x = cos(angle + world->player_angle);
         ray.vec.y = sin(angle + world->player_angle);
 
+        // on envoie le rayon
         RayIntersection cast = send_ray(world, &ray, layer);
         int last_ground_height = 0;
-        Room* current_room;
+        Room* current_room; // salle se trouvant derrière le mur précédent
 
-        if (cast.success) {
+        if (cast.success) { // si on a en effet touché un mur
             size_t n_hit;
 
-            current_room = find_current_room(world);
+            for (n_hit = cast.n_hits - 1; n_hit != -1; n_hit--) { // on affiche chaque intersection, en commencant par la dernière
+                Hit hit = cast.hits[n_hit]; // intersection en cours
+                Line2D* line = hit.line; // mur de l'intersectoin
+                if (hit.dist < DISTANCE_THRESHOLD) { // si le mur est trop près de la caméra
 
-            for (n_hit = cast.n_hits - 1; n_hit != -1; n_hit--) {
-                Hit hit = cast.hits[n_hit];
-                Line2D* line = hit.line;
-                if (hit.dist < DISTANCE_THRESHOLD) {
-
-                    if (game->draw_floor) {
+                    if (game->draw_floor) { // on affiche le sol derrière ce mur
 
                         if (line->type != NORMAL_LINE) {
                             if (hit.side) {
@@ -54,19 +53,19 @@ void draw(
                                 }
                             }
                             if (current_room != NULL) {
-                                EZ_trace_rectangle_plein(x, game->height / 2 + last_ground_height, 0, game->height - last_ground_height, current_room->color.red, current_room->color.green, current_room->color.blue, 255);
+                                EZ_trace_rectangle_plein(x, game->height / 2 + last_ground_height, 0, game->height - last_ground_height, current_room->color.red, current_room->color.green, current_room->color.blue, 255); // on affiche le sol si nécéssaire
                             }
                         }
 
                     }
 
-                    last_ground_height = game->height;
-                    continue;
+                    last_ground_height = game->height; // on n'affiche pas de sol après (on lui dit de l'affiche en dessous de la fenêtre, en gros)
+                    continue; // on skip la suite
                 }
-                int h = (int) (calc_height(hit.dist, angle, game->height, game->width));
-                double mist = 1 - 1 / (1 + hit.dist * hit.dist / mist_length);
+                int h = (int) (calc_height(hit.dist, angle, game->height, game->width)); // hauteur du mur
+                double mist = 1 - 1 / (1 + hit.dist * hit.dist / mist_length); // intensité du brouillard
 
-                if (game->draw_floor) {
+                if (game->draw_floor) { // si on doit afficher le sol
                     if (line->type != NORMAL_LINE) {
                         if (hit.side) {
                             if (line->room_left != NULL) {
@@ -84,7 +83,7 @@ void draw(
                 }
 
                 switch (line->type) {
-                    case BOUNCE_LINE:
+                    case BOUNCE_LINE: // la ligne est un mirroir
                         if (!game->draw_complex_textures && is_complex_texture(line->texture)) {
                             texture_flat(x, h, game->height, line, &hit, (1 - mist) * 0.25);
                         } else {
@@ -92,7 +91,7 @@ void draw(
                         }
                         break;
                     case GHOST_LINE:
-                    case TRANSPARENT_LINE:
+                    case TRANSPARENT_LINE: // la ligne est transparente: on récupère sa transparence et on l'affiche
                         {
                             double* transparency_ptr = (double*)line->data;
                             double transparency = transparency_ptr == NULL ? 0.5 : *transparency_ptr;
@@ -103,7 +102,7 @@ void draw(
                             }
                         }
                         break;
-                    default:
+                    default: // la ligne est normale ou est un miroir
                         if (!game->draw_complex_textures && is_complex_texture(line->texture)) {
                             texture_flat(x, h, game->height, line, &hit, 1 - mist);
                         } else {
@@ -115,7 +114,7 @@ void draw(
             }
         }
 
-        if (game->draw_floor) {
+        if (game->draw_floor) { // on affiche le sol entre le mur le plus proche et le bord inférieur de l'écran
           current_room = find_current_room(world);
           if (current_room != NULL) {
             EZ_trace_rectangle_plein(x, game->height / 2 + last_ground_height, 0, game->height / 2 - last_ground_height, current_room->color.red, current_room->color.green, current_room->color.blue, 255);
